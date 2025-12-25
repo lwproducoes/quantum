@@ -132,14 +132,57 @@ function Home(): React.JSX.Element {
       )
     }
 
+    const handleCancelled = (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => {
+      setDownloads((prev) =>
+        prev.map((d) => {
+          const part = d.parts.find((p) => p.url === data.url)
+          if (!part) return d
+
+          const updatedParts = d.parts.map((p) =>
+            p.url === data.url
+              ? { ...p, status: 'canceled' as const, progress: 0, downloadedBytes: 0 }
+              : p
+          )
+
+          const allCanceled = updatedParts.every((p) => p.status === 'canceled')
+
+          return {
+            ...d,
+            parts: updatedParts,
+            status: allCanceled ? ('canceled' as const) : d.status,
+            progress: allCanceled ? 0 : d.progress,
+            downloadedBytes: allCanceled ? 0 : d.downloadedBytes,
+            totalBytes: allCanceled ? 0 : d.totalBytes
+          }
+        })
+      )
+    }
+
+    const handleStarted = (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => {
+      setDownloads((prev) =>
+        prev.map((d) => {
+          const part = d.parts.find((p) => p.url === data.url)
+          if (!part) return d
+          const updatedParts = d.parts.map((p) =>
+            p.url === data.url ? { ...p, status: 'downloading' as const } : p
+          )
+          return { ...d, parts: updatedParts, status: 'downloading' }
+        })
+      )
+    }
+
     window.api.onDownloadProgress(handleProgress)
     window.api.onDownloadComplete(handleComplete)
     window.api.onDownloadError(handleError)
+    window.api.onDownloadStarted(handleStarted)
+    window.api.onDownloadCancelled(handleCancelled)
 
     return () => {
       window.api.removeDownloadListener('download:progress')
       window.api.removeDownloadListener('download:complete')
       window.api.removeDownloadListener('download:error')
+      window.api.removeDownloadListener('download:started')
+      window.api.removeDownloadListener('download:cancelled')
     }
   }, [])
 
@@ -243,7 +286,7 @@ function Home(): React.JSX.Element {
       id: downloadId,
       game,
       progress: 0,
-      status: 'downloading',
+      status: downloads.some((d) => d.status === 'downloading') ? 'queued' : 'downloading',
       downloadedBytes: 0,
       totalBytes: 0,
       parts
@@ -253,7 +296,7 @@ function Home(): React.JSX.Element {
     setIsDrawerOpen(true)
     setSelectedGame(null)
 
-    // Start all parts in parallel
+    // Enqueue all parts; queue ensures sequential execution
     await Promise.all(
       parts.map(async (part) => {
         try {
@@ -276,7 +319,20 @@ function Home(): React.JSX.Element {
     )
   }
 
-  const removeDownload = (id: string) => {
+  const removeDownload = async (id: string) => {
+    const target = downloads.find((d) => d.id === id)
+    if (!target) return
+
+    await Promise.all(
+      target.parts.map(async (part) => {
+        try {
+          await window.api.cancelDownload(part.url, part.kind)
+        } catch (err) {
+          console.error('Failed to cancel download', err)
+        }
+      })
+    )
+
     setDownloads((prev) => prev.filter((d) => d.id !== id))
   }
 

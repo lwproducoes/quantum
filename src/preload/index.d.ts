@@ -19,6 +19,7 @@ declare global {
         gameTitle: string,
         kind?: 'base' | 'update' | 'dlc'
       ) => Promise<{ success: boolean; filePath: string }>
+      cancelDownload: (downloadUrl: string, kind?: 'base' | 'update' | 'dlc') => Promise<boolean>
       onDownloadProgress: (
         callback: (data: {
           url: string
@@ -30,6 +31,12 @@ declare global {
       ) => void
       onDownloadComplete: (
         callback: (data: { url: string; filename: string; filePath: string }) => void
+      ) => void
+      onDownloadStarted: (
+        callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
+      ) => void
+      onDownloadCancelled: (
+        callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
       ) => void
       onDownloadError: (callback: (data: { url: string; error: string }) => void) => void
       removeDownloadListener: (channel: string) => void

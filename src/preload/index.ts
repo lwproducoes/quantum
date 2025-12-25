@@ -36,6 +36,12 @@ const api = {
   ): Promise<{ success: boolean; filePath: string }> => {
     return ipcRenderer.invoke('download:start', downloadUrl, gameTitle, kind)
   },
+  cancelDownload: async (
+    downloadUrl: string,
+    kind: 'base' | 'update' | 'dlc' = 'base'
+  ): Promise<boolean> => {
+    return ipcRenderer.invoke('download:cancel', downloadUrl, kind)
+  },
   onDownloadProgress: (
     callback: (data: {
       url: string
@@ -51,6 +57,16 @@ const api = {
     callback: (data: { url: string; filename: string; filePath: string }) => void
   ) => {
     ipcRenderer.on('download:complete', (_event, data) => callback(data))
+  },
+  onDownloadStarted: (
+    callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
+  ) => {
+    ipcRenderer.on('download:started', (_event, data) => callback(data))
+  },
+  onDownloadCancelled: (
+    callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
+  ) => {
+    ipcRenderer.on('download:cancelled', (_event, data) => callback(data))
   },
   onDownloadError: (callback: (data: { url: string; error: string }) => void) => {
     ipcRenderer.on('download:error', (_event, data) => callback(data))

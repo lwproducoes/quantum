@@ -11,7 +11,7 @@ export interface DownloadPart {
   url: string
   label: string
   kind: DownloadPartKind
-  status: 'downloading' | 'completed' | 'error'
+  status: 'queued' | 'downloading' | 'completed' | 'error' | 'canceled'
   progress: number
   downloadedBytes: number
   totalBytes: number
@@ -21,7 +21,7 @@ export interface DownloadItem {
   id: string
   game: Game
   progress: number
-  status: 'downloading' | 'completed' | 'error'
+  status: 'queued' | 'downloading' | 'completed' | 'error' | 'canceled'
   downloadedBytes: number
   totalBytes: number
   parts: DownloadPart[]
@@ -29,7 +29,7 @@ export interface DownloadItem {
 
 interface DownloadsProps {
   downloads: DownloadItem[]
-  onRemoveDownload: (id: string) => void
+  onRemoveDownload: (id: string) => void | Promise<void>
 }
 
 function formatSize(bytes: number): string {
@@ -67,9 +67,11 @@ function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.E
                     <div className="space-y-2">
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>
+                          {download.status === 'queued' && 'Queued...'}
                           {download.status === 'downloading' && 'Downloading...'}
                           {download.status === 'completed' && 'Completed'}
                           {download.status === 'error' && 'Error'}
+                          {download.status === 'canceled' && 'Canceled'}
                         </span>
                         <span>
                           {formatSize(download.downloadedBytes)} /
@@ -84,7 +86,9 @@ function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.E
                               ? 'bg-green-500'
                               : download.status === 'error'
                                 ? 'bg-red-500'
-                                : 'bg-primary'
+                                : download.status === 'canceled'
+                                  ? 'bg-secondary'
+                                  : 'bg-primary'
                           )}
                           style={{ width: `${download.progress}%` }}
                         />
