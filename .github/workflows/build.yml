@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest, macos-latest]
 
     steps:
       - name: Checkout code
@@ -48,13 +48,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
-      - name: Build and release (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: yarn build:linux --publish always
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -62,7 +55,3 @@ jobs:
           path: |
             dist/*.exe
             dist/*.dmg
-            dist/*.AppImage
-            dist/*.deb
-            dist/*.snap
-            dist/*.yml
