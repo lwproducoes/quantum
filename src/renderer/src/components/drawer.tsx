@@ -43,7 +43,7 @@ export function Drawer({
       {/* Drawer */}
       <div
         className={cn(
-          'fixed top-0 bottom-0 w-96 bg-background shadow-lg transition-transform duration-300 z-50 flex flex-col',
+          'fixed top-0 bottom-0 w-2/5 bg-background shadow-lg transition-transform duration-300 z-50 flex flex-col',
           side === 'right' ? 'right-0' : 'left-0',
           open ? 'translate-x-0' : side === 'right' ? 'translate-x-full' : '-translate-x-full'
         )}
