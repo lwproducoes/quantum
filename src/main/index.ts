@@ -1,13 +1,15 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
-import { createWriteStream, existsSync, readdirSync, readFileSync } from 'fs'
+import { createWriteStream, existsSync, readdirSync, readFileSync, WriteStream } from 'fs'
 import { mkdir, unlink } from 'fs/promises'
 import { get } from 'https'
 import { Level } from 'level'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 import { SevenZip } from './services/7zip'
+import { DownloadQueue } from './services/download-queue'
 import { DatanodesApi } from './services/hosters/datanodes'
+import { logger } from './services/logger'
 import { UpdaterService } from './services/updater'
 
 function createWindow(): void {
@@ -48,14 +50,18 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 let settingsDb: Level<string, any> | null = null
 let updaterService: UpdaterService | null = null
+const downloadQueue = new DownloadQueue()
+const activeDownloads = new Map<
+  string,
+  { request?: ReturnType<typeof get>; fileStream?: WriteStream }
+>()
+const cancelledDownloads = new Set<string>()
+
+const makeDownloadKey = (url: string, kind: 'base' | 'update' | 'dlc' = 'base') => `${url}::${kind}`
 
 app.whenReady().then(async () => {
-  // Set app user model id for windows
   electronApp.setAppUserModelId('com.jgco.quantum')
 
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
@@ -75,7 +81,7 @@ app.whenReady().then(async () => {
     const dbPath = join(app.getPath('userData'), 'settings')
     settingsDb = new Level<string, any>(dbPath, { valueEncoding: 'json' })
   } catch (err) {
-    console.error('Failed to initialize settings DB:', err)
+    logger.error('Failed to initialize settings DB:', err)
   }
 
   // Settings: get value by key
@@ -86,7 +92,7 @@ app.whenReady().then(async () => {
       return val ?? null
     } catch (err: any) {
       if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
-      console.error('settings:get error', err)
+      logger.error('settings:get error', err)
       return null
     }
   })
@@ -98,7 +104,7 @@ app.whenReady().then(async () => {
       await settingsDb.put(key, value)
       return true
     } catch (err) {
-      console.error('settings:set error', err)
+      logger.error('settings:set error', err)
       return false
     }
   })
@@ -111,7 +117,7 @@ app.whenReady().then(async () => {
       return val ?? null
     } catch (err: any) {
       if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
-      console.error('cache:get error', err)
+      logger.error('cache:get error', err)
       return null
     }
   })
@@ -123,7 +129,7 @@ app.whenReady().then(async () => {
       await settingsDb.put(`cache:${key}`, value)
       return true
     } catch (err) {
-      console.error('cache:set error', err)
+      logger.error('cache:set error', err)
       return false
     }
   })
@@ -136,7 +142,7 @@ app.whenReady().then(async () => {
       return true
     } catch (err: any) {
       if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return true
-      console.error('cache:delete error', err)
+      logger.error('cache:delete error', err)
       return false
     }
   })
@@ -151,7 +157,7 @@ app.whenReady().then(async () => {
         .map((e) => e.name)
       return providers
     } catch (err) {
-      console.error('providers:list error', err)
+      logger.error('providers:list error', err)
       return []
     }
   })
@@ -181,24 +187,24 @@ app.whenReady().then(async () => {
         try {
           const content = readFileSync(indexPath, 'utf-8')
           const list: any[] = JSON.parse(content)
-          console.log(`providers:checkGame checking provider ${name} with ${list.length} items`)
+          logger.debug(`providers:checkGame checking provider ${name} with ${list.length} items`)
           const item = list.find((it: any) => normalizeText(it?.title) === target)
           if (item) {
             matches.push({ provider: name, item })
           }
         } catch (err) {
-          console.error(`providers:checkGame read ${indexPath} error`, err)
+          logger.error(`providers:checkGame read ${indexPath} error`, err)
         }
       }
 
       return { providers: matches }
     } catch (err) {
-      console.error('providers:checkGame error', err)
+      logger.error('providers:checkGame error', err)
       return { providers: [] }
     }
   })
 
-  // Download: start download with real-time progress
+  // Download: start download with real-time progress, queued sequentially
   ipcMain.handle(
     'download:start',
     async (
@@ -207,8 +213,9 @@ app.whenReady().then(async () => {
       gameTitle: string,
       kind: 'base' | 'update' | 'dlc' = 'base'
     ) => {
+      const webContents = event.sender
       try {
-        // Get download directory from settings
+        // Prepare parameters up-front (fetch real URL, paths) before enqueue
         const downloadDir = await settingsDb?.get('downloadFolder')
         if (!downloadDir) {
           throw new Error('Download directory not configured')
@@ -217,121 +224,174 @@ app.whenReady().then(async () => {
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
         const safeTitle = (gameTitle || 'game').replace(/[<>:"/\\|?*]+/g, '_')
 
-        // Get real download URL from DatanodesApi
-        console.log('Getting real download URL from:', downloadUrl)
+        logger.debug('Getting real download URL from:', downloadUrl)
         const realDownloadUrl = await DatanodesApi.getDownloadUrl(downloadUrl)
-        console.log('Real download URL:', realDownloadUrl)
+        logger.debug('Real download URL:', realDownloadUrl)
 
-        // Extract filename from URL
         const targetRoot = join(baseDir, safeTitle)
         const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
         const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
 
         const filename = subfolder ? `${safeTitle}-${subfolder}.rar` : `${safeTitle}.rar`
         const filePath = join(targetRoot, filename)
-        console.log('Resolved filename:', filename, filePath)
-
-        // Ensure download directory exists
         await mkdir(extractPath, { recursive: true })
-        console.log('Saving download to:', filePath)
 
-        // Start download
-        return new Promise((resolve, reject) => {
-          get(realDownloadUrl, (response) => {
-            if (response.statusCode !== 200) {
-              reject(new Error(`Failed to download: ${response.statusCode}`))
-              return
-            }
+        const downloadKey = makeDownloadKey(downloadUrl, kind)
+        cancelledDownloads.delete(downloadKey)
 
-            const totalSize = parseInt(response.headers['content-length'] || '0', 10)
-            let downloadedSize = 0
+        // Enqueue the actual download task to run sequentially
+        return downloadQueue.enqueue(async () => {
+          if (cancelledDownloads.has(downloadKey)) {
+            cancelledDownloads.delete(downloadKey)
+            webContents.send('download:cancelled', { url: downloadUrl, kind })
+            return { success: false, filePath }
+          }
 
-            const fileStream = createWriteStream(filePath)
+          // Notify renderer that this queued task started
+          webContents.send('download:started', { url: downloadUrl, kind })
 
-            response.on('data', (chunk) => {
-              downloadedSize += chunk.length
-              const progress = totalSize > 0 ? (downloadedSize / totalSize) * 100 : 0
+          return await new Promise<{ success: boolean; filePath: string }>((resolve, reject) => {
+            const request = get(realDownloadUrl, (response) => {
+              if (response.statusCode !== 200) {
+                reject(new Error(`Failed to download: ${response.statusCode}`))
+                return
+              }
 
-              // Send progress update to renderer
-              event.sender.send('download:progress', {
-                url: downloadUrl,
-                progress,
-                downloadedSize,
-                totalSize,
-                filename,
-                kind
+              const totalSize = parseInt(response.headers['content-length'] || '0', 10)
+              let downloadedSize = 0
+
+              const fileStream = createWriteStream(filePath)
+              activeDownloads.set(downloadKey, { request, fileStream })
+
+              const cleanup = () => {
+                activeDownloads.delete(downloadKey)
+                cancelledDownloads.delete(downloadKey)
+              }
+
+              response.on('data', (chunk) => {
+                downloadedSize += chunk.length
+                const progress = totalSize > 0 ? (downloadedSize / totalSize) * 100 : 0
+
+                webContents.send('download:progress', {
+                  url: downloadUrl,
+                  progress,
+                  downloadedSize,
+                  totalSize,
+                  filename,
+                  kind
+                })
+              })
+
+              response.pipe(fileStream)
+
+              fileStream.on('finish', async () => {
+                fileStream.close()
+                cleanup()
+
+                try {
+                  await SevenZip.extractFile({ filePath, outputPath: extractPath }, (progress) => {
+                    const percent = typeof progress?.percent === 'number' ? progress.percent : 0
+                    webContents.send('download:extract-progress', {
+                      url: downloadUrl,
+                      progress: percent,
+                      kind
+                    })
+                  })
+
+                  try {
+                    await unlink(filePath)
+                  } catch (cleanupErr) {
+                    logger.warn('Failed to delete archive after extraction:', cleanupErr)
+                  }
+
+                  webContents.send('download:complete', {
+                    url: downloadUrl,
+                    filename,
+                    filePath,
+                    extractedTo: extractPath,
+                    kind
+                  })
+                  resolve({ success: true, filePath })
+                } catch (extractErr: any) {
+                  logger.error('Extraction failed:', extractErr)
+                  cleanup()
+                  webContents.send('download:error', {
+                    url: downloadUrl,
+                    error: extractErr?.message || 'Extraction failed',
+                    kind
+                  })
+                  reject(extractErr)
+                }
+              })
+
+              fileStream.on('error', (err) => {
+                fileStream.close()
+                const isCancelled = cancelledDownloads.has(downloadKey)
+                cleanup()
+
+                if (isCancelled) {
+                  unlink(filePath).catch(() => {})
+                  webContents.send('download:cancelled', { url: downloadUrl, kind })
+                  resolve({ success: false, filePath })
+                  return
+                }
+
+                webContents.send('download:error', {
+                  url: downloadUrl,
+                  error: err.message,
+                  kind
+                })
+                reject(err)
               })
             })
 
-            response.pipe(fileStream)
+            request.on('error', (err) => {
+              const isCancelled = cancelledDownloads.has(downloadKey)
+              activeDownloads.delete(downloadKey)
 
-            fileStream.on('finish', async () => {
-              fileStream.close()
-
-              // Extract the downloaded archive into the target path using SevenZip helper
-              try {
-                await SevenZip.extractFile({ filePath, outputPath: extractPath }, (progress) => {
-                  const percent = typeof progress?.percent === 'number' ? progress.percent : 0
-                  event.sender.send('download:extract-progress', {
-                    url: downloadUrl,
-                    progress: percent,
-                    kind
-                  })
-                })
-
-                // Remove archive after successful extraction
-                try {
-                  await unlink(filePath)
-                } catch (cleanupErr) {
-                  console.warn('Failed to delete archive after extraction:', cleanupErr)
-                }
-
-                event.sender.send('download:complete', {
-                  url: downloadUrl,
-                  filename,
-                  filePath,
-                  extractedTo: extractPath,
-                  kind
-                })
-                resolve({ success: true, filePath })
-              } catch (extractErr: any) {
-                console.error('Extraction failed:', extractErr)
-                event.sender.send('download:error', {
-                  url: downloadUrl,
-                  error: extractErr?.message || 'Extraction failed',
-                  kind
-                })
-                reject(extractErr)
+              if (isCancelled) {
+                unlink(filePath).catch(() => {})
+                webContents.send('download:cancelled', { url: downloadUrl, kind })
+                resolve({ success: false, filePath })
+                return
               }
-            })
 
-            fileStream.on('error', (err) => {
-              fileStream.close()
-              event.sender.send('download:error', {
+              webContents.send('download:error', {
                 url: downloadUrl,
                 error: err.message,
                 kind
               })
               reject(err)
             })
-          }).on('error', (err) => {
-            event.sender.send('download:error', {
-              url: downloadUrl,
-              error: err.message,
-              kind
-            })
-            reject(err)
           })
         })
       } catch (err: any) {
-        console.error('download:start error', err)
-        event.sender.send('download:error', {
+        logger.error('download:start error', err)
+        webContents.send('download:error', {
           url: downloadUrl,
           error: err.message,
           kind
         })
         throw err
       }
+    }
+  )
+
+  ipcMain.handle(
+    'download:cancel',
+    async (_event, downloadUrl: string, kind: 'base' | 'update' | 'dlc' = 'base') => {
+      const key = makeDownloadKey(downloadUrl, kind)
+      cancelledDownloads.add(key)
+
+      const active = activeDownloads.get(key)
+      try {
+        active?.request?.destroy(new Error('Download cancelled'))
+        active?.fileStream?.destroy(new Error('Download cancelled'))
+      } catch (err) {
+        logger.warn('download:cancel cleanup warning', err)
+      }
+
+      return true
     }
   )
 
