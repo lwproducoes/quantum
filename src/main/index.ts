@@ -222,11 +222,16 @@ app.whenReady().then(async () => {
         }
 
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
-        const safeTitle = (gameTitle || 'game').replace(/[<>:"/\\|?*]+/g, '_')
+        const safeTitle = (gameTitle || 'game')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace('™', '')
+          .replace(/[<>:"/\\|?*]+/g, '_')
+          .trim()
 
         logger.debug('Getting real download URL from:', downloadUrl)
         const realDownloadUrl = await DatanodesApi.getDownloadUrl(downloadUrl)
-        logger.debug('Real download URL:', realDownloadUrl)
+        logger.debug('Real download URL:', realDownloadUrl.slice(0, 20) + '...')
 
         const targetRoot = join(baseDir, safeTitle)
         const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
