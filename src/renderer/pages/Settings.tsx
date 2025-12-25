@@ -43,11 +43,11 @@ function Settings(): React.JSX.Element {
 
   async function handleCheckForUpdates() {
     setCheckingUpdates(true)
-    toast.info('Verificando atualizações...', { autoClose: 2000 })
+    toast.info('Checking for updates...', { autoClose: 2000 })
     try {
       await window.api.checkForUpdates()
     } catch (err) {
-      toast.error('Erro ao verificar atualizações')
+      toast.error('Error checking for updates')
     } finally {
       setTimeout(() => setCheckingUpdates(false), 2000)
     }
@@ -100,7 +100,7 @@ function Settings(): React.JSX.Element {
               className={cn('flex items-center gap-2')}
             >
               <RefreshCw className={cn(checkingUpdates && 'animate-spin')} size={16} />
-              {checkingUpdates ? 'Verificando...' : 'Verificar Atualizações'}
+              {checkingUpdates ? 'Checking...' : 'Check for Updates'}
             </Button>
           </CardContent>
         </Card>

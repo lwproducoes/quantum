@@ -393,7 +393,7 @@ function Home(): React.JSX.Element {
         )}
       </div>
 
-      {/* Dialog de opções de download */}
+      {/* Download Options Dialog */}
       <Dialog open={!!selectedGame} onOpenChange={(open) => !open && setSelectedGame(null)}>
         <DialogContent>
           <DialogHeader className="border-b pb-4">
@@ -447,7 +447,7 @@ function Home(): React.JSX.Element {
         </DialogContent>
       </Dialog>
 
-      {/* Drawer de Downloads */}
+      {/* Downloads Drawer */}
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} title="Downloads">
         <Downloads downloads={downloads} onRemoveDownload={removeDownload} />
       </Drawer>

@@ -12,7 +12,7 @@ interface CacheEntry {
 }
 
 const CACHE_KEY = 'games_cache'
-const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 horas em milissegundos
+const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
 
 async function getCachedGames(): Promise<Game[] | null> {
   try {
@@ -22,7 +22,7 @@ async function getCachedGames(): Promise<Game[] | null> {
     const entry: CacheEntry = cached
     const now = Date.now()
 
-    // Verifica se o cache expirou (24 horas)
+    // Check if cache expired (24 hours)
     if (now - entry.timestamp > CACHE_DURATION) {
       await window.api.deleteCache(CACHE_KEY)
       return null
@@ -30,7 +30,7 @@ async function getCachedGames(): Promise<Game[] | null> {
 
     return entry.data
   } catch (error) {
-    logger.error('Erro ao ler cache:', error)
+    logger.error('Error reading cache:', error)
     return null
   }
 }
@@ -43,12 +43,12 @@ async function setCachedGames(data: Game[]): Promise<void> {
     }
     await window.api.setCache(CACHE_KEY, entry)
   } catch (error) {
-    console.error('Erro ao salvar cache:', error)
+    logger.error('Error saving cache:', error)
   }
 }
 
 export async function fetchGames(searchTerm?: string, useCache = false) {
-  // Se useCache for true e não houver searchTerm, tenta retornar do cache
+  // If useCache is true and there is no searchTerm, try to return from cache
   if (useCache && !searchTerm) {
     const cached = await getCachedGames()
     if (cached) {
@@ -58,7 +58,7 @@ export async function fetchGames(searchTerm?: string, useCache = false) {
 
   const response = await api.get<Game[]>('/games', { params: { query: searchTerm } })
 
-  // Salva no cache apenas quando não há searchTerm (lista completa)
+  // Save to cache only when there is no searchTerm (full list)
   if (!searchTerm) {
     await setCachedGames(response.data)
   }
