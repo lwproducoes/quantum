@@ -18,7 +18,7 @@ Write-Host "Criando release versão v$version..." -ForegroundColor Green
 Write-Host "`nAtualizando package.json..." -ForegroundColor Yellow
 $packagePath = "package.json"
 $packageContent = Get-Content $packagePath -Raw
-$packageContent = $packageContent -replace '"version": "\d+\.\d+\.\d+"', "`"version`": `"$version`""
+$packageContent = $packageContent -replace '"version": "\d+\.\d+\.\d+"', '"version": ' + '"' + $version + '"'
 Set-Content $packagePath $packageContent
 
 # Git add, commit e tag
@@ -33,5 +33,5 @@ Write-Host "`nEnviando para o GitHub..." -ForegroundColor Yellow
 git push origin main
 git push origin "v$version"
 
-Write-Host "`n✓ Release v$version criada com sucesso!" -ForegroundColor Green
+Write-Host "`nRelease v$version criada com sucesso!" -ForegroundColor Green
 Write-Host "Acompanhe o build em: https://github.com/lwproducoes/quantum/actions" -ForegroundColor Cyan
