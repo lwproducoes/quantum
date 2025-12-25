@@ -1,3 +1,4 @@
+import logger from '@renderer/lib/logger'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from './button'
@@ -31,11 +32,11 @@ export function UpdaterNotification() {
 
   useEffect(() => {
     const handleUpdateMessage = (data: { event: string; data?: any }) => {
-      console.log('Update event:', data)
+      logger.log('Update event:', data)
 
       switch (data.event) {
         case 'checking-for-update':
-          console.log('Verificando atualizações...')
+          logger.log('Verificando atualizações...')
           break
 
         case 'update-available':
@@ -48,7 +49,7 @@ export function UpdaterNotification() {
           break
 
         case 'update-not-available':
-          console.log('Nenhuma atualização disponível')
+          logger.log('Nenhuma atualização disponível')
           break
 
         case 'update-download-progress': {

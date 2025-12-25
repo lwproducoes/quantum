@@ -1,5 +1,6 @@
 import { Game } from '@renderer/types'
 import axios from 'axios'
+import logger from './logger'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'https://quantum.lwproducoes.com/api/v1'
@@ -29,7 +30,7 @@ async function getCachedGames(): Promise<Game[] | null> {
 
     return entry.data
   } catch (error) {
-    console.error('Erro ao ler cache:', error)
+    logger.error('Erro ao ler cache:', error)
     return null
   }
 }

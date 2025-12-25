@@ -89,6 +89,19 @@ const api = {
   },
   removeUpdateListener: () => {
     ipcRenderer.removeAllListeners('updater-message')
+  },
+  // Logger APIs
+  log: (...args: any[]) => {
+    ipcRenderer.send('logger:log', args)
+  },
+  error: (...args: any[]) => {
+    ipcRenderer.send('logger:error', args)
+  },
+  warn: (...args: any[]) => {
+    ipcRenderer.send('logger:warn', args)
+  },
+  info: (...args: any[]) => {
+    ipcRenderer.send('logger:info', args)
   }
 }
 
@@ -100,7 +113,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
   } catch (error) {
-    console.error(error)
+    console.error('[Preload Error]', error)
   }
 } else {
   // @ts-ignore (define in dts)
