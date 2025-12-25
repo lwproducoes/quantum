@@ -110,12 +110,13 @@ export function UpdaterNotification() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Update Available</DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="">
               A new version ({updateInfo?.version}) is available. Do you want to download now?
               {updateInfo?.releaseNotes && (
-                <div className="mt-4 max-h-48 overflow-y-auto rounded bg-gray-100 p-3 text-sm dark:bg-gray-800">
-                  <p className="whitespace-pre-wrap">{updateInfo.releaseNotes}</p>
-                </div>
+                <div
+                  className="mt-4 max-h-48 overflow-y-auto rounded bg-gray-100 p-3 text-sm dark:bg-gray-800 prose prose-sm dark:prose-invert"
+                  dangerouslySetInnerHTML={{ __html: updateInfo.releaseNotes }}
+                />
               )}
             </DialogDescription>
           </DialogHeader>
