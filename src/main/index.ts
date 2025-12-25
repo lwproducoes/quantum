@@ -9,6 +9,7 @@ import icon from '../../resources/icon.png?asset'
 import { SevenZip } from './services/7zip'
 import { DownloadQueue } from './services/download-queue'
 import { DatanodesApi } from './services/hosters/datanodes'
+import { logger } from './services/logger'
 import { UpdaterService } from './services/updater'
 
 function createWindow(): void {
@@ -80,7 +81,7 @@ app.whenReady().then(async () => {
     const dbPath = join(app.getPath('userData'), 'settings')
     settingsDb = new Level<string, any>(dbPath, { valueEncoding: 'json' })
   } catch (err) {
-    console.error('Failed to initialize settings DB:', err)
+    logger.error('Failed to initialize settings DB:', err)
   }
 
   // Settings: get value by key
@@ -91,7 +92,7 @@ app.whenReady().then(async () => {
       return val ?? null
     } catch (err: any) {
       if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
-      console.error('settings:get error', err)
+      logger.error('settings:get error', err)
       return null
     }
   })
@@ -103,7 +104,7 @@ app.whenReady().then(async () => {
       await settingsDb.put(key, value)
       return true
     } catch (err) {
-      console.error('settings:set error', err)
+      logger.error('settings:set error', err)
       return false
     }
   })
@@ -116,7 +117,7 @@ app.whenReady().then(async () => {
       return val ?? null
     } catch (err: any) {
       if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
-      console.error('cache:get error', err)
+      logger.error('cache:get error', err)
       return null
     }
   })
@@ -128,7 +129,7 @@ app.whenReady().then(async () => {
       await settingsDb.put(`cache:${key}`, value)
       return true
     } catch (err) {
-      console.error('cache:set error', err)
+      logger.error('cache:set error', err)
       return false
     }
   })
@@ -141,7 +142,7 @@ app.whenReady().then(async () => {
       return true
     } catch (err: any) {
       if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return true
-      console.error('cache:delete error', err)
+      logger.error('cache:delete error', err)
       return false
     }
   })
@@ -156,7 +157,7 @@ app.whenReady().then(async () => {
         .map((e) => e.name)
       return providers
     } catch (err) {
-      console.error('providers:list error', err)
+      logger.error('providers:list error', err)
       return []
     }
   })
@@ -186,19 +187,19 @@ app.whenReady().then(async () => {
         try {
           const content = readFileSync(indexPath, 'utf-8')
           const list: any[] = JSON.parse(content)
-          console.log(`providers:checkGame checking provider ${name} with ${list.length} items`)
+          logger.debug(`providers:checkGame checking provider ${name} with ${list.length} items`)
           const item = list.find((it: any) => normalizeText(it?.title) === target)
           if (item) {
             matches.push({ provider: name, item })
           }
         } catch (err) {
-          console.error(`providers:checkGame read ${indexPath} error`, err)
+          logger.error(`providers:checkGame read ${indexPath} error`, err)
         }
       }
 
       return { providers: matches }
     } catch (err) {
-      console.error('providers:checkGame error', err)
+      logger.error('providers:checkGame error', err)
       return { providers: [] }
     }
   })
@@ -223,9 +224,9 @@ app.whenReady().then(async () => {
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
         const safeTitle = (gameTitle || 'game').replace(/[<>:"/\\|?*]+/g, '_')
 
-        console.log('Getting real download URL from:', downloadUrl)
+        logger.debug('Getting real download URL from:', downloadUrl)
         const realDownloadUrl = await DatanodesApi.getDownloadUrl(downloadUrl)
-        console.log('Real download URL:', realDownloadUrl)
+        logger.debug('Real download URL:', realDownloadUrl)
 
         const targetRoot = join(baseDir, safeTitle)
         const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
@@ -300,7 +301,7 @@ app.whenReady().then(async () => {
                   try {
                     await unlink(filePath)
                   } catch (cleanupErr) {
-                    console.warn('Failed to delete archive after extraction:', cleanupErr)
+                    logger.warn('Failed to delete archive after extraction:', cleanupErr)
                   }
 
                   webContents.send('download:complete', {
@@ -312,7 +313,7 @@ app.whenReady().then(async () => {
                   })
                   resolve({ success: true, filePath })
                 } catch (extractErr: any) {
-                  console.error('Extraction failed:', extractErr)
+                  logger.error('Extraction failed:', extractErr)
                   cleanup()
                   webContents.send('download:error', {
                     url: downloadUrl,
@@ -365,7 +366,7 @@ app.whenReady().then(async () => {
           })
         })
       } catch (err: any) {
-        console.error('download:start error', err)
+        logger.error('download:start error', err)
         webContents.send('download:error', {
           url: downloadUrl,
           error: err.message,
@@ -387,7 +388,7 @@ app.whenReady().then(async () => {
         active?.request?.destroy(new Error('Download cancelled'))
         active?.fileStream?.destroy(new Error('Download cancelled'))
       } catch (err) {
-        console.warn('download:cancel cleanup warning', err)
+        logger.warn('download:cancel cleanup warning', err)
       }
 
       return true
