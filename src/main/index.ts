@@ -414,6 +414,20 @@ app.whenReady().then(async () => {
     }
   })
 
+  // Logger handlers
+  ipcMain.on('logger:log', (_event, args: any[]) => {
+    logger.log(...args)
+  })
+  ipcMain.on('logger:error', (_event, args: any[]) => {
+    logger.error(...args)
+  })
+  ipcMain.on('logger:warn', (_event, args: any[]) => {
+    logger.warn(...args)
+  })
+  ipcMain.on('logger:info', (_event, args: any[]) => {
+    logger.info(...args)
+  })
+
   createWindow()
 
   // Initialize updater service after window is created

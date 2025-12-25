@@ -1,3 +1,4 @@
+import logger from '@renderer/lib/logger'
 import { AlertCircle, Home, RotateCcw } from 'lucide-react'
 import { useNavigate, useRouteError } from 'react-router'
 import { Button } from './button'
@@ -7,7 +8,7 @@ export function ErrorBoundary(): React.JSX.Element {
   const error = useRouteError() as Error
   const navigate = useNavigate()
 
-  console.error('Route error:', error)
+  logger.error('Route error:', error)
 
   return (
     <div className="h-screen flex items-center justify-center p-4 bg-background">

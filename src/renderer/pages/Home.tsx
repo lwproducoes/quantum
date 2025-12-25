@@ -1,5 +1,6 @@
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { fetchGames, getDownloadFolder } from '@renderer/lib/api'
+import logger from '@renderer/lib/logger'
 import { Download, LoaderCircle, Settings } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router'
@@ -113,7 +114,7 @@ function Home(): React.JSX.Element {
       error: string
       kind?: 'base' | 'update' | 'dlc'
     }) => {
-      console.error('Download error:', data.error)
+      logger.error('Download error:', data.error)
       setDownloads((prev) =>
         prev.map((d) => {
           const part = d.parts.find((p) => p.url === data.url)
@@ -216,7 +217,7 @@ function Home(): React.JSX.Element {
         const res = await window.api.checkGameProviders(selectedGame.title)
         setProviderMatches(res?.providers ?? [])
       } catch (err) {
-        console.error('Error checking providers:', err)
+        logger.error('Error checking providers:', err)
         setProviderMatches([])
       } finally {
         setProvidersLoading(false)
@@ -241,7 +242,7 @@ function Home(): React.JSX.Element {
     }
 
     const downloadId = `${downloadUrl}-${Date.now()}`
-    console.log('Starting download for:', game.title, 'from', downloadUrl)
+    logger.log('Starting download for:', game.title, 'from', downloadUrl)
 
     const parts: DownloadPart[] = [
       {
@@ -302,7 +303,7 @@ function Home(): React.JSX.Element {
         try {
           await window.api.startDownload(part.url, game.title, part.kind)
         } catch (err: any) {
-          console.error('Failed to start download:', err)
+          logger.error('Failed to start download:', err)
           setDownloads((prev) =>
             prev.map((d) =>
               d.id === downloadId
@@ -328,7 +329,7 @@ function Home(): React.JSX.Element {
         try {
           await window.api.cancelDownload(part.url, part.kind)
         } catch (err) {
-          console.error('Failed to cancel download', err)
+          logger.error('Failed to cancel download', err)
         }
       })
     )
