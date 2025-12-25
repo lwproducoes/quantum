@@ -36,20 +36,20 @@ export function UpdaterNotification() {
 
       switch (data.event) {
         case 'checking-for-update':
-          logger.log('Verificando atualizações...')
+          logger.log('Checking for updates...')
           break
 
         case 'update-available':
           setUpdateAvailable(true)
           setUpdateInfo(data.data)
           setShowDialog(true)
-          toast.info(`Nova versão disponível: ${data.data?.version || 'unknown'}`, {
+          toast.info(`New version available: ${data.data?.version || 'unknown'}`, {
             autoClose: 5000
           })
           break
 
         case 'update-not-available':
-          logger.log('Nenhuma atualização disponível')
+          logger.log('No update available')
           break
 
         case 'update-download-progress': {
@@ -63,14 +63,14 @@ export function UpdaterNotification() {
           setDownloading(false)
           setUpdateDownloaded(true)
           setShowDialog(true)
-          toast.success('Atualização baixada! Reinicie para instalar.', {
+          toast.success('Update downloaded! Restart to install.', {
             autoClose: false
           })
           break
 
         case 'update-error':
           setDownloading(false)
-          toast.error(`Erro ao atualizar: ${data.data?.message || 'Erro desconhecido'}`, {
+          toast.error(`Error updating: ${data.data?.message || 'Unknown error'}`, {
             autoClose: 5000
           })
           break
@@ -87,7 +87,7 @@ export function UpdaterNotification() {
   const handleDownloadUpdate = async () => {
     setShowDialog(false)
     setDownloading(true)
-    toast.info('Baixando atualização...', { autoClose: 2000 })
+    toast.info('Downloading update...', { autoClose: 2000 })
     await window.api.downloadUpdate()
   }
 
@@ -109,9 +109,9 @@ export function UpdaterNotification() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Atualização Disponível</DialogTitle>
+            <DialogTitle>Update Available</DialogTitle>
             <DialogDescription>
-              Uma nova versão ({updateInfo?.version}) está disponível. Deseja baixar agora?
+              A new version ({updateInfo?.version}) is available. Do you want to download now?
               {updateInfo?.releaseNotes && (
                 <div className="mt-4 max-h-48 overflow-y-auto rounded bg-gray-100 p-3 text-sm dark:bg-gray-800">
                   <p className="whitespace-pre-wrap">{updateInfo.releaseNotes}</p>
@@ -121,9 +121,9 @@ export function UpdaterNotification() {
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={handleDismiss}>
-              Mais tarde
+              Later
             </Button>
-            <Button onClick={handleDownloadUpdate}>Baixar atualização</Button>
+            <Button onClick={handleDownloadUpdate}>Download Update</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -132,17 +132,17 @@ export function UpdaterNotification() {
       <Dialog open={showDialog && updateDownloaded} onOpenChange={setShowDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Atualização Pronta</DialogTitle>
+            <DialogTitle>Update Ready</DialogTitle>
             <DialogDescription>
-              A atualização foi baixada com sucesso. O aplicativo será reiniciado para concluir a
-              instalação.
+              The update has been downloaded successfully. The application will restart to complete
+              the installation.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDialog(false)}>
-              Instalar depois
+              Install Later
             </Button>
-            <Button onClick={handleInstallUpdate}>Reiniciar e instalar</Button>
+            <Button onClick={handleInstallUpdate}>Restart and Install</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -150,7 +150,7 @@ export function UpdaterNotification() {
       {/* Download Progress Toast */}
       {downloading && downloadProgress > 0 && (
         <div className="fixed bottom-4 right-4 rounded-lg bg-white p-4 shadow-lg dark:bg-gray-800">
-          <p className="mb-2 text-sm font-medium">Baixando atualização...</p>
+          <p className="mb-2 text-sm font-medium">Downloading update...</p>
           <div className="h-2 w-64 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
             <div
               className="h-full bg-blue-500 transition-all duration-300"

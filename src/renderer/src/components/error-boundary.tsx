@@ -16,7 +16,7 @@ export function ErrorBoundary(): React.JSX.Element {
         <CardContent className="p-6 space-y-4">
           <div className="flex items-center gap-3 text-destructive">
             <AlertCircle size={32} />
-            <CardTitle className="text-xl">Algo deu errado</CardTitle>
+            <CardTitle className="text-xl">Something went wrong</CardTitle>
           </div>
 
           <div className="space-y-2">
@@ -31,11 +31,11 @@ export function ErrorBoundary(): React.JSX.Element {
           <div className="flex gap-2">
             <Button onClick={() => window.location.reload()} className="flex-1 gap-2">
               <RotateCcw size={16} />
-              Recarregar
+              Reload
             </Button>
             <Button onClick={() => navigate('/')} variant="outline" className="flex-1 gap-2">
               <Home size={16} />
-              Início
+              Home
             </Button>
           </div>
         </CardContent>
