@@ -93,10 +93,12 @@ function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.E
                       <div className="text-xs text-muted-foreground">
                         {download.progress.toFixed(1)}%
                       </div>
-                      <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>Speed: {formatSpeed(download.speedBytesPerSecond)}</span>
-                        <span>ETA: {formatDuration(download.etaSeconds)}</span>
-                      </div>
+                      {download.status === 'downloading' && (
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Speed: {formatSpeed(download.speedBytesPerSecond)}</span>
+                          <span>ETA: {formatDuration(download.etaSeconds)}</span>
+                        </div>
+                      )}
 
                       <div className="space-y-1 text-xs text-muted-foreground">
                         {download.parts.map((part) => (
