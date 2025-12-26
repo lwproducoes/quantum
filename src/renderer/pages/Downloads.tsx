@@ -9,13 +9,32 @@ interface DownloadsProps {
   onRemoveDownload: (id: string) => void | Promise<void>
 }
 
+function formatBytes(value: number, units: string[]): string {
+  if (!Number.isFinite(value) || value < 0) return `0 ${units[0]}`
+  if (value === 0) return `0 ${units[0]}`
+  const idx = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1)
+  const normalized = value / 1024 ** idx
+  const digits = normalized >= 100 ? 0 : normalized >= 10 ? 1 : 2
+  return `${normalized.toFixed(digits)} ${units[idx]}`
+}
+
 function formatSize(bytes: number): string {
-  if (!bytes || bytes < 0) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB', 'TB']
-  const idx = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  const value = bytes / 1024 ** idx
-  const digits = value >= 100 ? 0 : value >= 10 ? 1 : 2
-  return `${value.toFixed(digits)} ${units[idx]}`
+  return formatBytes(bytes, ['B', 'KB', 'MB', 'GB', 'TB'])
+}
+
+function formatSpeed(bytesPerSecond?: number): string {
+  return formatBytes(bytesPerSecond ?? 0, ['B/s', 'KB/s', 'MB/s', 'GB/s', 'TB/s'])
+}
+
+function formatDuration(seconds?: number): string {
+  if (seconds === undefined || Number.isNaN(seconds) || seconds < 0) return '—'
+  if (seconds < 1) return '<1s'
+  const hrs = Math.floor(seconds / 3600)
+  const mins = Math.floor((seconds % 3600) / 60)
+  const secs = Math.floor(seconds % 60)
+  if (hrs > 0) return `${hrs}h ${mins}m`
+  if (mins > 0) return `${mins}m ${secs}s`
+  return `${secs}s`
 }
 
 function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.Element {
@@ -73,6 +92,12 @@ function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.E
                       <div className="text-xs text-muted-foreground">
                         {download.progress.toFixed(1)}%
                       </div>
+                      {download.status === 'downloading' && (
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Speed: {formatSpeed(download.speedBytesPerSecond)}</span>
+                          <span>ETA: {formatDuration(download.etaSeconds)}</span>
+                        </div>
+                      )}
 
                       <div className="space-y-1 text-xs text-muted-foreground">
                         {download.parts.map((part) => (

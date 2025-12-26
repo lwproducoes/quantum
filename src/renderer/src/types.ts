@@ -22,6 +22,9 @@ export interface DownloadPart {
   progress: number
   downloadedBytes: number
   totalBytes: number
+  speedBytesPerSecond?: number
+  etaSeconds?: number
+  lastUpdatedAt?: number
 }
 
 export interface DownloadItem {
@@ -32,6 +35,8 @@ export interface DownloadItem {
   downloadedBytes: number
   totalBytes: number
   parts: DownloadPart[]
+  speedBytesPerSecond?: number
+  etaSeconds?: number
 }
 
 // Cache types
