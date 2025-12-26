@@ -26,9 +26,9 @@
   {
     "title": "Cavern of Dreams eShop 1.0",
     "data": {
-      "download": "Cavern of Dreams Upd v1.1.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Cavern of Dreams Upd v1.1.nsp"
     }
   },
   {
@@ -484,7 +484,7 @@
     "data": {
       "download": "Contra Operation Galuga.nsp",
       "dlc": "Contra Operation Galuga DLC Early Purchase Bonus.nsp",
-      "update": null
+      "update": "Contra Operation Galugav131072.nsp"
     }
   },
   {
@@ -506,9 +506,9 @@
   {
     "title": "SEKIMORI GAMI – SAIEN 1.0.2",
     "data": {
-      "download": "Sekimori Gami Saien v131072.nsp",
+      "download": "Sekimori Gami Saien.nsp",
       "dlc": null,
-      "update": null
+      "update": "Sekimori Gami Saien v131072.nsp"
     }
   },
   {
@@ -578,7 +578,7 @@
   {
     "title": "Axiom Verge eShop 1.0.5",
     "data": {
-      "download": "Axiom Verge Upd v1.0.5.nsp",
+      "download": "Axiom Verge.xci",
       "dlc": null,
       "update": "Axiom Verge Upd v1.0.5.nsp"
     }
@@ -594,15 +594,15 @@
   {
     "title": "Crypt of the NecroDancer eShop 1.0.5",
     "data": {
-      "download": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda v458752.nsp",
+      "download": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda.nsp",
       "dlc": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda 4 DLCs.rar",
-      "update": "Crypt of the Necrodancer Upd v1.0.5.nsp"
+      "update": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda v458752.nsp"
     }
   },
   {
     "title": "Enter the Gungeon eShop 2.1.92",
     "data": {
-      "download": "Enter the Gungeon Upd v2.1.92.rar",
+      "download": "Enter the Gungeon.nsp",
       "dlc": null,
       "update": "Enter the Gungeon Upd v2.1.92.rar"
     }
@@ -618,9 +618,9 @@
   {
     "title": "Iconoclasts 1.15p",
     "data": {
-      "download": "Iconoclasts Upd v1.15.nsp",
+      "download": "Iconoclasts.nsp",
       "dlc": null,
-      "update": null
+      "update": "Iconoclasts Upd v1.15.nsp"
     }
   },
   {
@@ -642,9 +642,9 @@
   {
     "title": "Katamari Damacy REROLL 1.2",
     "data": {
-      "download": "Katamari Damacy REROLL Upd v1.2.nsp",
+      "download": "Katamari Damacy REROLL.xci",
       "dlc": null,
-      "update": null
+      "update": "Katamari Damacy REROLL Upd v1.2.nsp"
     }
   },
   {
@@ -698,9 +698,9 @@
   {
     "title": "Shovel Knight Treasure Trove 4.2",
     "data": {
-      "download": "Shovel Knight Treasure Trove Upd v4.2.nsp",
+      "download": "Shovel Knight Treasure Trove.xci",
       "dlc": null,
-      "update": null
+      "update": "Shovel Knight Treasure Trove Upd v4.2.nsp"
     }
   },
   {
@@ -722,9 +722,9 @@
   {
     "title": "Morbid - The Lords of Ire 1.02",
     "data": {
-      "download": "Morbid The Lords of Ire v131072.nsp",
+      "download": "Morbid The Lords of Ire.nsp",
       "dlc": null,
-      "update": null
+      "update": "Morbid The Lords of Ire v131072.nsp"
     }
   },
   {
@@ -762,17 +762,17 @@
   {
     "title": "DUSK 1.01",
     "data": {
-      "download": "Dusk v1.01.nsp",
+      "download": "Dusk.nsp",
       "dlc": null,
-      "update": null
+      "update": "Dusk v1.01.nsp"
     }
   },
   {
     "title": "FAST RMX 1.3",
     "data": {
-      "download": "Fast.rmx v262144.nsp",
+      "download": "Fast.rmx.nsp",
       "dlc": null,
-      "update": null
+      "update": "Fast.rmx v262144.nsp"
     }
   },
   {
@@ -802,9 +802,9 @@
   {
     "title": "Persona 4 Golden eShop 1.0.1",
     "data": {
-      "download": "Persona 4 Golden v65536.nsp",
+      "download": "Persona 4 Golden.nsp",
       "dlc": null,
-      "update": null
+      "update": "Persona 4 Golden v65536.nsp"
     }
   },
   {
@@ -834,9 +834,9 @@
   {
     "title": "Super Bomberman R 1.0",
     "data": {
-      "download": "Super Bomberman R v327680.nsp",
+      "download": "Super Bomberman R.xci",
       "dlc": null,
-      "update": null
+      "update": "Super Bomberman R v327680.nsp"
     }
   },
   {
@@ -850,9 +850,9 @@
   {
     "title": "Pepper Grinder 1.0",
     "data": {
-      "download": "Pepper Grinder v262144.nsp",
+      "download": "Pepper Grinder.nsp",
       "dlc": null,
-      "update": null
+      "update": "Pepper Grinder v262144.nsp"
     }
   },
   {
@@ -866,9 +866,9 @@
   {
     "title": "Laika - Aged Through Blood 1.0.2.2",
     "data": {
-      "download": "Laika Aged Through Blood v131072.nsp",
+      "download": "Laika Aged Through Blood.nsp",
       "dlc": null,
-      "update": null
+      "update": "Laika Aged Through Blood v131072.nsp"
     }
   },
   {
@@ -882,17 +882,17 @@
   {
     "title": "Endless Ocean Luminous 1.0.1",
     "data": {
-      "download": "Endless Ocean Luminous v65536.nsp",
+      "download": "Endless Ocean Luminous.nsp",
       "dlc": null,
-      "update": null
+      "update": "Endless Ocean Luminous v65536.nsp"
     }
   },
   {
     "title": "Harvest Moon: One World 1.6.0",
     "data": {
-      "download": "Harvest Moon One World v262144.nsp",
+      "download": "Harvest Moon One World.nsp",
       "dlc": "Harvest Moon One World 4 DLC.rar",
-      "update": null
+      "update": "Harvest Moon One World v262144.nsp"
     }
   },
   {
@@ -914,9 +914,9 @@
   {
     "title": "Portal 1.0.3",
     "data": {
-      "download": "Portal v196608.nsp",
+      "download": "Portal.nsp",
       "dlc": null,
-      "update": null
+      "update": "Portal v196608.nsp"
     }
   },
   {
@@ -986,17 +986,17 @@
   {
     "title": "Final Fantasy XII The Zodiac Age 1.1.0",
     "data": {
-      "download": "Final Fantasy XII The Zodiac Age v65536.nsp",
+      "download": "Final Fantasy XII The Zodiac Age.nsp",
       "dlc": null,
-      "update": null
+      "update": "Final Fantasy XII The Zodiac Age v65536.nsp"
     }
   },
   {
     "title": "Chained Echoes 1.31",
     "data": {
-      "download": "Chained Echoes v1.31.nsp",
+      "download": "Chained Echoes.nsp",
       "dlc": null,
-      "update": null
+      "update": "Chained Echoes v1.31.nsp"
     }
   },
   {
@@ -1010,9 +1010,9 @@
   {
     "title": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda 1.5.0",
     "data": {
-      "download": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda v458752.nsp",
+      "download": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda.nsp",
       "dlc": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda 4 DLCs.rar",
-      "update": null
+      "update": "Cadence of Hyrule Crypt of the NecroDancer Featuring The Legend of Zelda v458752.nsp"
     }
   },
   {
@@ -1034,17 +1034,17 @@
   {
     "title": "Biomutant 1.0.1",
     "data": {
-      "download": "Biomutant v131072.nsp",
+      "download": "Biomutant.nsp",
       "dlc": null,
-      "update": null
+      "update": "Biomutant v131072.nsp"
     }
   },
   {
     "title": "Eiyuden Chronicle Hundred Heroes 1.0",
     "data": {
-      "download": "Eiyuden Chronicle Hundred Heroes v262144.nsp",
+      "download": "Eiyuden Chronicle Hundred Heroes.xci",
       "dlc": "Eiyuden Chronicle Hundred Heroes Multi8 HQ Makeover Pack Dlc.nsp",
-      "update": null
+      "update": "Eiyuden Chronicle Hundred Heroes v262144.nsp"
     }
   },
   {
@@ -1060,7 +1060,7 @@
     "data": {
       "download": "Octopath Traveler 2.xci",
       "dlc": null,
-      "update": null
+      "update": "Octopath Traveler v327680.nsp"
     }
   },
   {
@@ -1074,9 +1074,9 @@
   {
     "title": "Streets of Rage 4 1.0.9",
     "data": {
-      "download": "Streets of Rage 4 v458752.nsp",
+      "download": "Streets of Rage 4.nsp",
       "dlc": "Streets Of Rage 4 Mr X Nightmare DLC.nsp",
-      "update": null
+      "update": "Streets of Rage 4 v458752.nsp"
     }
   },
   {
@@ -1092,7 +1092,7 @@
     "data": {
       "download": "Fire Emblem Warriors - Three Hopes (Japan).zip",
       "dlc": "Fire Emblem Warriors Three Hopes Dlc Digital Purchase Bonus Owl Feathers.nsp",
-      "update": null
+      "update": "Fire Emblem Warriors Three Hopes v131072.nsp"
     }
   },
   {
@@ -1426,17 +1426,17 @@
   {
     "title": "Vampire Survivors eShop 1.10.102",
     "data": {
-      "download": "Vampire Survivors v1.11.111.nsp",
+      "download": "Vampire Survivors.xci",
       "dlc": "Vampire Survivors 4 Dlc for v524288.rar",
-      "update": "Vampire Survivors v1.11.111.nsp"
+      "update": "Vampire Survivors 4 Dlc for v524288.rar"
     }
   },
   {
     "title": "Castlevania Advance Collection 1.0",
     "data": {
-      "download": "Castlevania Advance Collection [0100B33014710000][v0].nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Castlevania Advance Collection [0100B33014710000][v0].nsp"
     }
   },
   {
@@ -1466,33 +1466,33 @@
   {
     "title": "GRIME Definitive Edition eShop 1.3.7",
     "data": {
-      "download": "Grime Definitive Edition v327680.nsp",
+      "download": "Grime Definitive Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "Grime Definitive Edition v327680.nsp"
     }
   },
   {
     "title": "Celeste 1.4.1.1",
     "data": {
-      "download": "Celeste [01002B30028F6800][v589824].nsp",
+      "download": "Celeste.nsp",
       "dlc": null,
-      "update": null
+      "update": "Celeste [01002B30028F6800][v589824].nsp"
     }
   },
   {
     "title": "Slay the Spire 2.3.1",
     "data": {
-      "download": "Slay the Spire v524288.nsp",
+      "download": "Slay the Spire.nsp",
       "dlc": null,
-      "update": null
+      "update": "Slay the Spire v524288.nsp"
     }
   },
   {
     "title": "Hollow Knight 1.4.3.2b",
     "data": {
-      "download": "Hollow Knight v262144.nsp",
+      "download": "Hollow Knight.xci",
       "dlc": null,
-      "update": null
+      "update": "Hollow Knight v262144.nsp"
     }
   },
   {
@@ -1524,7 +1524,7 @@
     "data": {
       "download": "Gi Joe Operation Blackout (USA).zip",
       "dlc": "Gi Joe Operation Blackout 3 DLC.rar",
-      "update": null
+      "update": "Gi Joe Operation Blackout v327680.nsp"
     }
   },
   {
@@ -1564,15 +1564,15 @@
     "data": {
       "download": "Saga Emerald Beyond (JP).xci",
       "dlc": "Saga Emerald Beyond Pre-order Bonus DLC.nsp",
-      "update": null
+      "update": "Saga Emerald Beyond Upd v1.01 (JP).nsp"
     }
   },
   {
     "title": "Metal Slug Attack Reloaded 1.0.1",
     "data": {
-      "download": "Metal Slug Attack Reloaded v65536.nsp",
+      "download": "Metal Slug Attack Reloaded.nsp",
       "dlc": null,
-      "update": null
+      "update": "Metal Slug Attack Reloaded v65536.nsp"
     }
   },
   {
@@ -1594,9 +1594,9 @@
   {
     "title": "Skullgirls 2nd Encore 1.0.11",
     "data": {
-      "download": "Skullgirls 2nd Encore v720896.nsp",
+      "download": null,
       "dlc": "Skullgirls 2nd Encore 5 DLCs.rar",
-      "update": null
+      "update": "Skullgirls 2nd Encore v720896.nsp"
     }
   },
   {
@@ -1618,9 +1618,9 @@
   {
     "title": "SPYxANYA Operation Memories 1.0.1",
     "data": {
-      "download": "Spy x Anya Operation Memories v65536.nsp",
+      "download": "Spy x Anya Operation Memories.nsp",
       "dlc": null,
-      "update": null
+      "update": "Spy x Anya Operation Memories v65536.nsp"
     }
   },
   {
@@ -1658,25 +1658,25 @@
   {
     "title": "Moving Out 2 eShop 1.3.315",
     "data": {
-      "download": "Moving Out 2 v327680.nsp",
+      "download": "Moving Out 2.nsp",
       "dlc": "Moving Out 2 DLC FARTastic Four Pack.nsp",
-      "update": null
+      "update": "Moving Out 2 v327680.nsp"
     }
   },
   {
     "title": "No More Heroes eShop",
     "data": {
-      "download": "No More Heroes 2 Desperate Struggle v196608.nsp",
+      "download": "No More Heroes 2 Desperate Struggle.nsp",
       "dlc": null,
-      "update": "No More Heroes 3 Upd v1.1.1.nsp"
+      "update": "No More Heroes 2 Desperate Struggle v196608.nsp"
     }
   },
   {
     "title": "No More Heroes 2: Desperate Struggle eShop 1.2.0",
     "data": {
-      "download": "No More Heroes 2 Desperate Struggle v196608.nsp",
+      "download": "No More Heroes 2 Desperate Struggle.nsp",
       "dlc": null,
-      "update": null
+      "update": "No More Heroes 2 Desperate Struggle v196608.nsp"
     }
   },
   {
@@ -1714,9 +1714,9 @@
   {
     "title": "The Sinking City 1.2.0",
     "data": {
-      "download": "The Sinking City v131072.nsp",
+      "download": "The Sinking City.nsp",
       "dlc": "The Sinking City DLC.rar",
-      "update": null
+      "update": "The Sinking City v131072.nsp"
     }
   },
   {
@@ -1730,9 +1730,9 @@
   {
     "title": "Ghostrunner 1.8.3",
     "data": {
-      "download": "Ghostrunner v524288.nsp",
+      "download": "Ghostrunner.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ghostrunner v524288.nsp"
     }
   },
   {
@@ -1754,9 +1754,9 @@
   {
     "title": "Taboo Trial 0.1.1",
     "data": {
-      "download": "Taboo Trial v65536.nsp",
+      "download": "Taboo Trial.nsp",
       "dlc": null,
-      "update": null
+      "update": "Taboo Trial v65536.nsp"
     }
   },
   {
@@ -1794,9 +1794,9 @@
   {
     "title": "Sniper Elite 4 1.0.3",
     "data": {
-      "download": "Sniper Elite 4 v196608.nsp",
+      "download": "Sniper Elite 4.nsp",
       "dlc": "Sniper Elite 4 13 DLC.rar",
-      "update": null
+      "update": "Sniper Elite 4 v196608.nsp"
     }
   },
   {
@@ -1810,9 +1810,9 @@
   {
     "title": "Kenka Bancho Otome Double Pack 1.0.2",
     "data": {
-      "download": "Kenka Bancho Otome Double Pack v131072.nsp",
+      "download": "Kenka Bancho Otome Double Pack.xci",
       "dlc": null,
-      "update": null
+      "update": "Kenka Bancho Otome Double Pack v131072.nsp"
     }
   },
   {
@@ -1842,7 +1842,7 @@
   {
     "title": "Broken Roads 1.2.8522",
     "data": {
-      "download": "Broken Roads Upd v1.2.11059.nsp",
+      "download": "Broken Roads.nsp",
       "dlc": null,
       "update": "Broken Roads Upd v1.2.11059.nsp"
     }
@@ -1850,9 +1850,9 @@
   {
     "title": "Hitman: Blood Money — Reprisal 1.2_71586",
     "data": {
-      "download": "Hitman Blood Money Reprisal v65536.nsp",
+      "download": "Hitman Blood Money Reprisal.nsp",
       "dlc": null,
-      "update": null
+      "update": "Hitman Blood Money Reprisal v65536.nsp"
     }
   },
   {
@@ -1866,9 +1866,9 @@
   {
     "title": "Yu-Gi-Oh! Master Duel 1.1.1",
     "data": {
-      "download": "Yugi Oh Master Duel v196608 US.nsp",
+      "download": "Yugi Oh Master Duel.nsp",
       "dlc": null,
-      "update": null
+      "update": "Yugi Oh Master Duel v196608 US.nsp"
     }
   },
   {
@@ -1876,7 +1876,7 @@
     "data": {
       "download": "Ys Origin Asia.zip",
       "dlc": null,
-      "update": null
+      "update": "Ys Origin v65536.nsp"
     }
   },
   {
@@ -1922,17 +1922,17 @@
   {
     "title": "Oceanhorn – Monster of Uncharted Seas 1.0.1",
     "data": {
-      "download": "Oceanhorn Monster of Uncharted Seas v65536.nsp",
+      "download": "Oceanhorn Monster of Uncharted Seas.nsp",
       "dlc": null,
-      "update": null
+      "update": "Oceanhorn Monster of Uncharted Seas v65536.nsp"
     }
   },
   {
     "title": "Oceanhorn 2: Knights of the Lost Realm 1.2",
     "data": {
-      "download": "Oceanhorn 2 Knights of the Lost Realm v131072.nsp",
+      "download": "Oceanhorn 2 Knights of the Lost Realm.nsp",
       "dlc": null,
-      "update": null
+      "update": "Oceanhorn 2 Knights of the Lost Realm v131072.nsp"
     }
   },
   {
@@ -1954,9 +1954,9 @@
   {
     "title": "Tomba! Special Edition 1.0.2",
     "data": {
-      "download": "Tomba Special Edition v65536.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Tomba Special Edition v65536.nsp"
     }
   },
   {
@@ -1978,9 +1978,9 @@
   {
     "title": "Shadow of the Ninja: Reborn 1.0.1",
     "data": {
-      "download": "Shadow of the Ninja Reborn v65536.nsp",
+      "download": "Shadow of the Ninja Reborn.nsp",
       "dlc": null,
-      "update": null
+      "update": "Shadow of the Ninja Reborn v65536.nsp"
     }
   },
   {
@@ -2018,7 +2018,7 @@
   {
     "title": "Gimmick! 2 1.2.0",
     "data": {
-      "download": "Gimmick 2 Upd v1.3.1.nsp",
+      "download": "Gimmick 2.nsp",
       "dlc": null,
       "update": "Gimmick 2 Upd v1.3.1.nsp"
     }
@@ -2026,9 +2026,9 @@
   {
     "title": "Badminton Time 1.2",
     "data": {
-      "download": "Badminton Time v1.3.nsp",
+      "download": "Badminton Time.nsp",
       "dlc": null,
-      "update": null
+      "update": "Badminton Time v1.3.nsp"
     }
   },
   {
@@ -2058,9 +2058,9 @@
   {
     "title": "Caravan SandWitch 1.0.2",
     "data": {
-      "download": "Caravan SandWitch v131072.nsp",
+      "download": "Caravan SandWitch.nsp",
       "dlc": null,
-      "update": null
+      "update": "Caravan SandWitch v131072.nsp"
     }
   },
   {
@@ -2076,15 +2076,15 @@
     "data": {
       "download": "That Time I Got Reincarnated as a Slime ISEKAI Chronicles Asia.xci",
       "dlc": "That Time I Got Reincarnated as a Slime ISEKAI Chronicles v1.0.3 DLC.rar",
-      "update": "That Time I Got Reincarnated as a Slime ISEKAI Chronicles v1.0.3 DLC.rar"
+      "update": "That Time I Got Reincarnated as a Slime ISEKAI Chronicles JPN v65536.nsp"
     }
   },
   {
     "title": "WitchSpring R 1.0.4",
     "data": {
-      "download": "WitchSpring R v131072.nsp",
+      "download": "WitchSpring R.nsp",
       "dlc": "WitchSpring R DLCs.rar",
-      "update": null
+      "update": "WitchSpring R v131072.nsp"
     }
   },
   {
@@ -2098,9 +2098,9 @@
   {
     "title": "The Karate Kid Street Rumble 1.1.6",
     "data": {
-      "download": "The Karate Kid Street Rumble v65536.nsp",
+      "download": "The Karate Kid Street Rumble.nsp",
       "dlc": null,
-      "update": null
+      "update": "The Karate Kid Street Rumble v65536.nsp"
     }
   },
   {
@@ -2114,7 +2114,7 @@
   {
     "title": "Looney Tunes: Wacky World of Sports 0.1.0.27382",
     "data": {
-      "download": "Looney Tunes Wacky World of Sports Upd v0.1.0.27382.nsp",
+      "download": "Looney Tunes Wacky World of Sports.nsp",
       "dlc": "Looney Tunes Wacky World of Sports dlc.rar",
       "update": "Looney Tunes Wacky World of Sports Upd v0.1.0.27382.nsp"
     }
@@ -2154,7 +2154,7 @@
   {
     "title": "AEW: Fight Forever 1.5.0",
     "data": {
-      "download": "Aew Fight Forever Upd v1.5.0.nsp",
+      "download": "Aew Fight Forever.xci",
       "dlc": "Aew Fight Forever DLCs.rar",
       "update": "Aew Fight Forever Upd v1.5.0.nsp"
     }
@@ -2202,9 +2202,9 @@
   {
     "title": "AnShi 1.4",
     "data": {
-      "download": "Anshi Upd v1.4.nsp",
+      "download": "Anshi.nsp",
       "dlc": null,
-      "update": null
+      "update": "Anshi Upd v1.4.nsp"
     }
   },
   {
@@ -2226,9 +2226,9 @@
   {
     "title": "Aokana Four Rhythms Across the Blue 1.0.2",
     "data": {
-      "download": "Aokana Four Rhythms Across the Blue Upd v1.02.nsp",
+      "download": "Aokana Four Rhythms Across the Blue.xci",
       "dlc": null,
-      "update": null
+      "update": "Aokana Four Rhythms Across the Blue Upd v1.02.nsp"
     }
   },
   {
@@ -2292,7 +2292,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Ys X Nordics Upd v1.0.3.nsp"
     }
   },
   {
@@ -2338,7 +2338,7 @@
   {
     "title": "Fae Farm eShop 3.2.0",
     "data": {
-      "download": "Fae Farm Upd v3.2.0.nsp",
+      "download": "Fae Farm.xci",
       "dlc": null,
       "update": "Fae Farm Upd v3.2.0.nsp"
     }
@@ -2354,9 +2354,9 @@
   {
     "title": "Steamworld Heist II 1.5.1",
     "data": {
-      "download": "SteamWorld Heist II v65536.nsp",
+      "download": "SteamWorld Heist II.nsp",
       "dlc": null,
-      "update": null
+      "update": "SteamWorld Heist II v65536.nsp"
     }
   },
   {
@@ -2370,9 +2370,9 @@
   {
     "title": "Moonglow Bay 1.4",
     "data": {
-      "download": "Moonglow Bay Upd v1.4.nsp",
+      "download": "Moonglow Bay.nsp",
       "dlc": null,
-      "update": null
+      "update": "Moonglow Bay Upd v1.4.nsp"
     }
   },
   {
@@ -2418,7 +2418,7 @@
   {
     "title": "Farmagia 1.0.1",
     "data": {
-      "download": "Farmagia v1.0.1.nsp",
+      "download": "Farmagia.xci",
       "dlc": null,
       "update": "Farmagia v1.0.1.nsp"
     }
@@ -2442,7 +2442,7 @@
   {
     "title": "Phantom Spark 1.0.1",
     "data": {
-      "download": "Phantom Spark v1.0.1.nsp",
+      "download": "Phantom Spark.nsp",
       "dlc": null,
       "update": "Phantom Spark v1.0.1.nsp"
     }
@@ -2450,7 +2450,7 @@
   {
     "title": "Mars 2120 1.0.5",
     "data": {
-      "download": "Mars 2120 v1.0.5.nsp",
+      "download": "Mars 2120.nsp",
       "dlc": null,
       "update": "Mars 2120 v1.0.5.nsp"
     }
@@ -2458,7 +2458,7 @@
   {
     "title": "Selfloss 1.0.4",
     "data": {
-      "download": "Selfloss v1.0.4.nsp",
+      "download": "Selfloss.nsp",
       "dlc": null,
       "update": "Selfloss v1.0.4.nsp"
     }
@@ -2482,9 +2482,9 @@
   {
     "title": "Bayonetta 2 1.2",
     "data": {
-      "download": "Bayonetta 2 v65536.nsp",
+      "download": "Bayonetta 2.xci",
       "dlc": null,
-      "update": null
+      "update": "Bayonetta 2 v65536.nsp"
     }
   },
   {
@@ -2514,7 +2514,7 @@
   {
     "title": "Broken Sword - Shadow of the Templars: Reforged 1.1.5",
     "data": {
-      "download": "Broken Sword Shadow of the Templars Reforged v1.1.5.nsp",
+      "download": "Broken Sword Shadow of the Templars Reforged.nsp",
       "dlc": null,
       "update": "Broken Sword Shadow of the Templars Reforged v1.1.5.nsp"
     }
@@ -2522,7 +2522,7 @@
   {
     "title": "Tomb Raider I-III Remastered eShop 1.0.6",
     "data": {
-      "download": "Tomb Raider I-III Remastered Starring Lara Croft v1.0.6.nsp",
+      "download": "Tomb Raider I-III Remastered Starring Lara Croft.nsp",
       "dlc": null,
       "update": "Tomb Raider I-III Remastered Starring Lara Croft v1.0.6.nsp"
     }
@@ -2564,7 +2564,7 @@
     "data": {
       "download": "Sid Meiers Civilization VI Europe.zip",
       "dlc": "Sid Meiers Civilization VI 18 DLC (3.10.2023).rar",
-      "update": null
+      "update": "Sid Meiers Civilization VI v1638400.nsp"
     }
   },
   {
@@ -2602,17 +2602,17 @@
   {
     "title": "Everybody 1-2-Switch! 1.0.1",
     "data": {
-      "download": "Everybody 1-2 Switch v65536.nsp",
+      "download": "Everybody 1-2 Switch.nsp",
       "dlc": null,
-      "update": null
+      "update": "Everybody 1-2 Switch v65536.nsp"
     }
   },
   {
     "title": "13 Sentinels: Aegis Rim eShop 1.10",
     "data": {
-      "download": "13 Sentinels Aegis Rim Upd v1.10.nsp",
+      "download": "13 Sentinels Aegis Rim.xci",
       "dlc": null,
-      "update": null
+      "update": "13 Sentinels Aegis Rim Upd v1.10.nsp"
     }
   },
   {
@@ -2668,7 +2668,7 @@
     "data": {
       "download": "Disgaea 7 Vows of The Virtueless JP.xci",
       "dlc": "Disgaea 7 Vows of the Virtueless 19 DLC.rar",
-      "update": "Disgaea 7 Vows of the Virtueless Jp v1.3.2.nsp"
+      "update": "Disgaea 7 Vows of The Virtueless US v262144.nsp"
     }
   },
   {
@@ -2746,7 +2746,7 @@
   {
     "title": "ABYSS OF THE SACRIFICE 1.0.1",
     "data": {
-      "download": "Abyss of the Sacrifice Upd v1.0.1.nsp",
+      "download": "Abyss of the Sacrifice.xci",
       "dlc": null,
       "update": "Abyss of the Sacrifice Upd v1.0.1.nsp"
     }
@@ -2762,9 +2762,9 @@
   {
     "title": "Dead Cells Rise of Giant 1.25.0",
     "data": {
-      "download": "Dead Cells Asia v2686976.nsp",
+      "download": "Dead Cells Asia.rar",
       "dlc": "Dead Cells Dlc Fatal Falls.nsp",
-      "update": null
+      "update": "Dead Cells Asia v2686976.nsp"
     }
   },
   {
@@ -2786,7 +2786,7 @@
   {
     "title": "Jujutsu Kaisen Cursed Clash 1.4.0",
     "data": {
-      "download": "Jujutsu Kaisen Cursed Clash v1.4.0.nsp",
+      "download": "Jujutsu Kaisen Cursed Clash.nsp",
       "dlc": "Jujutsu Kaisen Cursed Clash 7 DLC.rar",
       "update": "Jujutsu Kaisen Cursed Clash v1.4.0.nsp"
     }
@@ -2794,7 +2794,7 @@
   {
     "title": "Tales of Kenzera: ZAU 1.5.0",
     "data": {
-      "download": "Tales of Kenzera Zau v1.5.0.nsp",
+      "download": "Tales of Kenzera Zau.nsp",
       "dlc": "Tales of Kenzera ZAU Pre Order Content Dlc.nsp",
       "update": "Tales of Kenzera Zau v1.5.0.nsp"
     }
@@ -2802,7 +2802,7 @@
   {
     "title": "The Smurfs: Dreams 1.2.1",
     "data": {
-      "download": "The Smurfs Dreams v1.0.2.nsp",
+      "download": null,
       "dlc": null,
       "update": "The Smurfs Dreams v1.0.2.nsp"
     }
@@ -2810,17 +2810,17 @@
   {
     "title": "Yakuza Kiwami 1.0.1",
     "data": {
-      "download": "Yakuza Kiwami v1.01.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Yakuza Kiwami v1.01.nsp"
     }
   },
   {
     "title": "Critter Cafe 1.1",
     "data": {
-      "download": "Critter Cafe v1.1.nsp",
+      "download": "Critter Cafe.nsp",
       "dlc": null,
-      "update": null
+      "update": "Critter Cafe v1.1.nsp"
     }
   },
   {
@@ -2858,9 +2858,9 @@
   {
     "title": "Mission in Snowdriftlan 1.1",
     "data": {
-      "download": "Mission in Snowdriftland v1.1.nsp",
+      "download": "Mission in Snowdriftland.nsp",
       "dlc": null,
-      "update": null
+      "update": "Mission in Snowdriftland v1.1.nsp"
     }
   },
   {
@@ -2898,9 +2898,9 @@
   {
     "title": "Let's Sing 2025 1.1",
     "data": {
-      "download": "Lets Sing 2025 v1.1.nsp",
+      "download": "Lets Sing 2025.xci",
       "dlc": null,
-      "update": null
+      "update": "Lets Sing 2025 v1.1.nsp"
     }
   },
   {
@@ -2938,7 +2938,7 @@
   {
     "title": "10 Second Ninja X eShop 1.0.1",
     "data": {
-      "download": "10 Second Ninja X Upd v1.0.1.nsp",
+      "download": "10 Second Ninja X.nsp",
       "dlc": null,
       "update": "10 Second Ninja X Upd v1.0.1.nsp"
     }
@@ -2970,9 +2970,9 @@
   {
     "title": "Daemon X Machina 1.4.2a",
     "data": {
-      "download": "Daemon X Machina v720896.nsp",
+      "download": "Daemon X Machina.xci",
       "dlc": null,
-      "update": null
+      "update": "Daemon X Machina v720896.nsp"
     }
   },
   {
@@ -3028,7 +3028,7 @@
     "data": {
       "download": "Divinity Original Sin 2 Definitive Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "Divinity Original Sin 2 Definitive Edition v655360.nsp"
     }
   },
   {
@@ -3076,7 +3076,7 @@
     "data": {
       "download": "Ni No Kuni Wrath of the White Witch.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ni No Kuni Wrath of the White Witch v131072.nsp"
     }
   },
   {
@@ -3196,7 +3196,7 @@
     "data": {
       "download": "Dokapon Ikari no Tekken.xci",
       "dlc": null,
-      "update": null
+      "update": "Dokapon Ikari no Tekken v65536.nsp"
     }
   },
   {
@@ -3204,7 +3204,7 @@
     "data": {
       "download": "Death end re-Quest.xci",
       "dlc": null,
-      "update": null
+      "update": "Death end re-Quest v131072.nsp"
     }
   },
   {
@@ -3212,7 +3212,7 @@
     "data": {
       "download": "Taiko no Tatsujin Drum and Fun Japan.7z",
       "dlc": "Taiko no Tatsujin Drum and Fun Custom DLC 316 Songs VENOM Unlocker v2555904.nsp",
-      "update": null
+      "update": "Taiko no Tatsujin Drum and Fun v2949120.nsp"
     }
   },
   {
@@ -3220,7 +3220,7 @@
     "data": {
       "download": "Sam And Max The Devils Playhouse.nsp",
       "dlc": null,
-      "update": null
+      "update": "Sam And Max The Devils Playhouse v65536.nsp"
     }
   },
   {
@@ -3252,7 +3252,7 @@
     "data": {
       "download": "Shin Megami Tensei 3 Nocturne HD Remaster.xci",
       "dlc": "Shin Megami Tensei 3 Nocturne HD Remaster Merciful Difficulty Dlc.nsp",
-      "update": null
+      "update": "Shin Megami Tensei 3 Nocturne HD Remaster v262144.nsp"
     }
   },
   {
@@ -3308,7 +3308,7 @@
     "data": {
       "download": "Ninja Gaiden 3 Razors Edge.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ninja Gaiden 3 Razors Edge v65536.nsp"
     }
   },
   {
@@ -3316,7 +3316,7 @@
     "data": {
       "download": "Ninja Gaiden Sigma 2.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ninja Gaiden Sigma 2 v131072.nsp"
     }
   },
   {
@@ -3324,7 +3324,7 @@
     "data": {
       "download": "Ninja Gaiden Sigma.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ninja Gaiden Sigma v262144.nsp"
     }
   },
   {
@@ -3468,7 +3468,7 @@
     "data": {
       "download": "Chernobylite Complete Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "Chernobylite Complete Edition v1.1.nsp"
     }
   },
   {
@@ -3476,7 +3476,7 @@
     "data": {
       "download": "Starlink.xci",
       "dlc": "Starlink 22 DLC.rar",
-      "update": null
+      "update": "Starlink v393216.nsp"
     }
   },
   {
@@ -3484,7 +3484,7 @@
     "data": {
       "download": "Disney Music Parade Encore.xci",
       "dlc": null,
-      "update": null
+      "update": "Disney Music Parade Encore v1.1.nsp"
     }
   },
   {
@@ -3610,7 +3610,7 @@
   {
     "title": "Botworld Odyssey 1.25.31",
     "data": {
-      "download": "Botworld Odyssey v1.25.31.nsp",
+      "download": "Botworld Odyssey.nsp",
       "dlc": null,
       "update": "Botworld Odyssey v1.25.31.nsp"
     }
@@ -3620,7 +3620,7 @@
     "data": {
       "download": "Antonblast.nsp",
       "dlc": null,
-      "update": null
+      "update": "Antonblast v1.2.nsp"
     }
   },
   {
@@ -3690,7 +3690,7 @@
   {
     "title": "Monster Jam Showdown 1.0.8",
     "data": {
-      "download": "Monster Jam Showdown v1.0.8.nsp",
+      "download": "Monster Jam Showdown.rar",
       "dlc": null,
       "update": "Monster Jam Showdown v1.0.8.nsp"
     }
@@ -3706,9 +3706,9 @@
   {
     "title": "Gundam Breaker 4 1.11.0",
     "data": {
-      "download": "Gundam Breaker 4 Asia v196608.nsp",
+      "download": "Gundam Breaker 4 Jpn.rar",
       "dlc": null,
-      "update": "Gundam Breaker 4 v1.11.0.nsp"
+      "update": "Gundam Breaker 4 Asia v196608.nsp"
     }
   },
   {
@@ -3754,7 +3754,7 @@
   {
     "title": "TRIANGLE STRATEGY 1.1.1",
     "data": {
-      "download": "Triangle Strategy v1.1.1.nsp",
+      "download": "Triangle Strategy.xci",
       "dlc": null,
       "update": "Triangle Strategy v1.1.1.nsp"
     }
@@ -3820,7 +3820,7 @@
     "data": {
       "download": "Moons of Darsalon.nsp",
       "dlc": null,
-      "update": null
+      "update": "Moons of Darsalon v1.6.nsp"
     }
   },
   {
@@ -3868,7 +3868,7 @@
     "data": {
       "download": "Dead Dragons.nsp",
       "dlc": null,
-      "update": null
+      "update": "Dead Dragons v65536.nsp"
     }
   },
   {
@@ -3876,7 +3876,7 @@
     "data": {
       "download": "Discolored 2.nsp",
       "dlc": null,
-      "update": null
+      "update": "Discolored 2 v131072.nsp"
     }
   },
   {
@@ -3914,7 +3914,7 @@
   {
     "title": "Yo-kai Watch 1",
     "data": {
-      "download": "Yokai Watch 1 Upd v1.3.0 JP.nsp",
+      "download": null,
       "dlc": null,
       "update": "Yokai Watch 1 Upd v1.3.0 JP.nsp"
     }
@@ -3946,9 +3946,9 @@
   {
     "title": "Fate Stay Night Remastered 1.4.1.b389",
     "data": {
-      "download": "Fate Stay Night Remastered v393216.nsp",
+      "download": "Fate Stay Night Remastered.nsp",
       "dlc": null,
-      "update": "Fate Stay Night Remastered v1.4.1.b389.nsp"
+      "update": "Fate Stay Night Remastered v393216.nsp"
     }
   },
   {
@@ -4044,7 +4044,7 @@
     "data": {
       "download": "Subway Simulator Underground Train Ride Station Ultimate Driving Games.nsp",
       "dlc": null,
-      "update": null
+      "update": "Subway Simulator Underground Train Ride Station Ultimate Driving Games v262144.nsp"
     }
   },
   {
@@ -4060,7 +4060,7 @@
     "data": {
       "download": "Rayman Legends Definitive Edition.xci",
       "dlc": null,
-      "update": null
+      "update": "Rayman Legends Definitive Edition v1.2.nsp"
     }
   },
   {
@@ -4084,7 +4084,7 @@
     "data": {
       "download": "Tony Hawks Pro Skater 1 Plus 2.nsp",
       "dlc": null,
-      "update": null
+      "update": "Tony Hawks Pro Skater 1 Plus 2 v131072.nsp "
     }
   },
   {
@@ -4140,7 +4140,7 @@
     "data": {
       "download": "MONOPOLY 2024.xci",
       "dlc": null,
-      "update": null
+      "update": "MONOPOLY 2024 v1.5.nsp"
     }
   },
   {
@@ -4148,7 +4148,7 @@
     "data": {
       "download": "Godzilla Voxel Wars.nsp",
       "dlc": null,
-      "update": null
+      "update": "Godzilla Voxel Wars v65536.nsp"
     }
   },
   {
@@ -4164,7 +4164,7 @@
     "data": {
       "download": "Ninja Issen The Scroll of Dimension.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ninja Issen The Scroll of Dimension v131072.nsp"
     }
   },
   {
@@ -4172,7 +4172,7 @@
     "data": {
       "download": "Anime Dance-Off Space Party.nsp",
       "dlc": null,
-      "update": null
+      "update": "Anime Dance-Off Space Party v65536.nsp"
     }
   },
   {
@@ -4220,7 +4220,7 @@
     "data": {
       "download": "Hot Lap Racing.nsp",
       "dlc": null,
-      "update": "Hot Lap Racing v1.1.3.nsp"
+      "update": "Hot Lap Racing v65536.nsp"
     }
   },
   {
@@ -4228,7 +4228,7 @@
     "data": {
       "download": "ASTLIBRA Revision.nsp",
       "dlc": null,
-      "update": "ASTLIBRA Revision v1.0.7.nsp"
+      "update": "ASTLIBRA Revision v131072.nsp"
     }
   },
   {
@@ -4242,9 +4242,9 @@
   {
     "title": "Moving Out",
     "data": {
-      "download": "Moving Out 2 v327680.nsp",
+      "download": "Moving Out 2.nsp",
       "dlc": "Moving Out 2 DLC FARTastic Four Pack.nsp",
-      "update": null
+      "update": "Moving Out 2 v327680.nsp"
     }
   },
   {
@@ -4292,7 +4292,7 @@
     "data": {
       "download": "Shovel Knight Treasure Trove.nsp",
       "dlc": null,
-      "update": null
+      "update": "Shovel Knight Treasure Trove v4.2.nsp"
     }
   },
   {
@@ -4300,7 +4300,7 @@
     "data": {
       "download": "STAR WARS Battlefront Classic Collection.nsp",
       "dlc": null,
-      "update": "STAR WARS Battlefront Classic Collection v1.0.4.nsp"
+      "update": "STAR WARS Battlefront Classic Collection v65536.nsp"
     }
   },
   {
@@ -4356,7 +4356,7 @@
     "data": {
       "download": "Pet Shop Snacks.nsp",
       "dlc": null,
-      "update": null
+      "update": "Pet Shop Snacks v262144.nsp"
     }
   },
   {
@@ -4364,7 +4364,7 @@
     "data": {
       "download": "Classic Games Collection Vol 1.nsp",
       "dlc": null,
-      "update": null
+      "update": "Classic Games Collection Vol 1 v262144.nsp"
     }
   },
   {
@@ -4404,7 +4404,7 @@
     "data": {
       "download": "Cocoon.nsp",
       "dlc": null,
-      "update": null
+      "update": "Cocoon v131072.nsp"
     }
   },
   {
@@ -4442,9 +4442,9 @@
   {
     "title": "F1 Manager 2024 1.11",
     "data": {
-      "download": "F1 Manager 2024 Upd v1.11.nsp",
+      "download": "F1 Manager 2024.nsp",
       "dlc": "F1 Manager 2024 Deluxe Upgrade Pack Dlc.nsp",
-      "update": null
+      "update": "F1 Manager 2024 Upd v1.11.nsp"
     }
   },
   {
@@ -4468,7 +4468,7 @@
     "data": {
       "download": "Crow Country.nsp",
       "dlc": null,
-      "update": null
+      "update": "Crow Country v65536.nsp"
     }
   },
   {
@@ -4492,7 +4492,7 @@
     "data": {
       "download": "Ninja Five-O.nsp",
       "dlc": null,
-      "update": null
+      "update": "Ninja Five-O v196608.nsp"
     }
   },
   {
@@ -4500,7 +4500,7 @@
     "data": {
       "download": "Formula Racing Pro 2025.nsp",
       "dlc": null,
-      "update": null
+      "update": "Formula Racing Pro 2025 v65536.nsp"
     }
   },
   {
@@ -4564,7 +4564,7 @@
     "data": {
       "download": "Classic Dungeon X3.xci",
       "dlc": null,
-      "update": null
+      "update": "Classic Dungeon X3 v1.01.nsp"
     }
   },
   {
@@ -4612,7 +4612,7 @@
     "data": {
       "download": "Vanity Fair The Pursuit.nsp",
       "dlc": null,
-      "update": "Vanity Fair The Pursuit v1.1.0.nsp"
+      "update": "Vanity Fair The Pursuit v65536.nsp"
     }
   },
   {
@@ -4684,7 +4684,7 @@
     "data": {
       "download": "KINGDOM HEARTS Melody of Memory.xci",
       "dlc": null,
-      "update": null
+      "update": "KINGDOM HEARTS Melody of Memory v1.04.nsp"
     }
   },
   {
@@ -4708,7 +4708,7 @@
     "data": {
       "download": "Stranger Things 3 The Game.nsp",
       "dlc": null,
-      "update": null
+      "update": "Stranger Things 3 The Game v65536.nsp"
     }
   },
   {
@@ -4740,7 +4740,7 @@
     "data": {
       "download": "Grand Prix Formula One.nsp",
       "dlc": null,
-      "update": null
+      "update": "Grand Prix Formula One v1.1.nsp"
     }
   },
   {
@@ -4764,7 +4764,7 @@
     "data": {
       "download": "Just Dance 2019.xci",
       "dlc": null,
-      "update": null
+      "update": "Just Dance 2019 v292406.455024.nsp"
     }
   },
   {
@@ -4772,7 +4772,7 @@
     "data": {
       "download": "Sifu.xci",
       "dlc": null,
-      "update": null
+      "update": "Sifu v0.1.nsp"
     }
   },
   {
@@ -4794,7 +4794,7 @@
   {
     "title": "Assassins Creed III Remastered",
     "data": {
-      "download": "Assassins Creed III Remastered Upd v1.0.3.nsp",
+      "download": null,
       "dlc": null,
       "update": "Assassins Creed III Remastered Upd v1.0.3.nsp"
     }
@@ -4852,7 +4852,7 @@
     "data": {
       "download": "LEGO 2K Drive.nsp",
       "dlc": null,
-      "update": null
+      "update": "LEGO 2K Drive v1.17.nsp"
     }
   },
   {
@@ -4900,7 +4900,7 @@
     "data": {
       "download": "The Land Beneath Us.nsp",
       "dlc": null,
-      "update": "The Land Beneath Us v1.8.4.nsp"
+      "update": "The Land Beneath Us v65536.nsp"
     }
   },
   {
@@ -5098,7 +5098,7 @@
   {
     "title": "Aeterna Noctis 3.2.001",
     "data": {
-      "download": "Aeterna Noctis v3.2.001.nsp",
+      "download": "Aeterna Noctis.nsp",
       "dlc": "Aeterna Noctis DLC.nsp",
       "update": "Aeterna Noctis v3.2.001.nsp"
     }
@@ -5138,7 +5138,7 @@
   {
     "title": "Final Fantasty 2 1.2.0",
     "data": {
-      "download": "Final Fantasty 2 v1.2.0.nsp",
+      "download": null,
       "dlc": null,
       "update": "Final Fantasty 2 v1.2.0.nsp"
     }
@@ -5178,7 +5178,7 @@
   {
     "title": "Shadow Corridor 2 1.0.3",
     "data": {
-      "download": "Shadow Corridor 2 v1.0.3.nsp",
+      "download": "Shadow Corridor 2.nsp",
       "dlc": null,
       "update": "Shadow Corridor 2 v1.0.3.nsp"
     }
@@ -5188,13 +5188,13 @@
     "data": {
       "download": "Overdungeon.nsp",
       "dlc": null,
-      "update": "Overdungeon v1.8.0.nsp"
+      "update": "Overdungeon v131072.nsp"
     }
   },
   {
     "title": "Final Fantasy 1 1.2.0",
     "data": {
-      "download": "Final Fantasy 1 v1.2.0.nsp",
+      "download": null,
       "dlc": null,
       "update": "Final Fantasy 1 v1.2.0.nsp"
     }
@@ -5212,7 +5212,7 @@
     "data": {
       "download": "Platform 8.nsp",
       "dlc": null,
-      "update": "Platform 8 v1.0.4.nsp"
+      "update": "Platform 8 v131072.nsp"
     }
   },
   {
@@ -5260,7 +5260,7 @@
     "data": {
       "download": "Guilty Gear Strive Nintendo Switch Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "Guilty Gear Strive Nintendo Switch Edition v1.03.nsp"
     }
   },
   {
@@ -5546,7 +5546,7 @@
   {
     "title": "Star Wars Jedi Knight: Jedi Academy eShop",
     "data": {
-      "download": "Star Wars Jedi Knight Jedi Academy Upd v1.0.5.nsp",
+      "download": null,
       "dlc": null,
       "update": "Star Wars Jedi Knight Jedi Academy Upd v1.0.5.nsp"
     }
@@ -5554,7 +5554,7 @@
   {
     "title": "STAR WARS Republic Commando eShop",
     "data": {
-      "download": "Star Wars Republic Commando Upd v1.0.4.nsp",
+      "download": "Star Wars Republic Commando.nsp",
       "dlc": null,
       "update": "Star Wars Republic Commando Upd v1.0.4.nsp"
     }
@@ -5564,7 +5564,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Star Wars Knights of the Old Republic II The Sith Lords Upd v1.0.2.nsp"
     }
   },
   {
@@ -5682,7 +5682,7 @@
   {
     "title": "Serious Sam Collection 1.0.4",
     "data": {
-      "download": "Serious Sam Collection v1.0.4.nsp",
+      "download": null,
       "dlc": null,
       "update": "Serious Sam Collection v1.0.4.nsp"
     }
@@ -5690,7 +5690,7 @@
   {
     "title": "Reynatis 1.0.10",
     "data": {
-      "download": "Reynatis v1.0.10.nsp",
+      "download": "Reynatis.xci",
       "dlc": "Reynatis Dlcs.rar",
       "update": "Reynatis v1.0.10.nsp"
     }
@@ -5706,7 +5706,7 @@
   {
     "title": "Sprout Valley eShop 1.1.2",
     "data": {
-      "download": "Sprout Valley v1.1.2.nsp",
+      "download": "Sprout Valley.nsp",
       "dlc": "Sprout Valley Cows Dlc.nsp",
       "update": "Sprout Valley v1.1.2.nsp"
     }
@@ -5828,7 +5828,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Arcade Archives ASSAULT v1.0.2.nsp"
     }
   },
   {
@@ -5922,9 +5922,9 @@
   {
     "title": "Super Monkey Ball Banana Rumble 2.20",
     "data": {
-      "download": "Super Monkey Ball Banana Rumble v2.20.nsp",
+      "download": "Super Monkey Ball Banana Rumble.xci",
       "dlc": "Super Monkey Ball Banana Rumble v2.20 DLC Unlocker.rar",
-      "update": null
+      "update": "Super Monkey Ball Banana Rumble v2.20 DLC Unlocker.rar"
     }
   },
   {
@@ -5948,7 +5948,7 @@
     "data": {
       "download": "Omega 6 The Triangle Stars.nsp",
       "dlc": null,
-      "update": null
+      "update": "Omega 6 The Triangle Stars v1.3.nsp"
     }
   },
   {
@@ -5994,7 +5994,7 @@
   {
     "title": "FRONT MISSION 2: Remake 1.0.9",
     "data": {
-      "download": "Front Mission 2 Remake v1.0.9.nsp",
+      "download": "Front Mission 2 Remake.nsp",
       "dlc": null,
       "update": "Front Mission 2 Remake v1.0.9.nsp"
     }
@@ -6098,7 +6098,7 @@
   {
     "title": "Garten of Banban 1.0.4",
     "data": {
-      "download": "Garten of Banban v1.0.4.nsp",
+      "download": "Garten of Banban.nsp",
       "dlc": null,
       "update": "Garten of Banban v1.0.4.nsp"
     }
@@ -6106,7 +6106,7 @@
   {
     "title": "Garten of Banban 6 1.0.5",
     "data": {
-      "download": "Garten of Banban 6 v1.0.5.nsp",
+      "download": "Garten of Banban 6.nsp",
       "dlc": null,
       "update": "Garten of Banban 6 v1.0.5.nsp"
     }
@@ -6148,7 +6148,7 @@
     "data": {
       "download": "Tails of Iron 2 Whiskers of Winter.nsp",
       "dlc": null,
-      "update": null
+      "update": "Tails of Iron 2 Whiskers of Winter v2.4.nsp"
     }
   },
   {
@@ -6250,7 +6250,7 @@
   {
     "title": "Horizon Chase 2 eShop 1.6.9",
     "data": {
-      "download": "Horizon Chase 2 v1.6.9.nsp",
+      "download": "Horizon Chase 2.nsp",
       "dlc": null,
       "update": "Horizon Chase 2 v1.6.9.nsp"
     }
@@ -6282,9 +6282,9 @@
   {
     "title": "Phantom Breaker Battle Grounds Ultimate 1.0",
     "data": {
-      "download": "Phantom Breaker Battle Grounds Ultimate v1.03.nsp",
+      "download": "Phantom Breaker Battle Grounds Ultimate.xci",
       "dlc": null,
-      "update": null
+      "update": "Phantom Breaker Battle Grounds Ultimate v1.03.nsp"
     }
   },
   {
@@ -6316,7 +6316,7 @@
     "data": {
       "download": "Metal Suits Counter-Attack.nsp",
       "dlc": null,
-      "update": null
+      "update": "Metal Suits Counter-Attack v1.0603.ni.03.nsp"
     }
   },
   {
@@ -6346,7 +6346,7 @@
   {
     "title": "Tale of Immortal 1.0",
     "data": {
-      "download": "Tale of Immortal v1.0.6.nsp",
+      "download": null,
       "dlc": null,
       "update": "Tale of Immortal v1.0.6.nsp"
     }
@@ -6354,7 +6354,7 @@
   {
     "title": "Tempest 4000 1.0",
     "data": {
-      "download": "Tempest 4000 v1.0.3.nsp",
+      "download": null,
       "dlc": null,
       "update": "Tempest 4000 v1.0.3.nsp"
     }
@@ -6410,9 +6410,9 @@
   {
     "title": "Blade Chimera 1.38",
     "data": {
-      "download": "Blade Chimera v1.38.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Blade Chimera v1.38.nsp"
     }
   },
   {
@@ -6428,15 +6428,15 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Supraland v1.0.0.4.nsp"
     }
   },
   {
     "title": "Nine Sols 1.4",
     "data": {
-      "download": "Nine Sols v1.4.nsp",
+      "download": "Nine Sols.nsp",
       "dlc": null,
-      "update": null
+      "update": "Nine Sols v1.4.nsp"
     }
   },
   {
@@ -6458,7 +6458,7 @@
   {
     "title": "Pentiment 1.3.2",
     "data": {
-      "download": "Pentiment v1.3.2.nsp",
+      "download": "Pentiment.nsp",
       "dlc": null,
       "update": "Pentiment v1.3.2.nsp"
     }
@@ -6564,7 +6564,7 @@
     "data": {
       "download": "The Phantom.nsp",
       "dlc": null,
-      "update": null
+      "update": "The Phantom v1.016.nsp"
     }
   },
   {
@@ -6620,7 +6620,7 @@
     "data": {
       "download": "SNK Heroines Tag Team Frenzy.nsp",
       "dlc": "SNK Heroines Tag Team Frenzy v1.40 DLC.nsp",
-      "update": null
+      "update": "SNK Heroines Tag Team Frenzy v1.41.nsp"
     }
   },
   {
@@ -6668,7 +6668,7 @@
     "data": {
       "download": "Spiritfarer.nsp",
       "dlc": null,
-      "update": null
+      "update": "Spiritfarer v1.15.nsp"
     }
   },
   {
@@ -6722,9 +6722,9 @@
   {
     "title": "Infinite Seek and Find 1.02",
     "data": {
-      "download": "Infinite Seek and Find v1.02.nsp",
+      "download": "Infinite Seek and Find.nsp",
       "dlc": null,
-      "update": null
+      "update": "Infinite Seek and Find v1.02.nsp"
     }
   },
   {
@@ -6738,7 +6738,7 @@
   {
     "title": "#BLUD 1.4.0",
     "data": {
-      "download": "BLUD v1.4.0.nsp",
+      "download": "BLUD.nsp",
       "dlc": null,
       "update": "BLUD v1.4.0.nsp"
     }
@@ -6764,7 +6764,7 @@
     "data": {
       "download": "Five Nights at Freddys Help Wanted 2.xci",
       "dlc": null,
-      "update": null
+      "update": "Five Nights at Freddys Help Wanted 2 v0.3.nsp"
     }
   },
   {
@@ -6842,7 +6842,7 @@
   {
     "title": "Abathor 2.1.1",
     "data": {
-      "download": "Abathor v2.1.1.nsp",
+      "download": null,
       "dlc": null,
       "update": "Abathor v2.1.1.nsp"
     }
@@ -6900,7 +6900,7 @@
     "data": {
       "download": "Trombone Champ.nsp",
       "dlc": null,
-      "update": null
+      "update": "Trombone Champ v1.31B.nsp"
     }
   },
   {
@@ -7060,7 +7060,7 @@
     "data": {
       "download": "Vagrus The Riven Realms.nsp",
       "dlc": null,
-      "update": null
+      "update": "Vagrus The Riven Realms v1.205.nsp"
     }
   },
   {
@@ -7162,7 +7162,7 @@
   {
     "title": "Basureroes Invasion 1.0.2",
     "data": {
-      "download": "Basureroes Invasion v1.0.2.nsp",
+      "download": "Basureroes Invasion.nsp",
       "dlc": null,
       "update": "Basureroes Invasion v1.0.2.nsp"
     }
@@ -7218,9 +7218,9 @@
   {
     "title": "Grounded 1.13",
     "data": {
-      "download": "Grounded v1.13.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Grounded v1.13.nsp"
     }
   },
   {
@@ -7228,7 +7228,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Kingdom Two Crowns v2.1.4.nsp"
     }
   },
   {
@@ -7300,7 +7300,7 @@
     "data": {
       "download": "Palia Internal.nsp",
       "dlc": null,
-      "update": null
+      "update": "Palia Internal v191.1.nsp"
     }
   },
   {
@@ -7308,7 +7308,7 @@
     "data": {
       "download": "The Renovator Origins.nsp",
       "dlc": null,
-      "update": null
+      "update": "The Renovator Origins v1.1.nsp"
     }
   },
   {
@@ -7348,7 +7348,7 @@
     "data": {
       "download": "Japanese Drift Master.nsp",
       "dlc": null,
-      "update": null
+      "update": "Japanese Drift Master v1.2.nsp"
     }
   },
   {
@@ -7386,7 +7386,7 @@
   {
     "title": "Neon Apex Beyond the Limit 1.0.4",
     "data": {
-      "download": "Neon Apex Beyond the Limit v1.0.4.nsp",
+      "download": "Neon Apex Beyond the Limit.xci",
       "dlc": null,
       "update": "Neon Apex Beyond the Limit v1.0.4.nsp"
     }
@@ -7420,7 +7420,7 @@
     "data": {
       "download": "9th Dawn Remake.nsp",
       "dlc": null,
-      "update": null
+      "update": "9th Dawn Remake v1.175.nsp"
     }
   },
   {
@@ -7428,7 +7428,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Skelethrone The Chronicles of Ericona v1.5.4.nsp"
     }
   },
   {
@@ -7442,9 +7442,9 @@
   {
     "title": "Phantom Brave The Lost Hero 1.24",
     "data": {
-      "download": "Phantom Brave The Lost Hero v1.24.nsp",
+      "download": "Phantom Brave The Lost Hero.xci",
       "dlc": null,
-      "update": null
+      "update": "Phantom Brave The Lost Hero v1.24.nsp"
     }
   },
   {
@@ -7458,7 +7458,7 @@
   {
     "title": "Among Us eShop 2025.16.0.4",
     "data": {
-      "download": "Among Us v2025.16.0.4.nsp",
+      "download": "Among Us.nsp",
       "dlc": null,
       "update": "Among Us v2025.16.0.4.nsp"
     }
@@ -7474,7 +7474,7 @@
   {
     "title": "Fuga: Melodies of Steel 2 1.5.1",
     "data": {
-      "download": "Fuga Melodies of Steel 2 v1.5.1.nsp",
+      "download": null,
       "dlc": "Fuga Melodies of Steel 2 Tail Concerto Costume Pack DLC.nsp",
       "update": "Fuga Melodies of Steel 2 v1.5.1.nsp"
     }
@@ -7482,7 +7482,7 @@
   {
     "title": "Fuga: Melodies of Steel 1.1.7",
     "data": {
-      "download": "Fuga Melodies of Steel v1.1.7.nsp",
+      "download": null,
       "dlc": null,
       "update": "Fuga Melodies of Steel v1.1.7.nsp"
     }
@@ -7508,7 +7508,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "Sky Oceans Wings for Hire v1.0.4.nsp"
     }
   },
   {
@@ -7608,11 +7608,11 @@
     }
   },
   {
-    "title": "Dragon Drill Sho-2 Collection",
+    "title": "Dragon Drill Sho-2 Collection 1.0.1",
     "data": {
-      "download": null,
+      "download": "Dragon Drill Sho-2 Collection.xci",
       "dlc": null,
-      "update": null
+      "update": "Dragon Drill Sho-2 Collection v1.0.1.nsp"
     }
   },
   {
@@ -7788,7 +7788,7 @@
     "data": {
       "download": "Steam Hearts and ADVANCED Variable Geo Saturn Tribute.xci",
       "dlc": null,
-      "update": null
+      "update": "Steam Hearts and ADVANCED Variable Geo Saturn Tribute v1.01.nsp"
     }
   },
   {
@@ -7818,7 +7818,7 @@
   {
     "title": "Astral Ascent 1.0.13",
     "data": {
-      "download": "Astral Ascent v1.0.14.nsp",
+      "download": "Astral Ascent.nsp",
       "dlc": "Astral Ascent Dlc.nsp",
       "update": "Astral Ascent v1.0.14.nsp"
     }
@@ -7826,7 +7826,7 @@
   {
     "title": "OlliOlli World 1.3.1",
     "data": {
-      "download": "OlliOlli World v1.3.1.nsp",
+      "download": "OlliOlli World.nsp",
       "dlc": "OlliOlli World Void Riders DLC.nsp",
       "update": "OlliOlli World v1.3.1.nsp"
     }
@@ -7908,7 +7908,7 @@
     "data": {
       "download": "UNDER NIGHT IN BIRTH II Sys Celes.nsp",
       "dlc": null,
-      "update": null
+      "update": "UNDER NIGHT IN BIRTH II Sys Celes v1.24.nsp"
     }
   },
   {
@@ -7962,9 +7962,9 @@
   {
     "title": "NieR: Automata The End of YoRHa Edition 1.0.2",
     "data": {
-      "download": "Nier Automata The End of YoRHa Edition v65536.nsp",
+      "download": "Nier Automata The End of YoRHa Edition.nsp",
       "dlc": "Nier Automata The End of YoRHa Edition DLC.nsp",
-      "update": null
+      "update": "Nier Automata The End of YoRHa Edition v65536.nsp"
     }
   },
   {
@@ -7978,7 +7978,7 @@
   {
     "title": "Core Keeper 1.1.2.2",
     "data": {
-      "download": "Core Keeper v1.1.2.2.nsp",
+      "download": "Core Keeper.nsp",
       "dlc": null,
       "update": "Core Keeper v1.1.2.2.nsp"
     }
@@ -8060,7 +8060,7 @@
     "data": {
       "download": "HoloParade Deluxe Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "HoloParade Deluxe Edition v1.02.nsp"
     }
   },
   {
@@ -8068,7 +8068,7 @@
     "data": {
       "download": "RAIDOU Remastered Choriki Heidan Kitan.xci",
       "dlc": null,
-      "update": null
+      "update": "RAIDOU Remastered Choriki Heidan Kitan v1.02.nsp"
     }
   },
   {
@@ -8100,7 +8100,7 @@
     "data": {
       "download": null,
       "dlc": "Jigsaw Masterpieces 2 v1.0.13 DLC Unlocker.rar",
-      "update": "Jigsaw Masterpieces 2 v1.0.13 DLC Unlocker.rar"
+      "update": "Jigsaw Masterpieces 2 v1.0.13.nsp"
     }
   },
   {
@@ -8140,7 +8140,7 @@
     "data": {
       "download": "Dungeons 4 Nintendo Switch Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "Dungeons 4 Nintendo Switch Edition v1.9.nsp"
     }
   },
   {
@@ -8218,7 +8218,7 @@
   {
     "title": "Cat Quest III 1.4.2",
     "data": {
-      "download": "Cat Quest III v1.4.1.nsp",
+      "download": "Cat Quest III.nsp",
       "dlc": null,
       "update": "Cat Quest III v1.4.1.nsp"
     }
@@ -8226,7 +8226,7 @@
   {
     "title": "Pizza Tower 1.0.2",
     "data": {
-      "download": "Pizza Tower v1.0.2.nsp",
+      "download": "Pizza Tower.nsp",
       "dlc": null,
       "update": "Pizza Tower v1.0.2.nsp"
     }
@@ -8250,7 +8250,7 @@
   {
     "title": "Hauntii 1.0.7",
     "data": {
-      "download": "Hauntii v1.0.7.nsp",
+      "download": "Hauntii.nsp",
       "dlc": null,
       "update": "Hauntii v1.0.7.nsp"
     }
@@ -8396,7 +8396,7 @@
     "data": {
       "download": "Demon Slayer The Hinokami Chronicles.nsp",
       "dlc": "Demon Slayer The Hinokami Chronicles 10 DLC.rar",
-      "update": null
+      "update": "Demon Slayer The Hinokami Chronicles v589824.nsp"
     }
   },
   {
@@ -8466,7 +8466,7 @@
   {
     "title": "Xenoblade Chronicles 2 2.1.0",
     "data": {
-      "download": "Xenoblade Chronicles 2 v2.1.0.nsp",
+      "download": "Xenoblade Chronicles 2 My Nintendo Bonus Items US.nsp",
       "dlc": "Xenoblade Chronicles 2 Helpful Items Pack DLC v589824.nsp",
       "update": "Xenoblade Chronicles 2 v2.1.0.nsp"
     }
@@ -8474,7 +8474,7 @@
   {
     "title": "Astral Chain 1.0.1",
     "data": {
-      "download": "Astral Chain v1.0.1.nsp",
+      "download": "Astral Chain.xci",
       "dlc": null,
       "update": "Astral Chain v1.0.1.nsp"
     }
@@ -8490,17 +8490,17 @@
   {
     "title": "Batman: The Enemy Within",
     "data": {
-      "download": "Batman The Enemy Within v65536.nsp",
+      "download": "Batman The Enemy Within.nsp",
       "dlc": "Batman The Enemy Within Dlc Shadows Mode v65536.nsp",
-      "update": null
+      "update": "Batman The Enemy Within Dlc Shadows Mode v65536.nsp"
     }
   },
   {
     "title": "Bayonetta 1.1",
     "data": {
-      "download": "Bayonetta v65536.nsp",
+      "download": "Bayonetta.nsp",
       "dlc": null,
-      "update": null
+      "update": "Bayonetta v65536.nsp"
     }
   },
   {
@@ -8540,7 +8540,7 @@
     "data": {
       "download": "Dragon Quest Builders 2 (USA).7z",
       "dlc": null,
-      "update": null
+      "update": "Dragon Quest Builders 2 JP v327680.nsp"
     }
   },
   {
@@ -8548,7 +8548,7 @@
     "data": {
       "download": "Dragon Quest Builders 2 (USA).7z",
       "dlc": null,
-      "update": null
+      "update": "Dragon Quest Builders 2 JP v327680.nsp"
     }
   },
   {
@@ -8562,17 +8562,17 @@
   {
     "title": "Grand Theft Auto Vice City – The Definitive Edition eShop 1.0.8",
     "data": {
-      "download": "Grand Theft Auto Vice City v458752.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Grand Theft Auto Vice City v458752.nsp"
     }
   },
   {
     "title": "Hades eShop 1.0.38233",
     "data": {
-      "download": "Hades v589824.nsp",
+      "download": "Hades.nsp",
       "dlc": null,
-      "update": null
+      "update": "Hades v589824.nsp"
     }
   },
   {
@@ -8580,7 +8580,7 @@
     "data": {
       "download": "Hyrule Warriors Age of Calamity (USA Europe).zip",
       "dlc": "Hyrule Warriors Age of Calamity 4 DLC.rar",
-      "update": null
+      "update": "Hyrule Warriors Age of Calamity v327680.nsp"
     }
   },
   {
@@ -8610,9 +8610,9 @@
   {
     "title": "Little Nightmares Complete Edition 1.0.2",
     "data": {
-      "download": "Little Nightmares Complete Edition v131072.nsp",
+      "download": "Little Nightmares Complete Edition.nsp",
       "dlc": "Little Nightmares Complete Edition 2 DLC.rar",
-      "update": null
+      "update": "Little Nightmares Complete Edition v131072.nsp"
     }
   },
   {
@@ -8634,9 +8634,9 @@
   {
     "title": "The Binding of Isaac Afterbirth eShop",
     "data": {
-      "download": "The Binding of Isaac Afterbirth Plus Original Music by Danny Baranowsky Mod v2.rar",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "The Binding of Isaac Afterbirth Plus Original Music by Danny Baranowsky Mod v2.rar"
     }
   },
   {
@@ -8644,15 +8644,15 @@
     "data": {
       "download": "Just Dance 2021.xci",
       "dlc": null,
-      "update": null
+      "update": "Just Dance 2021 v327827.644899.nsp"
     }
   },
   {
     "title": "EA SPORTS FC 24 1.59.4045",
     "data": {
-      "download": "Ea Sports FC 24 v1310720.nsp",
+      "download": "Ea Sports FC 24.xci",
       "dlc": "Ea Sports FC 24 in-game_commentary_arabic_dlc.nsp",
-      "update": null
+      "update": "Ea Sports FC 24 v1310720.nsp"
     }
   },
   {
@@ -8660,7 +8660,7 @@
     "data": {
       "download": "DRAGON BALL Z KAKAROT plus A NEW POWER AWAKENS SET.xci",
       "dlc": "DRAGON BALL Z KAKAROT Plus A NEW POWER AWAKENS SET DLC v1.52.rar",
-      "update": null
+      "update": "DRAGON BALL Z KAKAROT Plus A NEW POWER AWAKENS SET DLC v1.52.rar"
     }
   },
   {
@@ -8674,9 +8674,9 @@
   {
     "title": "GRID Autosport 1.8.3_61741",
     "data": {
-      "download": "GRID Autosport v655360.nsp",
+      "download": "GRID Autosport.nsp",
       "dlc": null,
-      "update": null
+      "update": "GRID Autosport v655360.nsp"
     }
   },
   {
@@ -8698,9 +8698,9 @@
   {
     "title": "Life is Strange Arcadia Bay Collection 1.2",
     "data": {
-      "download": "Life is Strange Arcadia Bay Collection - Life is Strange Before the Storm Remastered v1.2.nsp",
+      "download": "Life is Strange Arcadia Bay Collection.xci",
       "dlc": "Life is Strange Arcadia Bay Collection DLC.nsp",
-      "update": "Life is Strange Arcadia Bay Collection v1.0.2 JP.nsp"
+      "update": "Life is Strange Arcadia Bay Collection - Life is Strange Before the Storm Remastered v1.2.nsp"
     }
   },
   {
@@ -8708,7 +8708,7 @@
     "data": {
       "download": "Donkey Kong Country Returns HD (Pass to Unzip: Danke12)",
       "dlc": null,
-      "update": "Terraria v1.0.3 [010024B00F9D0000][v196608] – FD – JP, CH"
+      "update": "Layton's Mystery Journey: Katrielle and the Millionaires' Conspiracy Deluxe Edition [0100CE500D226000][v0] – FD – EN, FR, DE, ES, IT, NL"
     }
   },
   {
@@ -8746,7 +8746,7 @@
   {
     "title": "Animal Well 1.0.10",
     "data": {
-      "download": "Animal Well v1.0.7.nsp",
+      "download": "Animal Well.nsp",
       "dlc": null,
       "update": "Animal Well v1.0.7.nsp"
     }
@@ -8786,9 +8786,9 @@
   {
     "title": "Easy Red 2 eShop 1.22",
     "data": {
-      "download": "Easy Red 2 v1.22.nsp",
+      "download": null,
       "dlc": "Easy Red 2 DLC Ardennes 1940 and 1944.nsp",
-      "update": null
+      "update": "Easy Red 2 v1.22.nsp"
     }
   },
   {
@@ -8796,7 +8796,7 @@
     "data": {
       "download": "Ark Survival Evolved (USA Europe).zip",
       "dlc": "Ark Survival Evolved Dlc Aberrant Skins Pack v262144.nsp",
-      "update": "Ark Survival Evolved v2.0.15.nsp"
+      "update": "Ark Survival Evolved Dlc Aberrant Skins Pack v262144.nsp"
     }
   },
   {
@@ -8844,15 +8844,15 @@
     "data": {
       "download": "Grand Theft Auto San Andreas.nsp",
       "dlc": null,
-      "update": null
+      "update": "Grand Theft Auto San Andreas v458752.nsp"
     }
   },
   {
     "title": "Miitopia 1.0.3",
     "data": {
-      "download": "Miitopia v196608.nsp",
+      "download": "Miitopia.zip",
       "dlc": null,
-      "update": null
+      "update": "Miitopia v196608.nsp"
     }
   },
   {
@@ -8892,7 +8892,7 @@
     "data": {
       "download": "Pokemon Snap.xci",
       "dlc": null,
-      "update": null
+      "update": "Pokemon Snap v262144.nsp"
     }
   },
   {
@@ -8930,9 +8930,9 @@
   {
     "title": "Yu-Gi-Oh! Legacy of the Duelist: Link Evolution 1.0.1",
     "data": {
-      "download": "Yugi Oh Legacy of the Duelist Link Evolution v65536.nsp",
+      "download": "Yugi Oh Legacy of the Duelist Link Evolution.nsp",
       "dlc": null,
-      "update": null
+      "update": "Yugi Oh Legacy of the Duelist Link Evolution v65536.nsp"
     }
   },
   {
@@ -9004,7 +9004,7 @@
     "data": {
       "download": null,
       "dlc": null,
-      "update": null
+      "update": "1000xRESIST v1.0.5.nsp"
     }
   },
   {
@@ -9050,7 +9050,7 @@
   {
     "title": "Just Dance 2022 1.0",
     "data": {
-      "download": "Just Dance 2022 Upd v3.26.96.nsp",
+      "download": "Just Dance 2022.xci",
       "dlc": null,
       "update": "Just Dance 2022 Upd v3.26.96.nsp"
     }
@@ -9098,7 +9098,7 @@
   {
     "title": "Yoshi’s Crafted World 1.0.1",
     "data": {
-      "download": "Yoshis Crafted World v1.0.1.nsp",
+      "download": "Yoshis Crafted World.nsp",
       "dlc": null,
       "update": "Yoshis Crafted World v1.0.1.nsp"
     }
@@ -9178,9 +9178,9 @@
   {
     "title": "Dark Souls Remastered 1.0.3",
     "data": {
-      "download": "Dark Souls Remastered v196608.nsp",
+      "download": "Dark Souls Remastered.nsp",
       "dlc": null,
-      "update": null
+      "update": "Dark Souls Remastered v196608.nsp"
     }
   },
   {
@@ -9242,7 +9242,7 @@
   {
     "title": "Final Fantasy 6 1.2.1 5",
     "data": {
-      "download": "Final Fantasy 6 v1.2.1 5.nsp",
+      "download": null,
       "dlc": null,
       "update": "Final Fantasy 6 v1.2.1 5.nsp"
     }
@@ -9266,7 +9266,7 @@
   {
     "title": "Final Fantasy 3 1.2.0 5",
     "data": {
-      "download": "Final Fantasy 3 v1.2.0 5.nsp",
+      "download": null,
       "dlc": null,
       "update": "Final Fantasy 3 v1.2.0 5.nsp"
     }
@@ -9474,9 +9474,9 @@
   {
     "title": "Mario vs. Donkey 1.0.1",
     "data": {
-      "download": "Mario vs Donkey Kong v65536.nsp",
+      "download": "Mario vs Donkey Kong.xci",
       "dlc": null,
-      "update": null
+      "update": "Mario vs Donkey Kong v65536.nsp"
     }
   },
   {
@@ -9524,13 +9524,13 @@
     "data": {
       "download": "Taiko no Tatsujin Rhythm Festival Asia.7z",
       "dlc": "Taiko no Tatsujin Rhythm Festival LFS Mod + Savegame DLC Music Pass Unlocker v20.rar",
-      "update": "Taiko no Tatsujin Rhythm Festival v6.0.1.nsp"
+      "update": "Taiko no Tatsujin Rhythm Festival LFS Mod + Savegame DLC Music Pass Unlocker v20.rar"
     }
   },
   {
     "title": "Dont Starve Together 1.23.0",
     "data": {
-      "download": "Dont Starve Together v1.23.0.nsp",
+      "download": "Dont Starve Together.nsp",
       "dlc": null,
       "update": "Dont Starve Together v1.23.0.nsp"
     }
@@ -9538,7 +9538,7 @@
   {
     "title": "No Man’s Sky 6.17.0",
     "data": {
-      "download": "No Mans Sky v6.17.0.nsp",
+      "download": "No Mans Sky.nsp",
       "dlc": null,
       "update": "No Mans Sky v6.17.0.nsp"
     }
@@ -9562,17 +9562,17 @@
   {
     "title": "Mega Man Zero/ZX Legacy Collection",
     "data": {
-      "download": "Mega Man Zero ZX Legacy Collection v262144.nsp",
+      "download": "Mega Man Zero ZX Legacy Collection.nsp",
       "dlc": "Mega Man Zero ZX Legacy Collection Dlc Reploid Remixes.nsp",
-      "update": null
+      "update": "Mega Man Zero ZX Legacy Collection v262144.nsp"
     }
   },
   {
     "title": "It Takes Two 1.0.2",
     "data": {
-      "download": "It Takes Two v131072.nsp",
+      "download": "It Takes Two.nsp",
       "dlc": "It Takes Two Dlc Friends Pass.nsp",
-      "update": null
+      "update": "It Takes Two v131072.nsp"
     }
   },
   {
@@ -9626,7 +9626,7 @@
   {
     "title": "Game Boy – Nintendo Switch Online 3.0.0",
     "data": {
-      "download": "Game Boy Nintendo Switch Online v3.0.0 JPN.nsp",
+      "download": "Game Boy Nintendo Switch Online jp.nsp",
       "dlc": null,
       "update": "Game Boy Nintendo Switch Online v3.0.0.nsp"
     }
@@ -9642,7 +9642,7 @@
   {
     "title": "Batman: Arkham Knight 1.0.4",
     "data": {
-      "download": "Batman Arkham Knight v1.0.4.nsp",
+      "download": "Batman Arkham Knight.nsp",
       "dlc": null,
       "update": "Batman Arkham Knight v1.0.4.nsp"
     }
@@ -9658,9 +9658,9 @@
   {
     "title": "Mario Kart Live: Home Circuit eShop 2.0.0",
     "data": {
-      "download": "Mario Kart Live Home Circuit v131072.nsp",
+      "download": "Mario Kart Live Home Circuit.nsp",
       "dlc": null,
-      "update": null
+      "update": "Mario Kart Live Home Circuit v131072.nsp"
     }
   },
   {
@@ -9754,7 +9754,7 @@
   {
     "title": "Muse Dash 5.10.0",
     "data": {
-      "download": "Muse Dash v5.10.0.nsp",
+      "download": "Muse Dash.nsp",
       "dlc": null,
       "update": "Muse Dash v5.10.0.nsp"
     }
@@ -9874,7 +9874,7 @@
   {
     "title": "Monument Valley 3 1.5.20160",
     "data": {
-      "download": "Monument Valley 3 v1.5.20160.nsp",
+      "download": null,
       "dlc": null,
       "update": "Monument Valley 3 v1.5.20160.nsp"
     }
@@ -9978,7 +9978,7 @@
   {
     "title": "Top Racer Collection 1.0.7",
     "data": {
-      "download": "Top Racer Collection v1.0.7.nsp",
+      "download": "Top Racer Collection.nsp",
       "dlc": null,
       "update": "Top Racer Collection v1.0.7.nsp"
     }
@@ -10074,9 +10074,9 @@
   {
     "title": "LOLLIPOP CHAINSAW RePOP 1.16",
     "data": {
-      "download": "LOLLIPOP CHAINSAW RePOP v1.16.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "LOLLIPOP CHAINSAW RePOP v1.16.nsp"
     }
   },
   {
@@ -10098,7 +10098,7 @@
   {
     "title": "Xenoblade Chronicles: Definitive Edition 1.1.2",
     "data": {
-      "download": "Xenoblade Chronicles Definitive Edition v1.1.2.nsp",
+      "download": "Xenoblade Chronicles Definitive Edition.xci",
       "dlc": null,
       "update": "Xenoblade Chronicles Definitive Edition Upd v1.1.2.nsp"
     }
@@ -10106,9 +10106,9 @@
   {
     "title": "Mario Strikers: Battle League 1.3.2",
     "data": {
-      "download": "Mario Strikers Battle League Football v393216.nsp",
+      "download": null,
       "dlc": null,
-      "update": null
+      "update": "Mario Strikers Battle League Football v393216.nsp"
     }
   },
   {
@@ -10130,9 +10130,9 @@
   {
     "title": "Mario Golf: Super Rush 4.0.0",
     "data": {
-      "download": "Mario Golf Super Rush v262144.nsp",
+      "download": "Mario Golf Super Rush.xci",
       "dlc": null,
-      "update": null
+      "update": "Mario Golf Super Rush v262144.nsp"
     }
   },
   {
@@ -10140,7 +10140,7 @@
     "data": {
       "download": "Fire Emblem Warriors - Three Hopes (Japan).zip",
       "dlc": "Fire Emblem Warriors Three Hopes Dlc Digital Purchase Bonus Owl Feathers.nsp",
-      "update": null
+      "update": "Fire Emblem Warriors Three Hopes v131072.nsp"
     }
   },
   {
@@ -10154,9 +10154,9 @@
   {
     "title": "DOOM 1.2",
     "data": {
-      "download": "Doom 3 v327680.nsp",
+      "download": "Doom 3.nsp",
       "dlc": "Doom Plus Doom Featured Mods DLC.rar",
-      "update": null
+      "update": "Doom 3 v327680.nsp"
     }
   },
   {
@@ -10202,9 +10202,9 @@
   {
     "title": "Donkey Kong Country: Tropical Freeze 1.0.2",
     "data": {
-      "download": "Donkey Kong Country Tropical Freeze v131072.nsp",
+      "download": "Donkey Kong Country Tropical Freeze.nsp",
       "dlc": null,
-      "update": null
+      "update": "Donkey Kong Country Tropical Freeze v131072.nsp"
     }
   },
   {
@@ -10290,7 +10290,7 @@
   {
     "title": "Pine Hearts 1.5.0.285",
     "data": {
-      "download": "Pine Hearts v1.5.0.285.nsp",
+      "download": "Pine Hearts.nsp",
       "dlc": null,
       "update": "Pine Hearts v1.5.0.285.nsp"
     }
@@ -10338,9 +10338,9 @@
   {
     "title": "Assassin’s Creed The Ezio Collection eShop 1.3",
     "data": {
-      "download": "Assassins Creed The Ezio Collection Upd v1.3.nsp",
+      "download": "Assassins Creed The Ezio Collection.nsp",
       "dlc": "Assassins Creed The Ezio Collection Audio Pack DLC.nsp",
-      "update": null
+      "update": "Assassins Creed The Ezio Collection Upd v1.3.nsp"
     }
   },
   {
@@ -10354,7 +10354,7 @@
   {
     "title": "Mario Tennis Aces 3.1.1",
     "data": {
-      "download": "Mario Tennis Aces v3.1.1.nsp",
+      "download": "Mario Tennis Aces.xci",
       "dlc": null,
       "update": "Mario Tennis Aces v3.1.1.nsp"
     }
@@ -10394,9 +10394,9 @@
   {
     "title": "Super Mario RPG eShop 1.0.1",
     "data": {
-      "download": "Super Mario RPG v65536.nsp",
+      "download": "Super Mario RPG.nsp",
       "dlc": null,
-      "update": null
+      "update": "Super Mario RPG v65536.nsp"
     }
   },
   {
@@ -10404,23 +10404,23 @@
     "data": {
       "download": "Mario Plus Rabbids Sparks of Hope.xci",
       "dlc": "Mario Plus Rabbids Sparks of Hope The Last Spark Hunter DLC.nsp",
-      "update": null
+      "update": "Mario plus Rabbids Sparks of Hope v393216.nsp"
     }
   },
   {
     "title": "Paper Mario: The Origami King 1.0.1",
     "data": {
-      "download": "Paper Mario The Origami King v65536.nsp",
+      "download": "Paper Mario The Origami King.nsp",
       "dlc": null,
-      "update": null
+      "update": "Paper Mario The Origami King v65536.nsp"
     }
   },
   {
     "title": "DOOM 3 1.0.5",
     "data": {
-      "download": "Doom 3 v327680.nsp",
+      "download": "Doom 3.nsp",
       "dlc": null,
-      "update": null
+      "update": "Doom 3 v327680.nsp"
     }
   },
   {
@@ -10428,7 +10428,7 @@
     "data": {
       "download": "The Elder Scrolls V Skyrim JPN.xci",
       "dlc": "The Elder Scrolls V Skyrim Dlc Anniversary Edition v65536.nsp",
-      "update": "The Elder Scrolls V Skyrim v1.1.404.0.nsp"
+      "update": "The Elder Scrolls V Skyrim Dlc Anniversary Edition v65536.nsp"
     }
   },
   {
@@ -10482,7 +10482,7 @@
   {
     "title": "Little Kitty Big City 1.25.12.10.5904",
     "data": {
-      "download": "Little Kitty Big City v1.25.3.3.4091.nsp",
+      "download": "Little Kitty Big City.nsp",
       "dlc": null,
       "update": "Little Kitty Big City v1.25.3.3.4091.nsp"
     }
@@ -10546,9 +10546,9 @@
   {
     "title": "EA SPORTS FC 25 Standard Edition v1.7c.d76a",
     "data": {
-      "download": "EA SPORTS FC 25 Standard Edition v1.7c.d76a.nsp",
+      "download": "EA SPORTS FC 25 Standard Edition.nsp",
       "dlc": null,
-      "update": null
+      "update": "EA SPORTS FC 25 Standard Edition v1.7c.d76a.nsp"
     }
   },
   {
@@ -10602,9 +10602,9 @@
   {
     "title": "Pokemon Let's Go Pikachu 1.0.2",
     "data": {
-      "download": "Pokemon Lets Go Pikachu v131072.nsp",
+      "download": "Pokemon Lets Go Pikachu.xci",
       "dlc": null,
-      "update": null
+      "update": "Pokemon Lets Go Pikachu v131072.nsp"
     }
   },
   {
@@ -10626,9 +10626,9 @@
   {
     "title": "Mega Man 11 1.0.2",
     "data": {
-      "download": "Mega Man 11 v1.0.2.nsp",
+      "download": "Mega Man 11.nsp",
       "dlc": "Mega Man 11 Dlc Wily Numbers Instrumental Stage Tracks v65536.nsp",
-      "update": "Mega Man 11 v1.0.2.nsp"
+      "update": "Mega Man 11 Dlc Wily Numbers Instrumental Stage Tracks v65536.nsp"
     }
   },
   {
@@ -10658,7 +10658,7 @@
   {
     "title": "Super Mario Party Jamboree 2.0.0",
     "data": {
-      "download": "Super Mario Party Jamboree v2.0.0.nsp",
+      "download": "Super Mario Party Jamboree.xci",
       "dlc": null,
       "update": "Super Mario Party Jamboree v2.0.0.nsp"
     }
@@ -10666,7 +10666,7 @@
   {
     "title": "Super Mario Bros. Wonder 1.0.2",
     "data": {
-      "download": "Super Mario Bros Wonder v1.0.2.nsp",
+      "download": "Super Mario Bros Wonder.xci",
       "dlc": null,
       "update": "Super Mario Bros Wonder v1.0.2.nsp"
     }
@@ -10716,7 +10716,7 @@
     "data": {
       "download": "Dragon Ball FighterZ.xci",
       "dlc": "Dragon Ball FighterZ DLC.rar",
-      "update": null
+      "update": "Dragon Ball FighterZ v01.42.nsp"
     }
   },
   {
@@ -10730,9 +10730,9 @@
   {
     "title": "Fire Emblem: Three Houses 1.2.0",
     "data": {
-      "download": "Fire Emblem Three Houses v327680.nsp",
+      "download": "Fire Emblem Three Houses.nsp",
       "dlc": "Fire Emblem Three Houses DLC Wave4.rar",
-      "update": null
+      "update": "Fire Emblem Three Houses v327680.nsp"
     }
   },
   {
@@ -10770,7 +10770,7 @@
   {
     "title": "Resident Evil 6 1.0.2",
     "data": {
-      "download": "Resident Evil 6 Upd v1.0.2.nsp",
+      "download": "Resident Evil 6.nsp",
       "dlc": null,
       "update": "Resident Evil 6 Upd v1.0.2.nsp"
     }
@@ -10778,9 +10778,9 @@
   {
     "title": "NBA 2K25 1.09",
     "data": {
-      "download": "NBA 2k25 v1.09.nsp",
+      "download": "NBA 2k25.nsp",
       "dlc": null,
-      "update": null
+      "update": "NBA 2k25 v1.09.nsp"
     }
   },
   {
@@ -10794,7 +10794,7 @@
   {
     "title": "Disney Epic Mickey Rebrushed 1.0.3",
     "data": {
-      "download": "Disney Epic Mickey Rebrushed Upd v1.0.3.nsp",
+      "download": "Disney Epic Mickey Rebrushed.nsp",
       "dlc": "Disney Epic Mickey Rebrushed Costume Pack Dlc.nsp",
       "update": "Disney Epic Mickey Rebrushed Upd v1.0.3.nsp"
     }
@@ -10850,17 +10850,17 @@
   {
     "title": "Batman: The Telltale Series",
     "data": {
-      "download": "Batman The Telltale Series v196608.nsp",
+      "download": "Batman The Telltale Series.nsp",
       "dlc": "Batman The Telltale Series Dlc Shadows Mode v131072.nsp",
-      "update": null
+      "update": "Batman The Telltale Series Dlc Shadows Mode v131072.nsp"
     }
   },
   {
     "title": "Crash Bandicoot 4: It’s About Time 1.2",
     "data": {
-      "download": "Crash Bandicoot 4 Its About Time v1.2.nsp",
+      "download": "Crash Bandicoot 4 Its About Time.nsp",
       "dlc": "Crash Bandicoot 4 Its About Time DLC Totally Tubular Skins Coco.nsp",
-      "update": null
+      "update": "Crash Bandicoot 4 Its About Time v1.2.nsp"
     }
   },
   {
@@ -10890,9 +10890,9 @@
   {
     "title": "Fire Emblem Engage eShop 2.0.0",
     "data": {
-      "download": "Fire Emblem Engage v327680.nsp",
+      "download": "Fire Emblem Engage.xci",
       "dlc": "Fire Emblem Engage DLC Order of Heroes Item Set.nsp",
-      "update": null
+      "update": "Fire Emblem Engage v327680.nsp"
     }
   },
   {
@@ -10916,7 +10916,7 @@
     "data": {
       "download": "The Witcher 3 The Wild Hunt Complete Edition Europe.zip",
       "dlc": null,
-      "update": null
+      "update": "The Witcher 3 The Wild Hunt Complete Edition v458752.nsp"
     }
   },
   {
@@ -10932,7 +10932,7 @@
     "data": {
       "download": "Mario Rabbids Kingdom Battle.xci",
       "dlc": null,
-      "update": null
+      "update": "Mario Plus Rabbids Kingdom Battle v589824.nsp"
     }
   },
   {
@@ -10970,17 +10970,17 @@
   {
     "title": "Splatoon 3 10.0.1",
     "data": {
-      "download": "Splatoon 3 v10.0.1.nsp",
+      "download": "Splatoon 3.nsp",
       "dlc": "Splatoon 3 Dlc Battle Boosting Bonuses.nsp",
-      "update": "Splatoon 3 v10.0.1.nsp"
+      "update": "Splatoon 3 Dlc Inkopolis v393216.nsp"
     }
   },
   {
     "title": "Mario Party Superstars 1.1.1",
     "data": {
-      "download": "Mario Party Superstars v131072.nsp",
+      "download": "Mario Party Superstars.nsp",
       "dlc": null,
-      "update": null
+      "update": "Mario Party Superstars v131072.nsp"
     }
   },
   {
@@ -11004,7 +11004,7 @@
     "data": {
       "download": null,
       "dlc": "Mortal Kombat 1 v1.25.0 DLC.nsp",
-      "update": "Mortal Kombat 1 v1.25.0 DLC.nsp"
+      "update": "Mortal Kombat 1 v1.29.0.nsp"
     }
   },
   {
@@ -11026,7 +11026,7 @@
   {
     "title": "Mario Kart 8 Deluxe 3.0.5",
     "data": {
-      "download": "Mario Kart 8 Deluxe v3.0.5.nsp",
+      "download": "Mario Kart 8 Deluxe.nsp",
       "dlc": "Mario Kart 8 Deluxe Wave 1-6 dlc unlocker.nsp",
       "update": "Mario Kart 8 Deluxe v3.0.5.nsp"
     }
@@ -11050,9 +11050,9 @@
   {
     "title": "Metroid Dread 2.1.0",
     "data": {
-      "download": "Metroid Dread v327680.nsp",
+      "download": "Metroid Dread.xci",
       "dlc": null,
-      "update": null
+      "update": "Metroid Dread v327680.nsp"
     }
   },
   {
@@ -11084,7 +11084,7 @@
     "data": {
       "download": "Monster Hunter Rise.nsp",
       "dlc": "Monster Hunter Rise 264 DLC.rar",
-      "update": null
+      "update": "Monster Hunter Rise v2228224.nsp"
     }
   }
 ]
