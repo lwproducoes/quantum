@@ -1,12 +1,12 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
-import { createWriteStream, existsSync, readdirSync, readFileSync, WriteStream } from 'fs'
-import { mkdir, unlink } from 'fs/promises'
+import { existsSync, readdirSync, readFileSync, WriteStream } from 'fs'
+import { mkdir } from 'fs/promises'
 import { get } from 'https'
 import { Level } from 'level'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
-import { SevenZip } from './services/7zip'
+import { performDownload } from './performDownload'
 import { DownloadQueue } from './services/download-queue'
 import { DatanodesApi } from './services/hosters/datanodes'
 import { logger } from './services/logger'
@@ -51,13 +51,45 @@ function createWindow(): void {
 let settingsDb: Level<string, any> | null = null
 let updaterService: UpdaterService | null = null
 const downloadQueue = new DownloadQueue()
-const activeDownloads = new Map<
+export const activeDownloads = new Map<
   string,
   { request?: ReturnType<typeof get>; fileStream?: WriteStream }
 >()
-const cancelledDownloads = new Set<string>()
+export const cancelledDownloads = new Set<string>()
 
 const makeDownloadKey = (url: string, kind: 'base' | 'update' | 'dlc' = 'base') => `${url}::${kind}`
+
+export type Provider = 'romslab' | 'nswpedia'
+export type DownloadKind = 'base' | 'update' | 'dlc'
+
+function normalizeTitle(str: string): string {
+  // eslint-disable-next-line no-control-regex
+  const CONTROL_CHARS_RE = /[\x00-\x1F\x7F]/g
+  return (str || 'game')
+    .normalize('NFD')
+    .replace(CONTROL_CHARS_RE, '')
+    .replaceAll(/[\u0300-\u036f]/g, '')
+    .replace('™', '')
+    .replaceAll(/[<>:"/\\|?*]+/g, '_')
+    .trim()
+}
+
+function buildPaths(baseDir: string, safeTitle: string, kind: DownloadKind) {
+  const targetRoot = join(baseDir, safeTitle)
+  const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
+  const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
+  const filename = subfolder ? `${safeTitle}-${subfolder}.rar` : `${safeTitle}.rar`
+  const filePath = join(targetRoot, filename)
+  return { targetRoot, extractPath, filename, filePath }
+}
+
+async function resolveRealDownloadUrl(provider: Provider, downloadUrl: string): Promise<string> {
+  // For now all links are resolved via Datanodes; route by provider if needed later
+  logger.debug('Getting real download URL from:', downloadUrl, 'provider:', provider)
+  const real = await DatanodesApi.getDownloadUrl(downloadUrl)
+  logger.debug('Real download URL:', real.slice(0, 20) + '...')
+  return real
+}
 
 app.whenReady().then(async () => {
   electronApp.setAppUserModelId('com.jgco.quantum')
@@ -211,7 +243,8 @@ app.whenReady().then(async () => {
       event,
       downloadUrl: string,
       gameTitle: string,
-      kind: 'base' | 'update' | 'dlc' = 'base'
+      provider: Provider,
+      kind: DownloadKind = 'base'
     ) => {
       const webContents = event.sender
       try {
@@ -222,23 +255,9 @@ app.whenReady().then(async () => {
         }
 
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
-        const safeTitle = (gameTitle || 'game')
-          .normalize('NFD')
-          .replaceAll(/[\u0300-\u036f]/g, '')
-          .replace('™', '')
-          .replaceAll(/[<>:"/\\|?*]+/g, '_')
-          .trim()
-
-        logger.debug('Getting real download URL from:', downloadUrl)
-        const realDownloadUrl = await DatanodesApi.getDownloadUrl(downloadUrl)
-        logger.debug('Real download URL:', realDownloadUrl.slice(0, 20) + '...')
-
-        const targetRoot = join(baseDir, safeTitle)
-        const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
-        const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
-
-        const filename = subfolder ? `${safeTitle}-${subfolder}.rar` : `${safeTitle}.rar`
-        const filePath = join(targetRoot, filename)
+        const safeTitle = normalizeTitle(gameTitle)
+        const realDownloadUrl = await resolveRealDownloadUrl(provider, downloadUrl)
+        const { extractPath, filename, filePath } = buildPaths(baseDir, safeTitle, kind)
         await mkdir(extractPath, { recursive: true })
 
         const downloadKey = makeDownloadKey(downloadUrl, kind)
@@ -254,120 +273,16 @@ app.whenReady().then(async () => {
 
           // Notify renderer that this queued task started
           webContents.send('download:started', { url: downloadUrl, kind })
-
-          return await new Promise<{ success: boolean; filePath: string }>((resolve, reject) => {
-            const request = get(realDownloadUrl, (response) => {
-              if (response.statusCode !== 200) {
-                reject(new Error(`Failed to download: ${response.statusCode}`))
-                return
-              }
-
-              const totalSize = parseInt(response.headers['content-length'] || '0', 10)
-              let downloadedSize = 0
-
-              const fileStream = createWriteStream(filePath)
-              activeDownloads.set(downloadKey, { request, fileStream })
-
-              const cleanup = () => {
-                activeDownloads.delete(downloadKey)
-                cancelledDownloads.delete(downloadKey)
-              }
-
-              response.on('data', (chunk) => {
-                downloadedSize += chunk.length
-                const progress = totalSize > 0 ? (downloadedSize / totalSize) * 100 : 0
-
-                webContents.send('download:progress', {
-                  url: downloadUrl,
-                  progress,
-                  downloadedSize,
-                  totalSize,
-                  filename,
-                  kind
-                })
-              })
-
-              response.pipe(fileStream)
-
-              fileStream.on('finish', async () => {
-                fileStream.close()
-                cleanup()
-
-                try {
-                  await SevenZip.extractFile({ filePath, outputPath: extractPath }, (progress) => {
-                    const percent = typeof progress?.percent === 'number' ? progress.percent : 0
-                    webContents.send('download:extract-progress', {
-                      url: downloadUrl,
-                      progress: percent,
-                      kind
-                    })
-                  })
-
-                  try {
-                    await unlink(filePath)
-                  } catch (cleanupErr) {
-                    logger.warn('Failed to delete archive after extraction:', cleanupErr)
-                  }
-
-                  webContents.send('download:complete', {
-                    url: downloadUrl,
-                    filename,
-                    filePath,
-                    extractedTo: extractPath,
-                    kind
-                  })
-                  resolve({ success: true, filePath })
-                } catch (extractErr: any) {
-                  logger.error('Extraction failed:', extractErr)
-                  cleanup()
-                  webContents.send('download:error', {
-                    url: downloadUrl,
-                    error: extractErr?.message || 'Extraction failed',
-                    kind
-                  })
-                  reject(extractErr)
-                }
-              })
-
-              fileStream.on('error', (err) => {
-                fileStream.close()
-                const isCancelled = cancelledDownloads.has(downloadKey)
-                cleanup()
-
-                if (isCancelled) {
-                  unlink(filePath).catch(() => {})
-                  webContents.send('download:cancelled', { url: downloadUrl, kind })
-                  resolve({ success: false, filePath })
-                  return
-                }
-
-                webContents.send('download:error', {
-                  url: downloadUrl,
-                  error: err.message,
-                  kind
-                })
-                reject(err)
-              })
-            })
-
-            request.on('error', (err) => {
-              const isCancelled = cancelledDownloads.has(downloadKey)
-              activeDownloads.delete(downloadKey)
-
-              if (isCancelled) {
-                unlink(filePath).catch(() => {})
-                webContents.send('download:cancelled', { url: downloadUrl, kind })
-                resolve({ success: false, filePath })
-                return
-              }
-
-              webContents.send('download:error', {
-                url: downloadUrl,
-                error: err.message,
-                kind
-              })
-              reject(err)
-            })
+          return await performDownload({
+            webContents,
+            realDownloadUrl,
+            downloadUrl,
+            filename,
+            filePath,
+            extractPath,
+            kind,
+            provider,
+            downloadKey
           })
         })
       } catch (err: any) {
