@@ -1,10 +1,10 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
-import { existsSync, readdirSync, readFileSync, WriteStream } from 'fs'
-import { mkdir } from 'fs/promises'
-import { get } from 'https'
 import { Level } from 'level'
-import { join } from 'path'
+import { existsSync, readdirSync, readFileSync, WriteStream } from 'node:fs'
+import { mkdir } from 'node:fs/promises'
+import { get } from 'node:https'
+import { join } from 'node:path'
 import icon from '../../resources/icon.png?asset'
 import { performDownload } from './performDownload'
 import { DownloadQueue } from './services/download-queue'
@@ -52,10 +52,12 @@ function createWindow(): void {
 let settingsDb: Level<string, any> | null = null
 let updaterService: UpdaterService | null = null
 const downloadQueue = new DownloadQueue()
+
 export const activeDownloads = new Map<
   string,
   { request?: ReturnType<typeof get>; fileStream?: WriteStream }
 >()
+
 export const cancelledDownloads = new Set<string>()
 
 const makeDownloadKey = (url: string, kind: DownloadKind = 'base') => `${url}::${kind}`
@@ -73,6 +75,17 @@ function normalizeTitle(str: string): string {
     .trim()
 }
 
+function normalizeText(str: string): string {
+  return (str || '')
+    .normalize('NFD')
+    .replaceAll(/[\u0300-\u036f]/g, '')
+    .replace('™', '')
+    .replaceAll(/[<>:"/\\|?*]+/g, '')
+    .replaceAll(/[.,;!?'"()[\]{}]/g, '')
+    .toLowerCase()
+    .trim()
+}
+
 function buildPaths(
   baseDir: string,
   safeTitle: string,
@@ -80,7 +93,12 @@ function buildPaths(
   extensionPath: string = 'rar'
 ) {
   const targetRoot = join(baseDir, safeTitle)
-  const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
+  let subfolder = ''
+  if (kind === 'update') {
+    subfolder = 'Update'
+  } else if (kind === 'dlc') {
+    subfolder = 'DLC'
+  }
   const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
   const filename = subfolder
     ? `${safeTitle}-${subfolder}.${extensionPath}`
@@ -101,287 +119,276 @@ async function resolveRealDownloadUrl(provider: Provider, downloadUrl: string): 
   return `https://download.nswpediax.site/${downloadUrl}`
 }
 
-app.whenReady().then(async () => {
-  electronApp.setAppUserModelId('com.jgco.quantum')
+await app.whenReady()
 
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
+electronApp.setAppUserModelId('com.jgco.quantum')
+
+app.on('browser-window-created', (_, window) => {
+  optimizer.watchWindowShortcuts(window)
+})
+
+// Directory selection dialog
+ipcMain.handle('dialog:selectDirectory', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openDirectory', 'createDirectory']
   })
 
-  // Directory selection dialog
-  ipcMain.handle('dialog:selectDirectory', async () => {
-    const result = await dialog.showOpenDialog({
-      properties: ['openDirectory', 'createDirectory']
-    })
+  if (result.canceled) return null
+  return result.filePaths?.[0] ?? null
+})
 
-    if (result.canceled) return null
-    return result.filePaths?.[0] ?? null
-  })
+// Initialize LevelDB for settings
+try {
+  const dbPath = join(app.getPath('userData'), 'settings')
+  settingsDb = new Level<string, any>(dbPath, { valueEncoding: 'json' })
+} catch (err) {
+  logger.error('Failed to initialize settings DB:', err)
+}
 
-  // Initialize LevelDB for settings
+// Settings: get value by key
+ipcMain.handle('settings:get', async (_event, key: string) => {
+  if (!settingsDb) return null
   try {
-    const dbPath = join(app.getPath('userData'), 'settings')
-    settingsDb = new Level<string, any>(dbPath, { valueEncoding: 'json' })
+    const val = await settingsDb.get(key)
+    return val ?? null
+  } catch (err: any) {
+    if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
+    logger.error('settings:get error', err)
+    return null
+  }
+})
+
+// Settings: set value by key
+ipcMain.handle('settings:set', async (_event, key: string, value: any) => {
+  if (!settingsDb) return false
+  try {
+    await settingsDb.put(key, value)
+    return true
   } catch (err) {
-    logger.error('Failed to initialize settings DB:', err)
+    logger.error('settings:set error', err)
+    return false
   }
+})
 
-  // Settings: get value by key
-  ipcMain.handle('settings:get', async (_event, key: string) => {
-    if (!settingsDb) return null
-    try {
-      const val = await settingsDb.get(key)
-      return val ?? null
-    } catch (err: any) {
-      if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
-      logger.error('settings:get error', err)
-      return null
-    }
-  })
+// Cache: get value by key
+ipcMain.handle('cache:get', async (_event, key: string) => {
+  if (!settingsDb) return null
+  try {
+    const val = await settingsDb.get(`cache:${key}`)
+    return val ?? null
+  } catch (err: any) {
+    if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
+    logger.error('cache:get error', err)
+    return null
+  }
+})
 
-  // Settings: set value by key
-  ipcMain.handle('settings:set', async (_event, key: string, value: any) => {
-    if (!settingsDb) return false
-    try {
-      await settingsDb.put(key, value)
-      return true
-    } catch (err) {
-      logger.error('settings:set error', err)
-      return false
-    }
-  })
+// Cache: set value by key
+ipcMain.handle('cache:set', async (_event, key: string, value: any) => {
+  if (!settingsDb) return false
+  try {
+    await settingsDb.put(`cache:${key}`, value)
+    return true
+  } catch (err) {
+    logger.error('cache:set error', err)
+    return false
+  }
+})
 
-  // Cache: get value by key
-  ipcMain.handle('cache:get', async (_event, key: string) => {
-    if (!settingsDb) return null
-    try {
-      const val = await settingsDb.get(`cache:${key}`)
-      return val ?? null
-    } catch (err: any) {
-      if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return null
-      logger.error('cache:get error', err)
-      return null
-    }
-  })
+// Cache: delete value by key
+ipcMain.handle('cache:delete', async (_event, key: string) => {
+  if (!settingsDb) return false
+  try {
+    await settingsDb.del(`cache:${key}`)
+    return true
+  } catch (err: any) {
+    if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return true
+    logger.error('cache:delete error', err)
+    return false
+  }
+})
 
-  // Cache: set value by key
-  ipcMain.handle('cache:set', async (_event, key: string, value: any) => {
-    if (!settingsDb) return false
-    try {
-      await settingsDb.put(`cache:${key}`, value)
-      return true
-    } catch (err) {
-      logger.error('cache:set error', err)
-      return false
-    }
-  })
+// Providers: list available providers by folder
+ipcMain.handle('providers:list', async () => {
+  try {
+    const providersRoot = resolveProvidersRoot()
+    const entries = readdirSync(providersRoot, { withFileTypes: true })
+    const providers = entries
+      .filter((e) => e.isDirectory() && existsSync(join(providersRoot, e.name, 'index.json')))
+      .map((e) => e.name)
+    return providers
+  } catch (err) {
+    logger.error('providers:list error', err)
+    return []
+  }
+})
 
-  // Cache: delete value by key
-  ipcMain.handle('cache:delete', async (_event, key: string) => {
-    if (!settingsDb) return false
-    try {
-      await settingsDb.del(`cache:${key}`)
-      return true
-    } catch (err: any) {
-      if (err && (err.notFound || err.code === 'LEVEL_NOT_FOUND')) return true
-      logger.error('cache:delete error', err)
-      return false
-    }
-  })
+// Providers: check if a game exists in any provider (accent/case-insensitive)
+ipcMain.handle('providers:checkGame', async (_event, title: string) => {
+  try {
+    const providersRoot = resolveProvidersRoot()
+    const entries = readdirSync(providersRoot, { withFileTypes: true })
+    const target = normalizeText(title)
+    const matches: Array<{ provider: string; item: any }> = []
 
-  // Providers: list available providers by folder
-  ipcMain.handle('providers:list', async () => {
-    try {
-      const providersRoot = resolveProvidersRoot()
-      const entries = readdirSync(providersRoot, { withFileTypes: true })
-      const providers = entries
-        .filter((e) => e.isDirectory() && existsSync(join(providersRoot, e.name, 'index.json')))
-        .map((e) => e.name)
-      return providers
-    } catch (err) {
-      logger.error('providers:list error', err)
-      return []
-    }
-  })
-
-  // Providers: check if a game exists in any provider (accent/case-insensitive)
-  ipcMain.handle('providers:checkGame', async (_event, title: string) => {
-    function normalizeText(str: string): string {
-      return (str || '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace('™', '')
-        .replaceAll(/[<>:"/\\|?*]+/g, '')
-        .replaceAll(/[.,;!?'"()[\]{}]/g, '')
-        .toLowerCase()
-        .trim()
-    }
-
-    try {
-      const providersRoot = resolveProvidersRoot()
-      const entries = readdirSync(providersRoot, { withFileTypes: true })
-      const target = normalizeText(title)
-      const matches: Array<{ provider: string; item: any }> = []
-
-      for (const e of entries) {
-        if (!e.isDirectory()) continue
-        const name = e.name
-        const indexPath = join(providersRoot, name, 'index.json')
-        if (!existsSync(indexPath)) continue
-        try {
-          const content = readFileSync(indexPath, 'utf-8')
-          const list: ProviderGameItem[] = JSON.parse(content)
-          logger.debug(`providers:checkGame checking provider ${name} with ${list.length} items`)
-          const item = list.find(
-            (it: ProviderGameItem) => normalizeText(it.title).includes(target) && it.data.download
-          )
-          if (item) {
-            matches.push({ provider: name, item })
-          }
-        } catch (err) {
-          logger.error(`providers:checkGame read ${indexPath} error`, err)
-        }
-      }
-
-      return { providers: matches }
-    } catch (err) {
-      logger.error('providers:checkGame error', err)
-      return { providers: [] }
-    }
-  })
-
-  // Download: start download with real-time progress, queued sequentially
-  ipcMain.handle(
-    'download:start',
-    async (
-      event,
-      downloadUrl: string,
-      gameTitle: string,
-      provider: Provider,
-      kind: DownloadKind = 'base'
-    ) => {
-      const webContents = event.sender
+    for (const e of entries) {
+      if (!e.isDirectory()) continue
+      const name = e.name
+      const indexPath = join(providersRoot, name, 'index.json')
+      if (!existsSync(indexPath)) continue
       try {
-        // Prepare parameters up-front (fetch real URL, paths) before enqueue
-        const downloadDir = await settingsDb?.get('downloadFolder')
-        if (!downloadDir) {
-          throw new Error('Download directory not configured')
+        const content = readFileSync(indexPath, 'utf-8')
+        const list: ProviderGameItem[] = JSON.parse(content)
+        logger.debug(`providers:checkGame checking provider ${name} with ${list.length} items`)
+        const item = list.find(
+          (it: ProviderGameItem) => normalizeText(it.title).includes(target) && it.data.download
+        )
+        if (item) {
+          matches.push({ provider: name, item })
         }
-
-        const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
-        const safeTitle = normalizeTitle(gameTitle)
-        const realDownloadUrl = await resolveRealDownloadUrl(provider, downloadUrl)
-        const extension = provider === 'nswpedia' ? downloadUrl.split('.').pop() : undefined
-        const { extractPath, filename, filePath } = buildPaths(baseDir, safeTitle, kind, extension)
-        await mkdir(extractPath, { recursive: true })
-
-        const downloadKey = makeDownloadKey(downloadUrl, kind)
-        cancelledDownloads.delete(downloadKey)
-
-        // Enqueue the actual download task to run sequentially
-        return downloadQueue.enqueue(async () => {
-          if (cancelledDownloads.has(downloadKey)) {
-            cancelledDownloads.delete(downloadKey)
-            webContents.send('download:cancelled', { url: downloadUrl, kind })
-            return { success: false, filePath }
-          }
-
-          // Notify renderer that this queued task started
-          webContents.send('download:started', { url: downloadUrl, kind })
-          return await performDownload({
-            webContents,
-            realDownloadUrl,
-            downloadUrl,
-            filename,
-            filePath,
-            extractPath,
-            kind,
-            provider,
-            downloadKey
-          })
-        })
-      } catch (err: any) {
-        logger.error('download:start error', err)
-        webContents.send('download:error', {
-          url: downloadUrl,
-          error: err.message,
-          kind
-        })
-        throw err
-      }
-    }
-  )
-
-  ipcMain.handle(
-    'download:cancel',
-    async (_event, downloadUrl: string, kind: 'base' | 'update' | 'dlc' = 'base') => {
-      const key = makeDownloadKey(downloadUrl, kind)
-      cancelledDownloads.add(key)
-
-      const active = activeDownloads.get(key)
-      try {
-        active?.request?.destroy(new Error('Download cancelled'))
-        active?.fileStream?.destroy(new Error('Download cancelled'))
       } catch (err) {
-        logger.warn('download:cancel cleanup warning', err)
+        logger.error(`providers:checkGame read ${indexPath} error`, err)
       }
-
-      return true
     }
-  )
 
-  // IPC handlers for updater
-  ipcMain.handle('updater:check', async () => {
-    if (updaterService) {
-      await updaterService.checkForUpdates()
-    }
-  })
-
-  ipcMain.handle('updater:download', async () => {
-    if (updaterService) {
-      await updaterService.downloadUpdate()
-    }
-  })
-
-  ipcMain.handle('updater:install', () => {
-    if (updaterService) {
-      updaterService.quitAndInstall()
-    }
-  })
-
-  // Logger handlers
-  ipcMain.on('logger:log', (_event, args: any[]) => {
-    logger.log(...args)
-  })
-  ipcMain.on('logger:error', (_event, args: any[]) => {
-    logger.error(...args)
-  })
-  ipcMain.on('logger:warn', (_event, args: any[]) => {
-    logger.warn(...args)
-  })
-  ipcMain.on('logger:info', (_event, args: any[]) => {
-    logger.info(...args)
-  })
-
-  createWindow()
-
-  // Initialize updater service after window is created
-  const mainWindow = BrowserWindow.getAllWindows()[0]
-  if (mainWindow) {
-    updaterService = new UpdaterService(mainWindow)
-    // Check for updates 3 seconds after app start
-    setTimeout(() => {
-      if (updaterService && !is.dev) {
-        updaterService.checkForUpdates()
-      }
-    }, 3000)
+    return { providers: matches }
+  } catch (err) {
+    logger.error('providers:checkGame error', err)
+    return { providers: [] }
   }
+})
 
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+// Download: start download with real-time progress, queued sequentially
+ipcMain.handle(
+  'download:start',
+  async (
+    event,
+    downloadUrl: string,
+    gameTitle: string,
+    provider: Provider,
+    kind: DownloadKind = 'base'
+  ) => {
+    const webContents = event.sender
+    try {
+      // Prepare parameters up-front (fetch real URL, paths) before enqueue
+      const downloadDir = await settingsDb?.get('downloadFolder')
+      if (!downloadDir) {
+        throw new Error('Download directory not configured')
+      }
+
+      const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
+      const safeTitle = normalizeTitle(gameTitle)
+      const realDownloadUrl = await resolveRealDownloadUrl(provider, downloadUrl)
+      const extension = provider === 'nswpedia' ? downloadUrl.split('.').pop() : undefined
+      const { extractPath, filename, filePath } = buildPaths(baseDir, safeTitle, kind, extension)
+      await mkdir(extractPath, { recursive: true })
+
+      const downloadKey = makeDownloadKey(downloadUrl, kind)
+      cancelledDownloads.delete(downloadKey)
+
+      // Enqueue the actual download task to run sequentially
+      return downloadQueue.enqueue(async () => {
+        if (cancelledDownloads.has(downloadKey)) {
+          cancelledDownloads.delete(downloadKey)
+          webContents.send('download:cancelled', { url: downloadUrl, kind })
+          return { success: false, filePath }
+        }
+
+        // Notify renderer that this queued task started
+        webContents.send('download:started', { url: downloadUrl, kind })
+        return await performDownload({
+          webContents,
+          realDownloadUrl,
+          downloadUrl,
+          filename,
+          filePath,
+          extractPath,
+          kind,
+          provider,
+          downloadKey
+        })
+      })
+    } catch (err: any) {
+      logger.error('download:start error', err)
+      webContents.send('download:error', {
+        url: downloadUrl,
+        error: err.message,
+        kind
+      })
+      throw err
+    }
+  }
+)
+
+ipcMain.handle(
+  'download:cancel',
+  async (_event, downloadUrl: string, kind: 'base' | 'update' | 'dlc' = 'base') => {
+    const key = makeDownloadKey(downloadUrl, kind)
+    cancelledDownloads.add(key)
+
+    const active = activeDownloads.get(key)
+    try {
+      active?.request?.destroy(new Error('Download cancelled'))
+      active?.fileStream?.destroy(new Error('Download cancelled'))
+    } catch (err) {
+      logger.warn('download:cancel cleanup warning', err)
+    }
+
+    return true
+  }
+)
+
+// IPC handlers for updater
+ipcMain.handle('updater:check', async () => {
+  if (updaterService) {
+    await updaterService.checkForUpdates()
+  }
+})
+
+ipcMain.handle('updater:download', async () => {
+  if (updaterService) {
+    await updaterService.downloadUpdate()
+  }
+})
+
+ipcMain.handle('updater:install', () => {
+  if (updaterService) {
+    updaterService.quitAndInstall()
+  }
+})
+
+// Logger handlers
+ipcMain.on('logger:log', (_event, args: any[]) => {
+  logger.log(...args)
+})
+ipcMain.on('logger:error', (_event, args: any[]) => {
+  logger.error(...args)
+})
+ipcMain.on('logger:warn', (_event, args: any[]) => {
+  logger.warn(...args)
+})
+ipcMain.on('logger:info', (_event, args: any[]) => {
+  logger.info(...args)
+})
+
+createWindow()
+
+// Initialize updater service after window is created
+const mainWindow = BrowserWindow.getAllWindows()[0]
+if (mainWindow) {
+  updaterService = new UpdaterService(mainWindow)
+  // Check for updates 3 seconds after app start
+  setTimeout(() => {
+    if (updaterService && !is.dev) {
+      updaterService.checkForUpdates()
+    }
+  }, 3000)
+}
+
+app.on('activate', function () {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
 // Resolve providers folder in dev vs packaged
