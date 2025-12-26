@@ -1,7 +1,7 @@
-import { createWriteStream } from 'fs'
-import { mkdir, rename, unlink } from 'fs/promises'
-import { get } from 'https'
-import { join } from 'path/posix'
+import { createWriteStream } from 'node:fs'
+import { mkdir, rename, unlink } from 'node:fs/promises'
+import { get } from 'node:https'
+import { join } from 'node:path/posix'
 import { activeDownloads, cancelledDownloads } from '.'
 import { SevenZip } from './services/7zip'
 import { logger } from './services/logger'
@@ -49,7 +49,7 @@ export function performDownload(ctx: {
         }
 
         // Extract real filename from Content-Disposition header
-        const totalSize = parseInt(response.headers['content-length'] || '0', 10)
+        const totalSize = Number.parseInt(response.headers['content-length'] || '0', 10)
         let downloadedSize = 0
 
         const fileStream = createWriteStream(filePath)
@@ -94,8 +94,8 @@ export function performDownload(ctx: {
               })
               try {
                 await unlink(filePath)
-              } catch (cleanupErr) {
-                logger.warn('Failed to delete archive after extraction:', cleanupErr)
+              } catch (error) {
+                logger.warn('Failed to delete archive after extraction:', error)
               }
             } else {
               try {
@@ -105,8 +105,8 @@ export function performDownload(ctx: {
                   const destFilePath = join(destPath, filename)
                   await rename(filePath, destFilePath)
                 }
-              } catch (cleanupErr) {
-                logger.warn('Failed to handle NSP/NSZ file after download:', cleanupErr)
+              } catch (error) {
+                logger.warn('Failed to handle NSP/NSZ file after download:', error)
               }
             }
 
@@ -118,15 +118,15 @@ export function performDownload(ctx: {
               kind
             })
             resolve({ success: true, filePath })
-          } catch (extractErr: any) {
-            logger.error('Extraction failed:', extractErr)
+          } catch (error: any) {
+            logger.error('Extraction failed:', error)
             cleanup()
             webContents.send('download:error', {
               url: downloadUrl,
-              error: extractErr?.message || 'Extraction failed',
+              error: error?.message || 'Extraction failed',
               kind
             })
-            reject(extractErr)
+            reject(error)
           }
         })
 

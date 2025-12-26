@@ -65,7 +65,7 @@ function normalizeTitle(str: string): string {
   const CONTROL_CHARS_RE = /[\x00-\x1F\x7F]/g
   return (str || 'game')
     .normalize('NFD')
-    .replace(CONTROL_CHARS_RE, '')
+    .replaceAll(CONTROL_CHARS_RE, '')
     .replaceAll(/[\u0300-\u036f]/g, '')
     .replace('™', '')
     .replaceAll(/[<>:"/\\|?*]+/g, '')
