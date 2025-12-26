@@ -10,8 +10,8 @@ import { Card, CardContent, CardTitle } from '../src/components/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../src/components/dialog'
 import { Drawer } from '../src/components/drawer'
 import { Input } from '../src/components/input'
-import { Game, Provider } from '../src/types'
-import Downloads, { DownloadItem, DownloadPart } from './Downloads'
+import { DownloadItem, DownloadPart, Game, Provider } from '../src/types'
+import Downloads from './Downloads'
 
 function Home(): React.JSX.Element {
   const navigate = useNavigate()

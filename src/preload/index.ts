@@ -1,9 +1,6 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const providers = ['romslab', 'nswpedia'] as const
-export type Provider = (typeof providers)[number]
+import { Provider } from './types'
 
 // Custom APIs for renderer
 const api = {

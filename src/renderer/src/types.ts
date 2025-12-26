@@ -2,9 +2,40 @@
 const providers = ['romslab', 'nswpedia'] as const
 export type Provider = (typeof providers)[number]
 
+// Shared game interface
 export interface Game {
   id: string
   title: string
   description: string
   imageBoxArt: string
+}
+
+// Download types
+export type DownloadPartKind = 'base' | 'update' | 'dlc'
+
+export interface DownloadPart {
+  id: string
+  url: string
+  label: string
+  kind: DownloadPartKind
+  status: 'queued' | 'downloading' | 'completed' | 'error' | 'canceled'
+  progress: number
+  downloadedBytes: number
+  totalBytes: number
+}
+
+export interface DownloadItem {
+  id: string
+  game: Game
+  progress: number
+  status: 'queued' | 'downloading' | 'completed' | 'error' | 'canceled'
+  downloadedBytes: number
+  totalBytes: number
+  parts: DownloadPart[]
+}
+
+// Cache types
+export interface CacheEntry<T = any> {
+  data: T
+  timestamp: number
 }

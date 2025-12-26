@@ -1,9 +1,10 @@
 import { createWriteStream } from 'fs'
 import { unlink } from 'fs/promises'
 import { get } from 'https'
-import { DownloadKind, Provider, activeDownloads, cancelledDownloads } from '.'
+import { activeDownloads, cancelledDownloads } from '.'
 import { SevenZip } from './services/7zip'
 import { logger } from './services/logger'
+import { DownloadKind, Provider } from './types'
 
 export function performDownload(ctx: {
   webContents: Electron.WebContents

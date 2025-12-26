@@ -1,15 +1,10 @@
-import { Game } from '@renderer/types'
+import type { CacheEntry, Game } from '@renderer/types'
 import axios from 'axios'
 import logger from './logger'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'https://quantum.lwproducoes.com/api/v1'
 })
-
-interface CacheEntry {
-  data: Game[]
-  timestamp: number
-}
 
 const CACHE_KEY = 'games_cache'
 const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds

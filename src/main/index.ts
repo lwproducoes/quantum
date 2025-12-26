@@ -11,6 +11,7 @@ import { DownloadQueue } from './services/download-queue'
 import { DatanodesApi } from './services/hosters/datanodes'
 import { logger } from './services/logger'
 import { UpdaterService } from './services/updater'
+import type { DownloadKind, Provider } from './types'
 
 function createWindow(): void {
   // Create the browser window.
@@ -57,10 +58,7 @@ export const activeDownloads = new Map<
 >()
 export const cancelledDownloads = new Set<string>()
 
-const makeDownloadKey = (url: string, kind: 'base' | 'update' | 'dlc' = 'base') => `${url}::${kind}`
-
-export type Provider = 'romslab' | 'nswpedia'
-export type DownloadKind = 'base' | 'update' | 'dlc'
+const makeDownloadKey = (url: string, kind: DownloadKind = 'base') => `${url}::${kind}`
 
 function normalizeTitle(str: string): string {
   // eslint-disable-next-line no-control-regex

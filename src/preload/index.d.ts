@@ -1,5 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import { Provider } from '@renderer/types'
+import type { Provider } from './types'
 
 declare global {
   interface Window {
