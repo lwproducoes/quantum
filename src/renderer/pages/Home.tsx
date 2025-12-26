@@ -63,7 +63,7 @@ function Home(): React.JSX.Element {
                   downloadedBytes: data.downloadedSize,
                   totalBytes: data.totalSize || p.totalBytes,
                   status: 'downloading' as const,
-                  speedBytesPerSecond: currentSpeed || undefined,
+                  speedBytesPerSecond: currentSpeed > 0 ? currentSpeed : undefined,
                   etaSeconds: partEta,
                   lastUpdatedAt: now
                 }
@@ -96,7 +96,7 @@ function Home(): React.JSX.Element {
             downloadedBytes,
             progress: progressVal,
             status: 'downloading',
-            speedBytesPerSecond: totalSpeed || undefined,
+            speedBytesPerSecond: totalSpeed > 0 ? totalSpeed : undefined,
             etaSeconds
           }
         })
@@ -139,7 +139,8 @@ function Home(): React.JSX.Element {
             progress: allCompleted ? 100 : d.progress,
             totalBytes,
             downloadedBytes,
-            speedBytesPerSecond: allCompleted ? undefined : totalSpeed || undefined,
+            speedBytesPerSecond:
+              allCompleted || totalSpeed <= 0 ? undefined : totalSpeed,
             etaSeconds: allCompleted ? undefined : etaSeconds
           }
         })
