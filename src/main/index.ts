@@ -11,7 +11,7 @@ import { DownloadQueue } from './services/download-queue'
 import { DatanodesApi } from './services/hosters/datanodes'
 import { logger } from './services/logger'
 import { UpdaterService } from './services/updater'
-import type { DownloadKind, Provider } from './types'
+import type { DownloadKind, Provider, ProviderGameItem } from './types'
 
 function createWindow(): void {
   // Create the browser window.
@@ -68,15 +68,23 @@ function normalizeTitle(str: string): string {
     .replace(CONTROL_CHARS_RE, '')
     .replaceAll(/[\u0300-\u036f]/g, '')
     .replace('™', '')
-    .replaceAll(/[<>:"/\\|?*]+/g, '_')
+    .replaceAll(/[<>:"/\\|?*]+/g, '')
+    .replaceAll(/[.,;!?'"()[\]{}]/g, '')
     .trim()
 }
 
-function buildPaths(baseDir: string, safeTitle: string, kind: DownloadKind) {
+function buildPaths(
+  baseDir: string,
+  safeTitle: string,
+  kind: DownloadKind,
+  extensionPath: string = 'rar'
+) {
   const targetRoot = join(baseDir, safeTitle)
   const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
   const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
-  const filename = subfolder ? `${safeTitle}-${subfolder}.rar` : `${safeTitle}.rar`
+  const filename = subfolder
+    ? `${safeTitle}-${subfolder}.${extensionPath}`
+    : `${safeTitle}.${extensionPath}`
   const filePath = join(targetRoot, filename)
   return { targetRoot, extractPath, filename, filePath }
 }
@@ -84,9 +92,13 @@ function buildPaths(baseDir: string, safeTitle: string, kind: DownloadKind) {
 async function resolveRealDownloadUrl(provider: Provider, downloadUrl: string): Promise<string> {
   // For now all links are resolved via Datanodes; route by provider if needed later
   logger.debug('Getting real download URL from:', downloadUrl, 'provider:', provider)
-  const real = await DatanodesApi.getDownloadUrl(downloadUrl)
-  logger.debug('Real download URL:', real.slice(0, 20) + '...')
-  return real
+  if (provider === 'romslab') {
+    const real = await DatanodesApi.getDownloadUrl(downloadUrl)
+    logger.debug('Real download URL:', real.slice(0, 20) + '...')
+    return real
+  }
+
+  return `https://download.nswpediax.site/${downloadUrl}`
 }
 
 app.whenReady().then(async () => {
@@ -199,6 +211,8 @@ app.whenReady().then(async () => {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace('™', '')
+        .replaceAll(/[<>:"/\\|?*]+/g, '')
+        .replaceAll(/[.,;!?'"()[\]{}]/g, '')
         .toLowerCase()
         .trim()
     }
@@ -216,9 +230,11 @@ app.whenReady().then(async () => {
         if (!existsSync(indexPath)) continue
         try {
           const content = readFileSync(indexPath, 'utf-8')
-          const list: any[] = JSON.parse(content)
+          const list: ProviderGameItem[] = JSON.parse(content)
           logger.debug(`providers:checkGame checking provider ${name} with ${list.length} items`)
-          const item = list.find((it: any) => normalizeText(it?.title) === target)
+          const item = list.find(
+            (it: ProviderGameItem) => normalizeText(it.title).includes(target) && it.data.download
+          )
           if (item) {
             matches.push({ provider: name, item })
           }
@@ -255,7 +271,8 @@ app.whenReady().then(async () => {
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
         const safeTitle = normalizeTitle(gameTitle)
         const realDownloadUrl = await resolveRealDownloadUrl(provider, downloadUrl)
-        const { extractPath, filename, filePath } = buildPaths(baseDir, safeTitle, kind)
+        const extension = provider === 'nswpedia' ? downloadUrl.split('.').pop() : undefined
+        const { extractPath, filename, filePath } = buildPaths(baseDir, safeTitle, kind, extension)
         await mkdir(extractPath, { recursive: true })
 
         const downloadKey = makeDownloadKey(downloadUrl, kind)

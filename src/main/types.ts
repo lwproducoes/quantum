@@ -22,3 +22,12 @@ export interface ExtractionResult {
   success: boolean
   extractedFiles: string[]
 }
+
+export interface ProviderGameItem {
+  title: string
+  data: {
+    download?: string
+    update?: string
+    dlc?: string
+  }
+}

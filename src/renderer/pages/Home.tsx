@@ -443,7 +443,9 @@ function Home(): React.JSX.Element {
                         <Download className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <CardTitle className="text-base mb-1">Direct Download</CardTitle>
+                        <CardTitle className="text-base mb-1">
+                          Direct Download - {pm.provider.toUpperCase()}
+                        </CardTitle>
                         <p className="text-sm text-muted-foreground">Direct server download</p>
                       </div>
                     </CardContent>
