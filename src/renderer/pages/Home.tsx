@@ -37,10 +37,23 @@ function Home(): React.JSX.Element {
       filename: string
       kind?: 'base' | 'update' | 'dlc'
     }) => {
+      const now = Date.now()
       setDownloads((prev) =>
         prev.map((d) => {
           const part = d.parts.find((p) => p.url === data.url)
           if (!part) return d
+          const timeDiffSeconds = part.lastUpdatedAt ? (now - part.lastUpdatedAt) / 1000 : 0
+          const deltaBytes = data.downloadedSize - part.downloadedBytes
+          const currentSpeed =
+            timeDiffSeconds > 0 && deltaBytes >= 0
+              ? deltaBytes / timeDiffSeconds
+              : part.speedBytesPerSecond || 0
+          const remainingBytesForPart =
+            data.totalSize > 0 ? Math.max(data.totalSize - data.downloadedSize, 0) : 0
+          const partEta =
+            currentSpeed > 0 && remainingBytesForPart > 0
+              ? remainingBytesForPart / currentSpeed
+              : undefined
 
           const updatedParts = d.parts.map((p) =>
             p.url === data.url
@@ -49,7 +62,10 @@ function Home(): React.JSX.Element {
                   progress: data.progress,
                   downloadedBytes: data.downloadedSize,
                   totalBytes: data.totalSize || p.totalBytes,
-                  status: 'downloading' as const
+                  status: 'downloading' as const,
+                  speedBytesPerSecond: currentSpeed || undefined,
+                  etaSeconds: partEta,
+                  lastUpdatedAt: now
                 }
               : p
           )
@@ -59,6 +75,14 @@ function Home(): React.JSX.Element {
             0
           )
           const downloadedBytes = updatedParts.reduce((sum, p) => sum + p.downloadedBytes, 0)
+
+          const totalSpeed = updatedParts.reduce(
+            (sum, p) => sum + (p.speedBytesPerSecond ?? 0),
+            0
+          )
+          const remainingBytes = totalBytes > 0 ? Math.max(totalBytes - downloadedBytes, 0) : 0
+          const etaSeconds =
+            totalSpeed > 0 && remainingBytes > 0 ? remainingBytes / totalSpeed : undefined
 
           const progressVal =
             totalBytes > 0
@@ -71,7 +95,9 @@ function Home(): React.JSX.Element {
             totalBytes,
             downloadedBytes,
             progress: progressVal,
-            status: 'downloading'
+            status: 'downloading',
+            speedBytesPerSecond: totalSpeed || undefined,
+            etaSeconds
           }
         })
       )
@@ -98,6 +124,13 @@ function Home(): React.JSX.Element {
             0
           )
           const downloadedBytes = updatedParts.reduce((sum, p) => sum + p.downloadedBytes, 0)
+          const totalSpeed = updatedParts.reduce(
+            (sum, p) => sum + (p.speedBytesPerSecond ?? 0),
+            0
+          )
+          const remainingBytes = totalBytes > 0 ? Math.max(totalBytes - downloadedBytes, 0) : 0
+          const etaSeconds =
+            totalSpeed > 0 && remainingBytes > 0 ? remainingBytes / totalSpeed : undefined
 
           return {
             ...d,
@@ -105,7 +138,9 @@ function Home(): React.JSX.Element {
             status: allCompleted ? 'completed' : 'downloading',
             progress: allCompleted ? 100 : d.progress,
             totalBytes,
-            downloadedBytes
+            downloadedBytes,
+            speedBytesPerSecond: allCompleted ? undefined : totalSpeed || undefined,
+            etaSeconds: allCompleted ? undefined : etaSeconds
           }
         })
       )
@@ -129,7 +164,9 @@ function Home(): React.JSX.Element {
           return {
             ...d,
             parts: updatedParts,
-            status: 'error'
+            status: 'error',
+            speedBytesPerSecond: undefined,
+            etaSeconds: undefined
           }
         })
       )
@@ -155,7 +192,9 @@ function Home(): React.JSX.Element {
             status: allCanceled ? ('canceled' as const) : d.status,
             progress: allCanceled ? 0 : d.progress,
             downloadedBytes: allCanceled ? 0 : d.downloadedBytes,
-            totalBytes: allCanceled ? 0 : d.totalBytes
+            totalBytes: allCanceled ? 0 : d.totalBytes,
+            speedBytesPerSecond: undefined,
+            etaSeconds: undefined
           }
         })
       )

@@ -18,6 +18,26 @@ function formatSize(bytes: number): string {
   return `${value.toFixed(digits)} ${units[idx]}`
 }
 
+function formatSpeed(bytesPerSecond?: number): string {
+  if (!bytesPerSecond || bytesPerSecond <= 0) return '0 B/s'
+  const units = ['B/s', 'KB/s', 'MB/s', 'GB/s', 'TB/s']
+  const idx = Math.min(Math.floor(Math.log(bytesPerSecond) / Math.log(1024)), units.length - 1)
+  const value = bytesPerSecond / 1024 ** idx
+  const digits = value >= 100 ? 0 : value >= 10 ? 1 : 2
+  return `${value.toFixed(digits)} ${units[idx]}`
+}
+
+function formatDuration(seconds?: number): string {
+  if (seconds === undefined || Number.isNaN(seconds) || seconds < 0) return '—'
+  if (seconds < 1) return '<1s'
+  const hrs = Math.floor(seconds / 3600)
+  const mins = Math.floor((seconds % 3600) / 60)
+  const secs = Math.floor(seconds % 60)
+  if (hrs > 0) return `${hrs}h ${mins}m`
+  if (mins > 0) return `${mins}m ${secs}s`
+  return `${secs}s`
+}
+
 function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.Element {
   return (
     <div className="h-full flex flex-col">
@@ -72,6 +92,10 @@ function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.E
                       </div>
                       <div className="text-xs text-muted-foreground">
                         {download.progress.toFixed(1)}%
+                      </div>
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Speed: {formatSpeed(download.speedBytesPerSecond)}</span>
+                        <span>ETA: {formatDuration(download.etaSeconds)}</span>
                       </div>
 
                       <div className="space-y-1 text-xs text-muted-foreground">
