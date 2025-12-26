@@ -194,9 +194,6 @@ build
 # Exclude packaged modules
 *.zip
 
-# Exclude .NET assemblies from source
-*.dll
-
 #!! ERROR: typescript is undefined. Use list command to see defined gitignore types !!#
 
 ### Windows ###
