@@ -224,9 +224,9 @@ app.whenReady().then(async () => {
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
         const safeTitle = (gameTitle || 'game')
           .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
+          .replaceAll(/[\u0300-\u036f]/g, '')
           .replace('™', '')
-          .replace(/[<>:"/\\|?*]+/g, '_')
+          .replaceAll(/[<>:"/\\|?*]+/g, '_')
           .trim()
 
         logger.debug('Getting real download URL from:', downloadUrl)
