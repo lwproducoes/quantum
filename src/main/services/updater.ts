@@ -7,7 +7,7 @@ autoUpdater.logger = log
 log.transports.file.level = 'info'
 
 export class UpdaterService {
-  private mainWindow: BrowserWindow | null = null
+  private readonly mainWindow: BrowserWindow | null = null
 
   constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow
