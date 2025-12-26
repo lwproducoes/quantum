@@ -87,8 +87,10 @@ function normalizeTitle(str: string): string {
     .replaceAll(CONTROL_CHARS_RE, '')
     .replaceAll(/[\u0300-\u036f]/g, '')
     .replace('™', '')
+    .replaceAll(/[`´^~¨'\u2018\u2019]/g, '')
     .replaceAll(/[<>:"/\\|?*]+/g, '')
     .replaceAll(/[.,;!?'"()[\]{}]/g, '')
+    .replaceAll(/[-/\\&_+=#@]/g, '')
     .trim()
 }
 
@@ -97,8 +99,10 @@ function normalizeText(str: string): string {
     .normalize('NFD')
     .replaceAll(/[\u0300-\u036f]/g, '')
     .replace('™', '')
+    .replaceAll(/[`´^~¨'\u2018\u2019]/g, '')
     .replaceAll(/[<>:"/\\|?*]+/g, '')
     .replaceAll(/[.,;!?'"()[\]{}]/g, '')
+    .replaceAll(/[-/\\&_+=#@]/g, '')
     .toLowerCase()
     .trim()
 }
@@ -118,7 +122,7 @@ function buildPaths(
   }
   const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
   const filename = subfolder
-    ? `${safeTitle}-${subfolder}.${extensionPath}`
+    ? `${safeTitle} ${subfolder}.${extensionPath}`
     : `${safeTitle}.${extensionPath}`
   const filePath = join(targetRoot, filename)
   return { targetRoot, extractPath, filename, filePath }

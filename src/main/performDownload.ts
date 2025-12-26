@@ -155,17 +155,20 @@ function setupResponseHandlers(ctx: {
   })
 }
 
-export async function performDownload(ctx: {
-  webContents: Electron.WebContents
-  realDownloadUrl: string
-  downloadUrl: string
-  filename: string
-  filePath: string
-  extractPath: string
-  kind: DownloadKind
-  provider: Provider
-  downloadKey: string
-}): Promise<{ success: boolean; filePath: string }> {
+async function attemptDownload(
+  ctx: {
+    webContents: Electron.WebContents
+    realDownloadUrl: string
+    downloadUrl: string
+    filename: string
+    filePath: string
+    extractPath: string
+    kind: DownloadKind
+    provider: Provider
+    downloadKey: string
+  },
+  retryCount: number = 0
+): Promise<{ success: boolean; filePath: string }> {
   const {
     webContents,
     realDownloadUrl,
@@ -177,6 +180,9 @@ export async function performDownload(ctx: {
     provider,
     downloadKey
   } = ctx
+
+  const maxRetries = 3
+  const baseDelay = 10000 // 10 seconds
 
   return new Promise<{ success: boolean; filePath: string }>((resolve, reject) => {
     const request = get(
@@ -190,7 +196,38 @@ export async function performDownload(ctx: {
             }
           : {})
       },
-      (response) => {
+      async (response) => {
+        if (response.statusCode === 429) {
+          // Rate limited - retry with exponential backoff
+          if (retryCount < maxRetries) {
+            const delay = baseDelay * Math.pow(2, retryCount)
+            const retryAfter = response.headers['retry-after']
+            const waitTime = retryAfter ? Number.parseInt(retryAfter, 10) * 1000 : delay
+
+            logger.warn(
+              `Rate limited (429). Retrying in ${waitTime / 1000}s... (attempt ${retryCount + 1}/${maxRetries})`
+            )
+
+            webContents.send('download:retry', {
+              url: downloadUrl,
+              kind,
+              retryCount: retryCount + 1,
+              maxRetries,
+              waitTime
+            })
+
+            setTimeout(() => {
+              attemptDownload(ctx, retryCount + 1)
+                .then(resolve)
+                .catch(reject)
+            }, waitTime)
+            return
+          } else {
+            reject(new Error(`Rate limited (429). Max retries (${maxRetries}) exceeded`))
+            return
+          }
+        }
+
         if (response.statusCode !== 200) {
           reject(new Error(`Failed to download: ${response.statusCode}`))
           return
@@ -228,4 +265,18 @@ export async function performDownload(ctx: {
       reject(err)
     })
   })
+}
+
+export async function performDownload(ctx: {
+  webContents: Electron.WebContents
+  realDownloadUrl: string
+  downloadUrl: string
+  filename: string
+  filePath: string
+  extractPath: string
+  kind: DownloadKind
+  provider: Provider
+  downloadKey: string
+}): Promise<{ success: boolean; filePath: string }> {
+  return attemptDownload(ctx, 0)
 }
