@@ -51,13 +51,12 @@ function Home(): React.JSX.Element {
           const deltaBytes = data.downloadedSize - part.downloadedBytes
           const normalizedElapsed = Math.max(timeDiffSeconds, MIN_SPEED_INTERVAL_SECONDS)
           const hasProgress = part.lastUpdatedAt && deltaBytes > 0
-          const currentSpeed = hasProgress ? deltaBytes / normalizedElapsed : part.speedBytesPerSecond
+          const currentSpeed = hasProgress ? deltaBytes / normalizedElapsed : undefined
           const remainingBytesForPart =
             data.totalSize > 0 ? Math.max(data.totalSize - data.downloadedSize, 0) : 0
+          const hasSpeed = currentSpeed !== undefined && currentSpeed > 0
           const partEta =
-            currentSpeed && currentSpeed > 0 && remainingBytesForPart > 0
-              ? remainingBytesForPart / currentSpeed
-              : undefined
+            hasSpeed && remainingBytesForPart > 0 ? remainingBytesForPart / currentSpeed : undefined
 
           const updatedParts = d.parts.map((p) =>
             p.url === data.url
@@ -67,8 +66,7 @@ function Home(): React.JSX.Element {
                   downloadedBytes: data.downloadedSize,
                   totalBytes: data.totalSize || p.totalBytes,
                   status: 'downloading' as const,
-                  speedBytesPerSecond:
-                    currentSpeed && currentSpeed > 0 ? currentSpeed : undefined,
+                  speedBytesPerSecond: hasSpeed ? currentSpeed : undefined,
                   etaSeconds: partEta,
                   lastUpdatedAt: now
                 }
