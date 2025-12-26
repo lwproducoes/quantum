@@ -13,6 +13,8 @@ import { Input } from '../src/components/input'
 import { DownloadItem, DownloadPart, Game, Provider } from '../src/types'
 import Downloads from './Downloads'
 
+const MIN_SPEED_INTERVAL_SECONDS = 0.1
+
 function Home(): React.JSX.Element {
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
@@ -29,6 +31,9 @@ function Home(): React.JSX.Element {
 
   // Setup download listeners
   useEffect(() => {
+    const aggregateSpeed = (parts: DownloadPart[]) =>
+      parts.reduce((sum, p) => sum + (p.speedBytesPerSecond ?? 0), 0)
+
     const handleProgress = (data: {
       url: string
       progress: number
@@ -45,9 +50,12 @@ function Home(): React.JSX.Element {
           const timeDiffSeconds = part.lastUpdatedAt ? (now - part.lastUpdatedAt) / 1000 : 0
           const deltaBytes = data.downloadedSize - part.downloadedBytes
           const elapsedSeconds = timeDiffSeconds > 0 ? timeDiffSeconds : 0
-          const normalizedElapsed = elapsedSeconds < 0.1 ? 0.1 : elapsedSeconds
+          const normalizedElapsed =
+            elapsedSeconds < MIN_SPEED_INTERVAL_SECONDS ? MIN_SPEED_INTERVAL_SECONDS : elapsedSeconds
           const currentSpeed =
-            deltaBytes >= 0 ? deltaBytes / normalizedElapsed : part.speedBytesPerSecond || 0
+            part.lastUpdatedAt && deltaBytes >= 0
+              ? deltaBytes / normalizedElapsed
+              : part.speedBytesPerSecond || 0
           const remainingBytesForPart =
             data.totalSize > 0 ? Math.max(data.totalSize - data.downloadedSize, 0) : 0
           const partEta =
@@ -76,10 +84,7 @@ function Home(): React.JSX.Element {
           )
           const downloadedBytes = updatedParts.reduce((sum, p) => sum + p.downloadedBytes, 0)
 
-          const totalSpeed = updatedParts.reduce(
-            (sum, p) => sum + (p.speedBytesPerSecond ?? 0),
-            0
-          )
+          const totalSpeed = aggregateSpeed(updatedParts)
           const remainingBytes = totalBytes > 0 ? Math.max(totalBytes - downloadedBytes, 0) : 0
           const etaSeconds =
             totalSpeed > 0 && remainingBytes > 0 ? remainingBytes / totalSpeed : undefined
@@ -124,10 +129,7 @@ function Home(): React.JSX.Element {
             0
           )
           const downloadedBytes = updatedParts.reduce((sum, p) => sum + p.downloadedBytes, 0)
-          const totalSpeed = updatedParts.reduce(
-            (sum, p) => sum + (p.speedBytesPerSecond ?? 0),
-            0
-          )
+          const totalSpeed = aggregateSpeed(updatedParts)
           const remainingBytes = totalBytes > 0 ? Math.max(totalBytes - downloadedBytes, 0) : 0
           const etaSeconds =
             totalSpeed > 0 && remainingBytes > 0 ? remainingBytes / totalSpeed : undefined
