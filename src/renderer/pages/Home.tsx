@@ -50,7 +50,7 @@ function Home(): React.JSX.Element {
           const timeDiffSeconds = part.lastUpdatedAt ? (now - part.lastUpdatedAt) / 1000 : 0
           const deltaBytes = data.downloadedSize - part.downloadedBytes
           const normalizedElapsed = Math.max(timeDiffSeconds, MIN_SPEED_INTERVAL_SECONDS)
-          const hasProgress = !!part.lastUpdatedAt && deltaBytes > 0
+          const hasProgress = part.lastUpdatedAt && deltaBytes > 0
           const currentSpeed = hasProgress ? deltaBytes / normalizedElapsed : part.speedBytesPerSecond
           const remainingBytesForPart =
             data.totalSize > 0 ? Math.max(data.totalSize - data.downloadedSize, 0) : 0

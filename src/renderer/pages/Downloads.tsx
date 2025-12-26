@@ -10,7 +10,8 @@ interface DownloadsProps {
 }
 
 function formatBytes(value: number, units: string[]): string {
-  if (value == null || Number.isNaN(value) || value <= 0) return `0 ${units[0]}`
+  if (value === null || value === undefined || Number.isNaN(value) || value <= 0)
+    return `0 ${units[0]}`
   const idx = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1)
   const normalized = value / 1024 ** idx
   const digits = normalized >= 100 ? 0 : normalized >= 10 ? 1 : 2
