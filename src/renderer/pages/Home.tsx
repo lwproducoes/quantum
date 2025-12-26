@@ -10,8 +10,8 @@ import { Card, CardContent, CardTitle } from '../src/components/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../src/components/dialog'
 import { Drawer } from '../src/components/drawer'
 import { Input } from '../src/components/input'
-import { Game } from '../src/types'
-import Downloads, { DownloadItem, DownloadPart } from './Downloads'
+import { DownloadItem, DownloadPart, Game, Provider } from '../src/types'
+import Downloads from './Downloads'
 
 function Home(): React.JSX.Element {
   const navigate = useNavigate()
@@ -23,7 +23,9 @@ function Home(): React.JSX.Element {
   const [downloads, setDownloads] = useState<DownloadItem[]>([])
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [providersLoading, setProvidersLoading] = useState(false)
-  const [providerMatches, setProviderMatches] = useState<Array<{ provider: string; item: any }>>([])
+  const [providerMatches, setProviderMatches] = useState<Array<{ provider: Provider; item: any }>>(
+    []
+  )
 
   // Setup download listeners
   useEffect(() => {
@@ -159,7 +161,11 @@ function Home(): React.JSX.Element {
       )
     }
 
-    const handleStarted = (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => {
+    const handleStarted = (data: {
+      url: string
+      provider: Provider
+      kind?: 'base' | 'update' | 'dlc'
+    }) => {
       setDownloads((prev) =>
         prev.map((d) => {
           const part = d.parts.find((p) => p.url === data.url)
@@ -215,6 +221,7 @@ function Home(): React.JSX.Element {
       setProvidersLoading(true)
       try {
         const res = await window.api.checkGameProviders(selectedGame.title)
+        console.log(res)
         setProviderMatches(res?.providers ?? [])
       } catch (err) {
         logger.error('Error checking providers:', err)
@@ -228,6 +235,7 @@ function Home(): React.JSX.Element {
 
   const handleStartDownload = async (
     game: Game,
+    provider: Provider,
     downloadUrl: string,
     updateUrl?: string,
     dlcUrl?: string
@@ -301,7 +309,7 @@ function Home(): React.JSX.Element {
     await Promise.all(
       parts.map(async (part) => {
         try {
-          await window.api.startDownload(part.url, game.title, part.kind)
+          await window.api.startDownload(part.url, game.title, provider, part.kind)
         } catch (err: any) {
           logger.error('Failed to start download:', err)
           setDownloads((prev) =>
@@ -426,7 +434,7 @@ function Home(): React.JSX.Element {
                       const updateUrl = pm.item?.data?.update || pm.item?.update
                       const dlcUrl = pm.item?.data?.dlc || pm.item?.dlc
                       if (baseUrl) {
-                        handleStartDownload(selectedGame, baseUrl, updateUrl, dlcUrl)
+                        handleStartDownload(selectedGame, pm.provider, baseUrl, updateUrl, dlcUrl)
                       }
                     }}
                   >
@@ -435,7 +443,9 @@ function Home(): React.JSX.Element {
                         <Download className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <CardTitle className="text-base mb-1">Direct Download</CardTitle>
+                        <CardTitle className="text-base mb-1">
+                          Direct Download - {pm.provider.toUpperCase()}
+                        </CardTitle>
                         <p className="text-sm text-muted-foreground">Direct server download</p>
                       </div>
                     </CardContent>

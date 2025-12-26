@@ -1,4 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
+import type { Provider } from './types'
 
 declare global {
   interface Window {
@@ -13,10 +14,11 @@ declare global {
       listProviders: () => Promise<string[]>
       checkGameProviders: (
         title: string
-      ) => Promise<{ providers: Array<{ provider: string; item: any }> }>
+      ) => Promise<{ providers: Array<{ provider: Provider; item: any }> }>
       startDownload: (
         downloadUrl: string,
         gameTitle: string,
+        provider: Provider,
         kind?: 'base' | 'update' | 'dlc'
       ) => Promise<{ success: boolean; filePath: string }>
       cancelDownload: (downloadUrl: string, kind?: 'base' | 'update' | 'dlc') => Promise<boolean>
@@ -33,7 +35,11 @@ declare global {
         callback: (data: { url: string; filename: string; filePath: string }) => void
       ) => void
       onDownloadStarted: (
-        callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
+        callback: (data: {
+          url: string
+          provider: Provider
+          kind?: 'base' | 'update' | 'dlc'
+        }) => void
       ) => void
       onDownloadCancelled: (
         callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void

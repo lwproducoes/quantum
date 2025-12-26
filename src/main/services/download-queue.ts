@@ -1,10 +1,4 @@
-export type QueueTask<T = any> = () => Promise<T>
-
-interface PendingTask<T = any> {
-  task: QueueTask<T>
-  resolve: (value: T) => void
-  reject: (reason?: any) => void
-}
+import type { PendingTask, QueueTask } from '../types'
 
 export class DownloadQueue {
   private queue: PendingTask[] = []

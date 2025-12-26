@@ -1,23 +1,13 @@
 import { app } from 'electron'
 import Seven, { CommandLineSwitches } from 'node-7z'
 import path from 'node:path'
+import type { ExtractionProgress, ExtractionResult } from '../types'
 import { logger } from './logger'
 
 export const binaryName = {
   linux: '7zzs',
   darwin: '7zz',
   win32: '7z.exe'
-}
-
-export interface ExtractionProgress {
-  percent: number
-  fileCount: number
-  file: string
-}
-
-export interface ExtractionResult {
-  success: boolean
-  extractedFiles: string[]
 }
 
 export class SevenZip {

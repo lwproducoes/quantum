@@ -1,5 +1,7 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge, ipcRenderer } from 'electron'
+import { DownloadKind } from '../main/types'
+import { Provider } from './types'
 
 // Custom APIs for renderer
 const api = {
@@ -32,14 +34,12 @@ const api = {
   startDownload: async (
     downloadUrl: string,
     gameTitle: string,
-    kind: 'base' | 'update' | 'dlc' = 'base'
+    provider: Provider,
+    kind: DownloadKind = 'base'
   ): Promise<{ success: boolean; filePath: string }> => {
-    return ipcRenderer.invoke('download:start', downloadUrl, gameTitle, kind)
+    return ipcRenderer.invoke('download:start', downloadUrl, gameTitle, provider, kind)
   },
-  cancelDownload: async (
-    downloadUrl: string,
-    kind: 'base' | 'update' | 'dlc' = 'base'
-  ): Promise<boolean> => {
+  cancelDownload: async (downloadUrl: string, kind: DownloadKind = 'base'): Promise<boolean> => {
     return ipcRenderer.invoke('download:cancel', downloadUrl, kind)
   },
   onDownloadProgress: (
@@ -59,13 +59,11 @@ const api = {
     ipcRenderer.on('download:complete', (_event, data) => callback(data))
   },
   onDownloadStarted: (
-    callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
+    callback: (data: { url: string; provider: Provider; kind?: DownloadKind }) => void
   ) => {
     ipcRenderer.on('download:started', (_event, data) => callback(data))
   },
-  onDownloadCancelled: (
-    callback: (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => void
-  ) => {
+  onDownloadCancelled: (callback: (data: { url: string; kind?: DownloadKind }) => void) => {
     ipcRenderer.on('download:cancelled', (_event, data) => callback(data))
   },
   onDownloadError: (callback: (data: { url: string; error: string }) => void) => {

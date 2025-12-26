@@ -2,30 +2,7 @@ import { Download, X } from 'lucide-react'
 import { Button } from '../src/components/button'
 import { Card, CardContent, CardTitle } from '../src/components/card'
 import { cn } from '../src/lib/utils'
-import { Game } from '../src/types'
-
-export type DownloadPartKind = 'base' | 'update' | 'dlc'
-
-export interface DownloadPart {
-  id: string
-  url: string
-  label: string
-  kind: DownloadPartKind
-  status: 'queued' | 'downloading' | 'completed' | 'error' | 'canceled'
-  progress: number
-  downloadedBytes: number
-  totalBytes: number
-}
-
-export interface DownloadItem {
-  id: string
-  game: Game
-  progress: number
-  status: 'queued' | 'downloading' | 'completed' | 'error' | 'canceled'
-  downloadedBytes: number
-  totalBytes: number
-  parts: DownloadPart[]
-}
+import { DownloadItem } from '../src/types'
 
 interface DownloadsProps {
   downloads: DownloadItem[]

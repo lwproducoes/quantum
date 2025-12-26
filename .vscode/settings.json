@@ -8,5 +8,9 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "prettier.endOfLine": "crlf"
+  "prettier.endOfLine": "crlf",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "lwproducoes",
+    "projectKey": "lwproducoes_quantum"
+  }
 }

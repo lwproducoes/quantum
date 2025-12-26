@@ -1,16 +1,17 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
-import { createWriteStream, existsSync, readdirSync, readFileSync, WriteStream } from 'fs'
-import { mkdir, unlink } from 'fs/promises'
-import { get } from 'https'
 import { Level } from 'level'
-import { join } from 'path'
+import { existsSync, readdirSync, readFileSync, WriteStream } from 'node:fs'
+import { mkdir } from 'node:fs/promises'
+import { get } from 'node:https'
+import { join } from 'node:path'
 import icon from '../../resources/icon.png?asset'
-import { SevenZip } from './services/7zip'
+import { performDownload } from './performDownload'
 import { DownloadQueue } from './services/download-queue'
 import { DatanodesApi } from './services/hosters/datanodes'
 import { logger } from './services/logger'
 import { UpdaterService } from './services/updater'
+import type { DownloadKind, Provider, ProviderGameItem } from './types'
 
 function createWindow(): void {
   // Create the browser window.
@@ -51,15 +52,91 @@ function createWindow(): void {
 let settingsDb: Level<string, any> | null = null
 let updaterService: UpdaterService | null = null
 const downloadQueue = new DownloadQueue()
-const activeDownloads = new Map<
+
+export const activeDownloads = new Map<
   string,
   { request?: ReturnType<typeof get>; fileStream?: WriteStream }
 >()
-const cancelledDownloads = new Set<string>()
 
-const makeDownloadKey = (url: string, kind: 'base' | 'update' | 'dlc' = 'base') => `${url}::${kind}`
+export const cancelledDownloads = new Set<string>()
 
-app.whenReady().then(async () => {
+const makeDownloadKey = (url: string, kind: DownloadKind = 'base') => `${url}::${kind}`
+
+function resolveProvidersRoot(): string {
+  // In packaged apps, resourcesPath points to where extraResources are copied
+  const prodPath = join(process.resourcesPath, 'providers')
+  if (existsSync(prodPath)) return prodPath
+
+  // In development, read directly from source tree
+  const devPath1 = join(__dirname, '../../src/main/providers')
+  if (existsSync(devPath1)) return devPath1
+
+  const devPath2 = join(process.cwd(), 'src', 'main', 'providers')
+  if (existsSync(devPath2)) return devPath2
+
+  // Fallback to a sibling in compiled dir (if copied by tooling)
+  const devPath3 = join(__dirname, 'providers')
+  return devPath3
+}
+
+function normalizeTitle(str: string): string {
+  // eslint-disable-next-line no-control-regex
+  const CONTROL_CHARS_RE = /[\x00-\x1F\x7F]/g
+  return (str || 'game')
+    .normalize('NFD')
+    .replaceAll(CONTROL_CHARS_RE, '')
+    .replaceAll(/[\u0300-\u036f]/g, '')
+    .replace('™', '')
+    .replaceAll(/[<>:"/\\|?*]+/g, '')
+    .replaceAll(/[.,;!?'"()[\]{}]/g, '')
+    .trim()
+}
+
+function normalizeText(str: string): string {
+  return (str || '')
+    .normalize('NFD')
+    .replaceAll(/[\u0300-\u036f]/g, '')
+    .replace('™', '')
+    .replaceAll(/[<>:"/\\|?*]+/g, '')
+    .replaceAll(/[.,;!?'"()[\]{}]/g, '')
+    .toLowerCase()
+    .trim()
+}
+
+function buildPaths(
+  baseDir: string,
+  safeTitle: string,
+  kind: DownloadKind,
+  extensionPath: string = 'rar'
+) {
+  const targetRoot = join(baseDir, safeTitle)
+  let subfolder = ''
+  if (kind === 'update') {
+    subfolder = 'Update'
+  } else if (kind === 'dlc') {
+    subfolder = 'DLC'
+  }
+  const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
+  const filename = subfolder
+    ? `${safeTitle}-${subfolder}.${extensionPath}`
+    : `${safeTitle}.${extensionPath}`
+  const filePath = join(targetRoot, filename)
+  return { targetRoot, extractPath, filename, filePath }
+}
+
+async function resolveRealDownloadUrl(provider: Provider, downloadUrl: string): Promise<string> {
+  // For now all links are resolved via Datanodes; route by provider if needed later
+  logger.debug('Getting real download URL from:', downloadUrl, 'provider:', provider)
+  if (provider === 'romslab') {
+    const real = await DatanodesApi.getDownloadUrl(downloadUrl)
+    logger.debug('Real download URL:', real.slice(0, 20) + '...')
+    return real
+  }
+
+  return `https://download.nswpediax.site/${downloadUrl}`
+}
+
+app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.jgco.quantum')
 
   app.on('browser-window-created', (_, window) => {
@@ -164,15 +241,6 @@ app.whenReady().then(async () => {
 
   // Providers: check if a game exists in any provider (accent/case-insensitive)
   ipcMain.handle('providers:checkGame', async (_event, title: string) => {
-    function normalizeText(str: string): string {
-      return (str || '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace('™', '')
-        .toLowerCase()
-        .trim()
-    }
-
     try {
       const providersRoot = resolveProvidersRoot()
       const entries = readdirSync(providersRoot, { withFileTypes: true })
@@ -186,9 +254,11 @@ app.whenReady().then(async () => {
         if (!existsSync(indexPath)) continue
         try {
           const content = readFileSync(indexPath, 'utf-8')
-          const list: any[] = JSON.parse(content)
+          const list: ProviderGameItem[] = JSON.parse(content)
           logger.debug(`providers:checkGame checking provider ${name} with ${list.length} items`)
-          const item = list.find((it: any) => normalizeText(it?.title) === target)
+          const item = list.find(
+            (it: ProviderGameItem) => normalizeText(it.title).includes(target) && it.data.download
+          )
           if (item) {
             matches.push({ provider: name, item })
           }
@@ -211,7 +281,8 @@ app.whenReady().then(async () => {
       event,
       downloadUrl: string,
       gameTitle: string,
-      kind: 'base' | 'update' | 'dlc' = 'base'
+      provider: Provider,
+      kind: DownloadKind = 'base'
     ) => {
       const webContents = event.sender
       try {
@@ -222,23 +293,10 @@ app.whenReady().then(async () => {
         }
 
         const baseDir = typeof downloadDir === 'string' ? downloadDir : String(downloadDir)
-        const safeTitle = (gameTitle || 'game')
-          .normalize('NFD')
-          .replaceAll(/[\u0300-\u036f]/g, '')
-          .replace('™', '')
-          .replaceAll(/[<>:"/\\|?*]+/g, '_')
-          .trim()
-
-        logger.debug('Getting real download URL from:', downloadUrl)
-        const realDownloadUrl = await DatanodesApi.getDownloadUrl(downloadUrl)
-        logger.debug('Real download URL:', realDownloadUrl.slice(0, 20) + '...')
-
-        const targetRoot = join(baseDir, safeTitle)
-        const subfolder = kind === 'update' ? 'Update' : kind === 'dlc' ? 'DLC' : ''
-        const extractPath = subfolder ? join(targetRoot, subfolder) : targetRoot
-
-        const filename = subfolder ? `${safeTitle}-${subfolder}.rar` : `${safeTitle}.rar`
-        const filePath = join(targetRoot, filename)
+        const safeTitle = normalizeTitle(gameTitle)
+        const realDownloadUrl = await resolveRealDownloadUrl(provider, downloadUrl)
+        const extension = provider === 'nswpedia' ? downloadUrl.split('.').pop() : undefined
+        const { extractPath, filename, filePath } = buildPaths(baseDir, safeTitle, kind, extension)
         await mkdir(extractPath, { recursive: true })
 
         const downloadKey = makeDownloadKey(downloadUrl, kind)
@@ -254,120 +312,16 @@ app.whenReady().then(async () => {
 
           // Notify renderer that this queued task started
           webContents.send('download:started', { url: downloadUrl, kind })
-
-          return await new Promise<{ success: boolean; filePath: string }>((resolve, reject) => {
-            const request = get(realDownloadUrl, (response) => {
-              if (response.statusCode !== 200) {
-                reject(new Error(`Failed to download: ${response.statusCode}`))
-                return
-              }
-
-              const totalSize = parseInt(response.headers['content-length'] || '0', 10)
-              let downloadedSize = 0
-
-              const fileStream = createWriteStream(filePath)
-              activeDownloads.set(downloadKey, { request, fileStream })
-
-              const cleanup = () => {
-                activeDownloads.delete(downloadKey)
-                cancelledDownloads.delete(downloadKey)
-              }
-
-              response.on('data', (chunk) => {
-                downloadedSize += chunk.length
-                const progress = totalSize > 0 ? (downloadedSize / totalSize) * 100 : 0
-
-                webContents.send('download:progress', {
-                  url: downloadUrl,
-                  progress,
-                  downloadedSize,
-                  totalSize,
-                  filename,
-                  kind
-                })
-              })
-
-              response.pipe(fileStream)
-
-              fileStream.on('finish', async () => {
-                fileStream.close()
-                cleanup()
-
-                try {
-                  await SevenZip.extractFile({ filePath, outputPath: extractPath }, (progress) => {
-                    const percent = typeof progress?.percent === 'number' ? progress.percent : 0
-                    webContents.send('download:extract-progress', {
-                      url: downloadUrl,
-                      progress: percent,
-                      kind
-                    })
-                  })
-
-                  try {
-                    await unlink(filePath)
-                  } catch (cleanupErr) {
-                    logger.warn('Failed to delete archive after extraction:', cleanupErr)
-                  }
-
-                  webContents.send('download:complete', {
-                    url: downloadUrl,
-                    filename,
-                    filePath,
-                    extractedTo: extractPath,
-                    kind
-                  })
-                  resolve({ success: true, filePath })
-                } catch (extractErr: any) {
-                  logger.error('Extraction failed:', extractErr)
-                  cleanup()
-                  webContents.send('download:error', {
-                    url: downloadUrl,
-                    error: extractErr?.message || 'Extraction failed',
-                    kind
-                  })
-                  reject(extractErr)
-                }
-              })
-
-              fileStream.on('error', (err) => {
-                fileStream.close()
-                const isCancelled = cancelledDownloads.has(downloadKey)
-                cleanup()
-
-                if (isCancelled) {
-                  unlink(filePath).catch(() => {})
-                  webContents.send('download:cancelled', { url: downloadUrl, kind })
-                  resolve({ success: false, filePath })
-                  return
-                }
-
-                webContents.send('download:error', {
-                  url: downloadUrl,
-                  error: err.message,
-                  kind
-                })
-                reject(err)
-              })
-            })
-
-            request.on('error', (err) => {
-              const isCancelled = cancelledDownloads.has(downloadKey)
-              activeDownloads.delete(downloadKey)
-
-              if (isCancelled) {
-                unlink(filePath).catch(() => {})
-                webContents.send('download:cancelled', { url: downloadUrl, kind })
-                resolve({ success: false, filePath })
-                return
-              }
-
-              webContents.send('download:error', {
-                url: downloadUrl,
-                error: err.message,
-                kind
-              })
-              reject(err)
-            })
+          return await performDownload({
+            webContents,
+            realDownloadUrl,
+            downloadUrl,
+            filename,
+            filePath,
+            extractPath,
+            kind,
+            provider,
+            downloadKey
           })
         })
       } catch (err: any) {
@@ -452,34 +406,16 @@ app.whenReady().then(async () => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  // Quit when all windows are closed, except on macOS. There, it's common
+  // for applications and their menu bar to stay active until the user quits
+  // explicitly with Cmd + Q.
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  })
+
+  // In this file you can include the rest of your app's specific main process
+  // code. You can also put them in separate files and require them here.
 })
-
-// Resolve providers folder in dev vs packaged
-function resolveProvidersRoot(): string {
-  // In packaged apps, resourcesPath points to where extraResources are copied
-  const prodPath = join(process.resourcesPath, 'providers')
-  if (existsSync(prodPath)) return prodPath
-
-  // In development, read directly from source tree
-  const devPath1 = join(__dirname, '../../src/main/providers')
-  if (existsSync(devPath1)) return devPath1
-
-  const devPath2 = join(process.cwd(), 'src', 'main', 'providers')
-  if (existsSync(devPath2)) return devPath2
-
-  // Fallback to a sibling in compiled dir (if copied by tooling)
-  const devPath3 = join(__dirname, 'providers')
-  return devPath3
-}
-
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
