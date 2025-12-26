@@ -9,22 +9,20 @@ interface DownloadsProps {
   onRemoveDownload: (id: string) => void | Promise<void>
 }
 
+function formatBytes(value: number, units: string[]): string {
+  if (!value || value < 0) return `0 ${units[0]}`
+  const idx = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1)
+  const normalized = value / 1024 ** idx
+  const digits = normalized >= 100 ? 0 : normalized >= 10 ? 1 : 2
+  return `${normalized.toFixed(digits)} ${units[idx]}`
+}
+
 function formatSize(bytes: number): string {
-  if (!bytes || bytes < 0) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB', 'TB']
-  const idx = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  const value = bytes / 1024 ** idx
-  const digits = value >= 100 ? 0 : value >= 10 ? 1 : 2
-  return `${value.toFixed(digits)} ${units[idx]}`
+  return formatBytes(bytes, ['B', 'KB', 'MB', 'GB', 'TB'])
 }
 
 function formatSpeed(bytesPerSecond?: number): string {
-  if (!bytesPerSecond || bytesPerSecond <= 0) return '0 B/s'
-  const units = ['B/s', 'KB/s', 'MB/s', 'GB/s', 'TB/s']
-  const idx = Math.min(Math.floor(Math.log(bytesPerSecond) / Math.log(1024)), units.length - 1)
-  const value = bytesPerSecond / 1024 ** idx
-  const digits = value >= 100 ? 0 : value >= 10 ? 1 : 2
-  return `${value.toFixed(digits)} ${units[idx]}`
+  return formatBytes(bytesPerSecond ?? 0, ['B/s', 'KB/s', 'MB/s', 'GB/s', 'TB/s'])
 }
 
 function formatDuration(seconds?: number): string {
