@@ -1,7 +1,7 @@
 import type { PendingTask, QueueTask } from '../types'
 
 export class DownloadQueue {
-  private queue: PendingTask[] = []
+  private readonly queue: PendingTask[] = []
   private running = false
 
   enqueue<T>(task: QueueTask<T>): Promise<T> {
