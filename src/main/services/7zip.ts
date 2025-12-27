@@ -1,3 +1,7 @@
+/**
+ * Based on code from Hydra Launcher
+ * https://github.com/hydralauncher/hydra
+ */
 import { app } from 'electron'
 import Seven, { CommandLineSwitches } from 'node-7z'
 import path from 'node:path'

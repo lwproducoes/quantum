@@ -1,3 +1,7 @@
+/**
+ * Based on code from Hydra Launcher
+ * https://github.com/hydralauncher/hydra
+ */
 import axios, { AxiosResponse } from 'axios'
 import { wrapper } from 'axios-cookiejar-support'
 import { CookieJar } from 'tough-cookie'
