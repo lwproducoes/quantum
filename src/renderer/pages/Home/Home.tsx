@@ -35,19 +35,15 @@ function Home(): React.JSX.Element {
     []
   )
 
-  const mapParts = (parts: DownloadPart[], partUrl: string) => {
-    return parts.map((p) => updatePartError(p, partUrl))
-  }
-
   const handleDownloadStartFailure = (downloadId: string, partUrl: string) => {
-    const newDownloads = downloads.map((d) => {
-      if (d.id !== downloadId) return d
+    setDownloads((prev) =>
+      prev.map((d) => {
+        if (d.id !== downloadId) return d
 
-      const updatedParts = mapParts(d.parts, partUrl)
-      return { ...d, status: 'error', parts: updatedParts } as DownloadItem
-    })
-
-    setDownloads(newDownloads)
+        const updatedParts = d.parts.map((p) => updatePartError(p, partUrl))
+        return { ...d, status: 'error', parts: updatedParts }
+      })
+    )
   }
 
   const startDownloadPart = async (
