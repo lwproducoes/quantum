@@ -14,25 +14,11 @@ function formatSize(bytes: number): string {
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
   const idx = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
   const value = bytes / 1024 ** idx
-  let digits: number
-  if (value >= 100) {
-    digits = 0
-  } else if (value >= 10) {
-    digits = 1
-  } else {
-    digits = 2
-  }
+  const digits = value >= 100 ? 0 : value >= 10 ? 1 : 2
   return `${value.toFixed(digits)} ${units[idx]}`
 }
 
-function getProgressBarColor(status: DownloadItem['status']): string {
-  if (status === 'completed') return 'bg-green-500'
-  if (status === 'error') return 'bg-red-500'
-  if (status === 'canceled') return 'bg-secondary'
-  return 'bg-primary'
-}
-
-function Downloads({ downloads, onRemoveDownload }: Readonly<DownloadsProps>): React.JSX.Element {
+function Downloads({ downloads, onRemoveDownload }: DownloadsProps): React.JSX.Element {
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-auto p-4 space-y-4">
@@ -73,7 +59,13 @@ function Downloads({ downloads, onRemoveDownload }: Readonly<DownloadsProps>): R
                         <div
                           className={cn(
                             'h-2 rounded-full transition-all',
-                            getProgressBarColor(download.status)
+                            download.status === 'completed'
+                              ? 'bg-green-500'
+                              : download.status === 'error'
+                                ? 'bg-red-500'
+                                : download.status === 'canceled'
+                                  ? 'bg-secondary'
+                                  : 'bg-primary'
                           )}
                           style={{ width: `${download.progress}%` }}
                         />
