@@ -1,6 +1,6 @@
 {
   "name": "quantum",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Nintendo Switch game download manager with support for multiple providers, automatic file extraction, and real-time progress tracking.",
   "main": "./out/main/index.js",
   "author": "quantum.lwproducoes.com",
