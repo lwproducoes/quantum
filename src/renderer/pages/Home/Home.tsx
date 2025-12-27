@@ -5,13 +5,21 @@ import { Download, LoaderCircle, Settings } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import { Button } from '../src/components/button'
-import { Card, CardContent, CardTitle } from '../src/components/card'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../src/components/dialog'
-import { Drawer } from '../src/components/drawer'
-import { Input } from '../src/components/input'
-import { DownloadItem, DownloadPart, Game, Provider } from '../src/types'
-import Downloads from './Downloads'
+import { Button } from '../../src/components/button'
+import { Card, CardContent, CardTitle } from '../../src/components/card'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../src/components/dialog'
+import { Drawer } from '../../src/components/drawer'
+import { Input } from '../../src/components/input'
+import { DownloadItem, DownloadPart, Game, Provider } from '../../src/types'
+import Downloads from '../Downloads'
+import {
+  makeHandleCancelled,
+  makeHandleComplete,
+  makeHandleError,
+  makeHandleProgress,
+  makeHandleStarted
+} from './makeHandles'
+import { updatePartError } from './updatePartError'
 
 function Home(): React.JSX.Element {
   const navigate = useNavigate()
@@ -27,169 +35,73 @@ function Home(): React.JSX.Element {
     []
   )
 
+  const handleDownloadStartFailure = (downloadId: string, partUrl: string) => {
+    setDownloads((prev) =>
+      prev.map((d) => {
+        if (d.id !== downloadId) return d
+
+        const updatedParts = d.parts.map((p) => updatePartError(p, partUrl))
+        return { ...d, status: 'error', parts: updatedParts }
+      })
+    )
+  }
+
+  const startDownloadPart = async (
+    part: DownloadPart,
+    gameTitle: string,
+    provider: Provider,
+    downloadId: string
+  ) => {
+    try {
+      await globalThis.api.startDownload(part.url, gameTitle, provider, part.kind)
+    } catch (err: any) {
+      logger.error('Failed to start download:', err)
+      handleDownloadStartFailure(downloadId, part.url)
+    }
+  }
+
+  const cancelDownloadPart = async (part: DownloadPart) => {
+    try {
+      await globalThis.api.cancelDownload(part.url, part.kind)
+    } catch (err) {
+      logger.error('Failed to cancel download', err)
+    }
+  }
+
+  const initiateDownload = (pm: { provider: Provider; item: any }) => {
+    if (!selectedGame) return
+    const baseUrl = pm.item?.data?.download || pm.item?.download
+    const updateUrl = pm.item?.data?.update || pm.item?.update
+    const dlcUrl = pm.item?.data?.dlc || pm.item?.dlc
+    if (baseUrl) {
+      handleStartDownload(selectedGame, pm.provider, baseUrl, updateUrl, dlcUrl)
+    }
+  }
+
   // Setup download listeners
   useEffect(() => {
-    const handleProgress = (data: {
-      url: string
-      progress: number
-      downloadedSize: number
-      totalSize: number
-      filename: string
-      kind?: 'base' | 'update' | 'dlc'
-    }) => {
-      setDownloads((prev) =>
-        prev.map((d) => {
-          const part = d.parts.find((p) => p.url === data.url)
-          if (!part) return d
+    const handleProgress = makeHandleProgress(setDownloads)
 
-          const updatedParts = d.parts.map((p) =>
-            p.url === data.url
-              ? {
-                  ...p,
-                  progress: data.progress,
-                  downloadedBytes: data.downloadedSize,
-                  totalBytes: data.totalSize || p.totalBytes,
-                  status: 'downloading' as const
-                }
-              : p
-          )
+    const handleComplete = makeHandleComplete(setDownloads)
 
-          const totalBytes = updatedParts.reduce(
-            (sum, p) => sum + (p.totalBytes > 0 ? p.totalBytes : 0),
-            0
-          )
-          const downloadedBytes = updatedParts.reduce((sum, p) => sum + p.downloadedBytes, 0)
+    const handleError = makeHandleError(setDownloads)
 
-          const progressVal =
-            totalBytes > 0
-              ? Math.min((downloadedBytes / totalBytes) * 100, 100)
-              : updatedParts.reduce((sum, p) => sum + p.progress, 0) / updatedParts.length
+    const handleCancelled = makeHandleCancelled(setDownloads)
 
-          return {
-            ...d,
-            parts: updatedParts,
-            totalBytes,
-            downloadedBytes,
-            progress: progressVal,
-            status: 'downloading'
-          }
-        })
-      )
-    }
+    const handleStarted = makeHandleStarted(setDownloads)
 
-    const handleComplete = (data: {
-      url: string
-      filename: string
-      filePath: string
-      kind?: 'base' | 'update' | 'dlc'
-    }) => {
-      setDownloads((prev) =>
-        prev.map((d) => {
-          const part = d.parts.find((p) => p.url === data.url)
-          if (!part) return d
-
-          const updatedParts = d.parts.map((p) =>
-            p.url === data.url ? { ...p, status: 'completed' as const, progress: 100 } : p
-          )
-
-          const allCompleted = updatedParts.every((p) => p.status === 'completed')
-          const totalBytes = updatedParts.reduce(
-            (sum, p) => sum + (p.totalBytes > 0 ? p.totalBytes : 0),
-            0
-          )
-          const downloadedBytes = updatedParts.reduce((sum, p) => sum + p.downloadedBytes, 0)
-
-          return {
-            ...d,
-            parts: updatedParts,
-            status: allCompleted ? 'completed' : 'downloading',
-            progress: allCompleted ? 100 : d.progress,
-            totalBytes,
-            downloadedBytes
-          }
-        })
-      )
-    }
-
-    const handleError = (data: {
-      url: string
-      error: string
-      kind?: 'base' | 'update' | 'dlc'
-    }) => {
-      logger.error('Download error:', data.error)
-      setDownloads((prev) =>
-        prev.map((d) => {
-          const part = d.parts.find((p) => p.url === data.url)
-          if (!part) return d
-
-          const updatedParts = d.parts.map((p) =>
-            p.url === data.url ? { ...p, status: 'error' as const } : p
-          )
-
-          return {
-            ...d,
-            parts: updatedParts,
-            status: 'error'
-          }
-        })
-      )
-    }
-
-    const handleCancelled = (data: { url: string; kind?: 'base' | 'update' | 'dlc' }) => {
-      setDownloads((prev) =>
-        prev.map((d) => {
-          const part = d.parts.find((p) => p.url === data.url)
-          if (!part) return d
-
-          const updatedParts = d.parts.map((p) =>
-            p.url === data.url
-              ? { ...p, status: 'canceled' as const, progress: 0, downloadedBytes: 0 }
-              : p
-          )
-
-          const allCanceled = updatedParts.every((p) => p.status === 'canceled')
-
-          return {
-            ...d,
-            parts: updatedParts,
-            status: allCanceled ? ('canceled' as const) : d.status,
-            progress: allCanceled ? 0 : d.progress,
-            downloadedBytes: allCanceled ? 0 : d.downloadedBytes,
-            totalBytes: allCanceled ? 0 : d.totalBytes
-          }
-        })
-      )
-    }
-
-    const handleStarted = (data: {
-      url: string
-      provider: Provider
-      kind?: 'base' | 'update' | 'dlc'
-    }) => {
-      setDownloads((prev) =>
-        prev.map((d) => {
-          const part = d.parts.find((p) => p.url === data.url)
-          if (!part) return d
-          const updatedParts = d.parts.map((p) =>
-            p.url === data.url ? { ...p, status: 'downloading' as const } : p
-          )
-          return { ...d, parts: updatedParts, status: 'downloading' }
-        })
-      )
-    }
-
-    window.api.onDownloadProgress(handleProgress)
-    window.api.onDownloadComplete(handleComplete)
-    window.api.onDownloadError(handleError)
-    window.api.onDownloadStarted(handleStarted)
-    window.api.onDownloadCancelled(handleCancelled)
+    globalThis.api.onDownloadProgress(handleProgress)
+    globalThis.api.onDownloadComplete(handleComplete)
+    globalThis.api.onDownloadError(handleError)
+    globalThis.api.onDownloadStarted(handleStarted)
+    globalThis.api.onDownloadCancelled(handleCancelled)
 
     return () => {
-      window.api.removeDownloadListener('download:progress')
-      window.api.removeDownloadListener('download:complete')
-      window.api.removeDownloadListener('download:error')
-      window.api.removeDownloadListener('download:started')
-      window.api.removeDownloadListener('download:cancelled')
+      globalThis.api.removeDownloadListener('download:progress')
+      globalThis.api.removeDownloadListener('download:complete')
+      globalThis.api.removeDownloadListener('download:error')
+      globalThis.api.removeDownloadListener('download:started')
+      globalThis.api.removeDownloadListener('download:cancelled')
     }
   }, [])
 
@@ -220,7 +132,7 @@ function Home(): React.JSX.Element {
       }
       setProvidersLoading(true)
       try {
-        const res = await window.api.checkGameProviders(selectedGame.title)
+        const res = await globalThis.api.checkGameProviders(selectedGame.title)
         console.log(res)
         setProviderMatches(res?.providers ?? [])
       } catch (err) {
@@ -307,24 +219,7 @@ function Home(): React.JSX.Element {
 
     // Enqueue all parts; queue ensures sequential execution
     await Promise.all(
-      parts.map(async (part) => {
-        try {
-          await window.api.startDownload(part.url, game.title, provider, part.kind)
-        } catch (err: any) {
-          logger.error('Failed to start download:', err)
-          setDownloads((prev) =>
-            prev.map((d) =>
-              d.id === downloadId
-                ? {
-                    ...d,
-                    status: 'error',
-                    parts: d.parts.map((p) => (p.url === part.url ? { ...p, status: 'error' } : p))
-                  }
-                : d
-            )
-          )
-        }
-      })
+      parts.map((part) => startDownloadPart(part, game.title, provider, downloadId))
     )
   }
 
@@ -332,15 +227,7 @@ function Home(): React.JSX.Element {
     const target = downloads.find((d) => d.id === id)
     if (!target) return
 
-    await Promise.all(
-      target.parts.map(async (part) => {
-        try {
-          await window.api.cancelDownload(part.url, part.kind)
-        } catch (err) {
-          logger.error('Failed to cancel download', err)
-        }
-      })
-    )
+    await Promise.all(target.parts.map((part) => cancelDownloadPart(part)))
 
     setDownloads((prev) => prev.filter((d) => d.id !== id))
   }
@@ -428,15 +315,7 @@ function Home(): React.JSX.Element {
                   <Card
                     key={`${pm.provider}-${pm.item?.title}`}
                     className="cursor-pointer hover:bg-accent transition-colors select-none"
-                    onClick={() => {
-                      if (!selectedGame) return
-                      const baseUrl = pm.item?.data?.download || pm.item?.download
-                      const updateUrl = pm.item?.data?.update || pm.item?.update
-                      const dlcUrl = pm.item?.data?.dlc || pm.item?.dlc
-                      if (baseUrl) {
-                        handleStartDownload(selectedGame, pm.provider, baseUrl, updateUrl, dlcUrl)
-                      }
-                    }}
+                    onClick={() => initiateDownload(pm)}
                   >
                     <CardContent className="flex items-center gap-4 p-4">
                       <div className="p-3 bg-primary/10 rounded-full">

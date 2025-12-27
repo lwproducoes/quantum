@@ -1,6 +1,6 @@
 import { app } from 'electron'
 import log from 'electron-log'
-import path from 'path'
+import path from 'node:path'
 
 const logsPath = path.join(app.getPath('userData'), `logs${app.isPackaged ? '' : '-dev'}`)
 console.log(`Logs path: ${logsPath}`)
