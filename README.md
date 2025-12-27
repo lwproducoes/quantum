@@ -6,7 +6,7 @@ Nintendo Switch download manager with multi-provider support, automatic 7-Zip ex
 
 ---
 
-![Version](https://img.shields.io/badge/version-1.0.8-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-888)
+![Version](https://img.shields.io/github/package-json/v/lwproducoes/quantum) ![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-888)
 
 ## Overview
 
