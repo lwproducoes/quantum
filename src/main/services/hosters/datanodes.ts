@@ -14,8 +14,7 @@ export class DatanodesApi {
 
   public static async getDownloadUrl(downloadUrl: string): Promise<string> {
     const parsedUrl = new URL(downloadUrl)
-    const pathSegments = parsedUrl.pathname.split('/').filter(Boolean)
-    const fileCode = pathSegments[0]
+    const fileCode = parsedUrl.pathname.split('/').find(Boolean) ?? ''
 
     await this.jar.setCookie('lang=english;', 'https://datanodes.to')
 

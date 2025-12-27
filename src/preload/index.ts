@@ -114,8 +114,6 @@ if (process.contextIsolated) {
     console.error('[Preload Error]', error)
   }
 } else {
-  // @ts-ignore (define in dts)
-  window.electron = electronAPI
-  // @ts-ignore (define in dts)
-  window.api = api
+  globalThis.electron = electronAPI
+  globalThis.api = api
 }

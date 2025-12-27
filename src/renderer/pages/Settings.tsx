@@ -7,7 +7,11 @@ import {
   CardTitle
 } from '@renderer/components/card'
 import { Input } from '@renderer/components/input'
-import { getDownloadFolder, selectDownloadFolder, setDownloadFolder } from '@renderer/lib/api'
+import {
+  getDownloadFolder,
+  selectDownloadFolder,
+  setDownloadFolder as setDownloadFolderApi
+} from '@renderer/lib/api'
 import { cn } from '@renderer/lib/utils'
 import { ArrowLeft, RefreshCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -15,25 +19,25 @@ import { NavLink } from 'react-router'
 import { toast } from 'react-toastify'
 
 function Settings(): React.JSX.Element {
-  const [downloadFolder, setDownloadFolderState] = useState<string>('')
+  const [downloadFolder, setDownloadFolder] = useState<string>('')
   const [checkingUpdates, setCheckingUpdates] = useState(false)
 
   useEffect(() => {
     getDownloadFolder().then((saved) => {
-      if (saved) setDownloadFolderState(saved)
+      if (saved) setDownloadFolder(saved)
     })
   }, [])
 
   async function handleBrowse() {
     const path = await selectDownloadFolder()
     if (path) {
-      setDownloadFolderState(path)
+      setDownloadFolder(path)
     }
   }
 
   async function handleSave() {
     if (!downloadFolder) return
-    const success = await setDownloadFolder(downloadFolder)
+    const success = await setDownloadFolderApi(downloadFolder)
     if (success) {
       toast.success('Download folder saved successfully!', { position: 'top-right' })
     } else {
@@ -45,8 +49,8 @@ function Settings(): React.JSX.Element {
     setCheckingUpdates(true)
     toast.info('Checking for updates...', { autoClose: 2000 })
     try {
-      await window.api.checkForUpdates()
-    } catch (err) {
+      await globalThis.api.checkForUpdates()
+    } catch {
       toast.error('Error checking for updates')
     } finally {
       setTimeout(() => setCheckingUpdates(false), 2000)
@@ -76,7 +80,7 @@ function Settings(): React.JSX.Element {
                 aria-label="Selected download folder"
                 placeholder="No folder selected"
                 value={downloadFolder}
-                onChange={(e) => setDownloadFolderState(e.target.value)}
+                onChange={(e) => setDownloadFolder(e.target.value)}
               />
               <Button variant="outline" onClick={handleBrowse} aria-label="Browse folders">
                 Browse
