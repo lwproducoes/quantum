@@ -29,7 +29,7 @@ export function ErrorBoundary(): React.JSX.Element {
           </div>
 
           <div className="flex gap-2">
-            <Button onClick={() => globalThis.location.reload()} className="flex-1 gap-2">
+            <Button onClick={() => window.location.reload()} className="flex-1 gap-2">
               <RotateCcw size={16} />
               Reload
             </Button>

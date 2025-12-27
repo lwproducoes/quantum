@@ -11,7 +11,7 @@ const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
 
 async function getCachedGames(): Promise<Game[] | null> {
   try {
-    const cached = await globalThis.api.getCache(CACHE_KEY)
+    const cached = await window.api.getCache(CACHE_KEY)
     if (!cached) return null
 
     const entry: CacheEntry = cached
@@ -19,7 +19,7 @@ async function getCachedGames(): Promise<Game[] | null> {
 
     // Check if cache expired (24 hours)
     if (now - entry.timestamp > CACHE_DURATION) {
-      await globalThis.api.deleteCache(CACHE_KEY)
+      await window.api.deleteCache(CACHE_KEY)
       return null
     }
 
@@ -36,7 +36,7 @@ async function setCachedGames(data: Game[]): Promise<void> {
       data,
       timestamp: Date.now()
     }
-    await globalThis.api.setCache(CACHE_KEY, entry)
+    await window.api.setCache(CACHE_KEY, entry)
   } catch (error) {
     logger.error('Error saving cache:', error)
   }
@@ -62,16 +62,16 @@ export async function fetchGames(searchTerm?: string, useCache = false) {
 }
 
 export function selectDownloadFolder(): Promise<string | null> {
-  return globalThis.api.selectDirectory()
+  return window.api.selectDirectory()
 }
 
 export async function getDownloadFolder(): Promise<string | null> {
-  const val = await globalThis.api.getSetting('downloadFolder')
+  const val = await window.api.getSetting('downloadFolder')
   return typeof val === 'string' ? val : null
 }
 
 export function setDownloadFolder(path: string): Promise<boolean> {
-  return globalThis.api.setSetting('downloadFolder', path)
+  return window.api.setSetting('downloadFolder', path)
 }
 
 export default api

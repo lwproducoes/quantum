@@ -14,7 +14,7 @@ import { UpdaterService } from './services/updater'
 import type { DownloadKind, Provider, ProviderGameItem } from './types'
 
 function createWindow(): void {
-  // Create the browser globalThis.
+  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,

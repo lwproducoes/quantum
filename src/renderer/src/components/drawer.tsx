@@ -17,7 +17,7 @@ export function Drawer({
   children,
   title,
   side = 'right'
-}: Readonly<DrawerProps>): React.JSX.Element {
+}: DrawerProps): React.JSX.Element {
   React.useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -28,9 +28,6 @@ export function Drawer({
       document.body.style.overflow = 'unset'
     }
   }, [open])
-
-  const sideTranslate = side === 'right' ? 'translate-x-full' : '-translate-x-full'
-  const drawerTransform = open ? 'translate-x-0' : sideTranslate
 
   return (
     <>
@@ -48,7 +45,7 @@ export function Drawer({
         className={cn(
           'fixed top-0 bottom-0 w-2/5 bg-background shadow-lg transition-transform duration-300 z-50 flex flex-col',
           side === 'right' ? 'right-0' : 'left-0',
-          drawerTransform
+          open ? 'translate-x-0' : side === 'right' ? 'translate-x-full' : '-translate-x-full'
         )}
       >
         {/* Header */}

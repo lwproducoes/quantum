@@ -77,10 +77,10 @@ export function UpdaterNotification() {
       }
     }
 
-    globalThis.api.onUpdateMessage(handleUpdateMessage)
+    window.api.onUpdateMessage(handleUpdateMessage)
 
     return () => {
-      globalThis.api.removeUpdateListener()
+      window.api.removeUpdateListener()
     }
   }, [])
 
@@ -88,11 +88,11 @@ export function UpdaterNotification() {
     setShowDialog(false)
     setDownloading(true)
     toast.info('Downloading update...', { autoClose: 2000 })
-    await globalThis.api.downloadUpdate()
+    await window.api.downloadUpdate()
   }
 
   const handleInstallUpdate = async () => {
-    await globalThis.api.installUpdate()
+    await window.api.installUpdate()
   }
 
   const handleDismiss = () => {
